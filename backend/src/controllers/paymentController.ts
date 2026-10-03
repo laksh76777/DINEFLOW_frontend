@@ -6,6 +6,7 @@ import { TableSession } from '../models/TableSession.js';
 import { Table } from '../models/Table.js';
 import { Order } from '../models/Order.js';
 import { SessionMember } from '../models/SessionMember.js';
+import { StaffRequest } from '../models/StaffRequest.js';
 import { Restaurant } from '../models/Restaurant.js';
 import { AnalyticsEvent } from '../models/AnalyticsEvent.js';
 import { ORDER_STATUSES } from '../config/constants.js';
@@ -450,7 +451,9 @@ export const paymentController = {
       await session.save();
 
       // Release Table: make it AVAILABLE for next guests
-      const table = await Table.findById(session.tableId);
+      const table = await Table.findOne({
+        $or: [{ _id: session.tableId }, { tableNumber: session.tableNumber }],
+      });
       if (table) {
         table.status = 'AVAILABLE';
         table.activeSessionId = null;
@@ -458,10 +461,22 @@ export const paymentController = {
         socketBroadcaster.emitTableUpdated(table.toObject());
       }
 
+      // Mark all session members as inactive so next session is clean
+      await SessionMember.updateMany({ sessionId: session._id }, { active: false });
+
       // Mark all orders as COMPLETED
       await Order.updateMany(
         { session: session._id, status: { $ne: ORDER_STATUSES.CANCELLED } },
         { status: ORDER_STATUSES.COMPLETED, completedAt: new Date() }
+      );
+
+      // Complete all pending staff requests for this session/table
+      await StaffRequest.updateMany(
+        {
+          $or: [{ sessionId: session._id }, { tableNumber: session.tableNumber }],
+          status: { $in: ['REQUESTED', 'ACCEPTED', 'IN_PROGRESS'] },
+        },
+        { status: 'COMPLETED', completedAt: new Date() }
       );
 
       // Real-time broadcasts

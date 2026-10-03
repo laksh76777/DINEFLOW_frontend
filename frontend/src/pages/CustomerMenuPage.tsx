@@ -33,10 +33,11 @@ import {
   ChefHat,
   Leaf,
   Info,
-  Maximize2,
+  DoorOpen,
   Volume2,
   VolumeX,
 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import {
   Button,
   Card,
@@ -59,8 +60,22 @@ import { toast } from '../stores/useToastStore';
 import { soundManager } from '../utils/sound';
 
 export const CustomerMenuPage: React.FC = () => {
+  const navigate = useNavigate();
+
   // Navigation / Tabs
   const [activeTab, setActiveTab] = useState<'menu' | 'orders' | 'bill'>('menu');
+
+  const handleLeaveTable = () => {
+    localStorage.removeItem('dineflow_active_session');
+    const keys = Object.keys(localStorage);
+    keys.forEach((key) => {
+      if (key.startsWith('dineflow_temp_member_') || key.startsWith('dineflow_name_')) {
+        localStorage.removeItem(key);
+      }
+    });
+    toast.success('Thank you for dining with us!', `Table ${tableNumber} has been released.`);
+    navigate('/');
+  };
 
   // Restaurant & Session Context
   const [profile, setProfile] = useState<RestaurantProfile | null>(null);
@@ -1440,15 +1455,26 @@ export const CustomerMenuPage: React.FC = () => {
                     </p>
                   </div>
 
-                  <a
-                    href={`/api/payments/invoice/${sessionId}`}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#d96236] text-white font-bold text-xs shadow-sm hover:bg-[#be4d27] transition-colors w-full"
-                  >
-                    <Download className="w-4 h-4" />
-                    Download Official Tax Invoice (PDF)
-                  </a>
+                  <div className="flex flex-col gap-2 pt-1">
+                    <a
+                      href={`/api/payments/invoice/${sessionId}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#d96236] text-white font-bold text-xs shadow-sm hover:bg-[#be4d27] transition-colors w-full"
+                    >
+                      <Download className="w-4 h-4" />
+                      Download Official Tax Invoice (PDF)
+                    </a>
+                    <Button
+                      variant="outline"
+                      size="md"
+                      className="w-full font-bold border-[#e9e3dc] text-[#211d1a] hover:bg-[#fff4ef] hover:border-[#d96236] flex items-center justify-center gap-2"
+                      onClick={handleLeaveTable}
+                      leftIcon={<DoorOpen className="w-4 h-4 text-[#d96236]" />}
+                    >
+                      Finish Dining & Leave Table
+                    </Button>
+                  </div>
                 </div>
               )}
             </CardBody>
@@ -1695,15 +1721,28 @@ export const CustomerMenuPage: React.FC = () => {
                   className="w-full py-2.5 px-4 rounded-xl bg-[#d96236] text-white font-bold text-xs shadow-sm hover:bg-[#be4d27] transition-colors flex items-center justify-center gap-1.5"
                 >
                   <FileText className="w-4 h-4" />
-                  View Invoice
+                  Download Official Tax Invoice (PDF)
                 </a>
 
                 <Button
-                  variant="outline"
+                  variant="primary"
                   size="md"
+                  className="w-full font-bold shadow-sm flex items-center justify-center gap-2"
+                  onClick={() => {
+                    setIsDineFlowPayOpen(false);
+                    handleLeaveTable();
+                  }}
+                  leftIcon={<DoorOpen className="w-4 h-4" />}
+                >
+                  Finish Dining & Leave Table
+                </Button>
+
+                <Button
+                  variant="ghost"
+                  size="sm"
                   onClick={() => setIsDineFlowPayOpen(false)}
                 >
-                  Back to Table
+                  Stay on Table
                 </Button>
               </div>
             </div>

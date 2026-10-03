@@ -25,7 +25,7 @@ export const LoginPage: React.FC = () => {
   const { login } = useAuthStore();
 
   const [email, setEmail] = useState('owner@dineflow.com');
-  const [password, setPassword] = useState('dineflow-demo');
+  const [password, setPassword] = useState('dineflow123');
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -193,8 +193,8 @@ export const LoginPage: React.FC = () => {
                       type="button"
                       onClick={() => {
                         setEmail(item.email);
-                        setPassword('dineflow-demo');
-                        performLogin({ email: item.email, password: 'dineflow-demo' });
+                        setPassword('dineflow123');
+                        performLogin({ email: item.email, role: item.role, password: 'dineflow123' });
                       }}
                       className="flex items-center gap-2 p-2.5 rounded-xl border border-[#e9e3dc] hover:border-[#ffc9b5] bg-[#fbf9f6] hover:bg-[#fff4ef] transition-all text-left group"
                     >

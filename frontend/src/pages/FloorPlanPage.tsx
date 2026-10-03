@@ -922,8 +922,8 @@ export const FloorPlanPage: React.FC = () => {
             </div>
 
             <div>
-              <h3 className="text-base font-bold text-white">Table {selectedTableForQr.tableNumber}</h3>
-              <p className="text-xs text-stone-400 font-mono">Token: {selectedTableForQr.qrCode.token}</p>
+              <h3 className="text-base font-bold text-[#211d1a]">Table {selectedTableForQr.tableNumber}</h3>
+              <p className="text-xs text-[#7b726a] font-mono">Token: {selectedTableForQr.qrCode.token}</p>
             </div>
 
             <Button

@@ -463,4 +463,58 @@ export const tableController = {
       next(err);
     }
   },
+
+  // Reset all tables to AVAILABLE and clear lingering sessions
+  async resetAllTables(_req: Request, res: Response, next: NextFunction) {
+    try {
+      await Table.updateMany(
+        {},
+        {
+          $set: {
+            status: 'AVAILABLE',
+            activeSessionId: null,
+            active: true,
+            'qrCode.active': true,
+          },
+        }
+      );
+
+      await TableSession.updateMany(
+        { status: { $ne: 'COMPLETED' } },
+        {
+          $set: {
+            status: 'COMPLETED',
+            paymentStatus: 'PAID',
+            endedAt: new Date(),
+          },
+        }
+      );
+
+      await SessionMember.updateMany({ active: true }, { $set: { active: false } });
+
+      await Order.updateMany(
+        { status: { $nin: ['COMPLETED', 'CANCELLED'] } },
+        { $set: { status: 'COMPLETED', completedAt: new Date() } }
+      );
+
+      await StaffRequest.updateMany(
+        { status: { $ne: 'COMPLETED' } },
+        { $set: { status: 'COMPLETED', completedAt: new Date() } }
+      );
+
+      // Fetch all refreshed tables and broadcast to all connected staff & guests
+      const allTables = await Table.find().sort({ tableNumber: 1 });
+      for (const t of allTables) {
+        socketBroadcaster.emitTableUpdated(t.toObject());
+      }
+
+      res.json({
+        success: true,
+        message: 'All restaurant tables initialized to fresh AVAILABLE state with 0 active customers.',
+        data: allTables,
+      });
+    } catch (err) {
+      next(err);
+    }
+  },
 };

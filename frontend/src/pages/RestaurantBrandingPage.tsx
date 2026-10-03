@@ -144,14 +144,14 @@ export const RestaurantBrandingPage: React.FC = () => {
         {/* Left Column: Editor Controls (7 cols) */}
         <div className="lg:col-span-7 space-y-6">
           {/* 1. Imagery: Cover & Logo Upload Cards */}
-          <Card variant="default">
+          <Card>
             <CardHeader className="flex items-center justify-between">
               <div>
-                <h3 className="text-sm font-bold text-white flex items-center gap-2">
-                  <ImageIcon className="w-4 h-4 text-orange-400" />
+                <h3 className="text-sm font-bold text-[#211d1a] flex items-center gap-2">
+                  <ImageIcon className="w-4 h-4 text-[#d96236]" />
                   <span>Imagery & Visual Assets</span>
                 </h3>
-                <p className="text-xs text-stone-400 mt-0.5">
+                <p className="text-xs text-[#7b726a] mt-0.5">
                   Optimized and delivered globally via Cloudinary CDN.
                 </p>
               </div>
@@ -159,31 +159,31 @@ export const RestaurantBrandingPage: React.FC = () => {
             <CardBody className="space-y-4">
               {/* Cover Image Upload Area */}
               <div>
-                <label className="text-xs font-semibold text-stone-300 mb-1.5 block">
+                <label className="text-xs font-semibold text-[#4d443c] mb-1.5 block">
                   Restaurant Cover Banner (16:9 ratio recommended)
                 </label>
                 <div
                   onClick={() => coverInputRef.current?.click()}
-                  className="relative h-44 rounded-2xl overflow-hidden border border-stone-800 hover:border-orange-500/50 cursor-pointer group transition-all"
+                  className="relative h-44 rounded-2xl overflow-hidden border border-[#e9e3dc] hover:border-[#d96236] cursor-pointer group transition-all"
                 >
                   <img
                     src={profile.coverImage}
                     alt="Cover Banner"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-stone-950/60 opacity-0 group-hover:opacity-100 backdrop-blur-xs flex flex-col items-center justify-center text-white transition-opacity gap-2">
+                  <div className="absolute inset-0 bg-[#211d1a]/50 opacity-0 group-hover:opacity-100 backdrop-blur-xs flex flex-col items-center justify-center text-white transition-opacity gap-2">
                     {uploadingCover ? (
-                      <Loader2 className="w-6 h-6 animate-spin text-orange-400" />
+                      <Loader2 className="w-6 h-6 animate-spin text-[#d89a20]" />
                     ) : (
                       <>
-                        <Upload className="w-6 h-6 text-orange-400" />
+                        <Upload className="w-6 h-6 text-[#d89a20]" />
                         <span className="text-xs font-semibold">Click to Replace Cover Image</span>
                       </>
                     )}
                   </div>
                   {uploadingCover && (
-                    <div className="absolute inset-0 bg-stone-950/80 flex items-center justify-center text-white gap-2 text-xs">
-                      <Loader2 className="w-5 h-5 animate-spin text-orange-500" />
+                    <div className="absolute inset-0 bg-[#211d1a]/80 flex items-center justify-center text-white gap-2 text-xs">
+                      <Loader2 className="w-5 h-5 animate-spin text-[#d96236]" />
                       <span>Uploading to Cloudinary...</span>
                     </div>
                   )}
@@ -194,26 +194,26 @@ export const RestaurantBrandingPage: React.FC = () => {
               <div className="flex items-center gap-4 pt-2">
                 <div
                   onClick={() => logoInputRef.current?.click()}
-                  className="relative w-20 h-20 rounded-2xl overflow-hidden border border-stone-800 hover:border-orange-500/50 cursor-pointer group shrink-0"
+                  className="relative w-20 h-20 rounded-2xl overflow-hidden border border-[#e9e3dc] hover:border-[#d96236] cursor-pointer group shrink-0"
                 >
                   <img
                     src={profile.logo}
                     alt="Restaurant Logo"
                     className="w-full h-full object-cover"
                   />
-                  <div className="absolute inset-0 bg-stone-950/60 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white transition-opacity">
-                    <Upload className="w-4 h-4 text-orange-400" />
+                  <div className="absolute inset-0 bg-[#211d1a]/50 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white transition-opacity">
+                    <Upload className="w-4 h-4 text-[#d89a20]" />
                   </div>
                   {uploadingLogo && (
-                    <div className="absolute inset-0 bg-stone-950/80 flex items-center justify-center">
-                      <Loader2 className="w-4 h-4 animate-spin text-orange-500" />
+                    <div className="absolute inset-0 bg-[#211d1a]/80 flex items-center justify-center">
+                      <Loader2 className="w-4 h-4 animate-spin text-[#d96236]" />
                     </div>
                   )}
                 </div>
 
                 <div className="space-y-1">
-                  <div className="text-xs font-bold text-white">Brand Logo / Emblem</div>
-                  <p className="text-[11px] text-stone-400">
+                  <div className="text-xs font-bold text-[#211d1a]">Brand Logo / Emblem</div>
+                  <p className="text-[11px] text-[#7b726a]">
                     Displayed on digital table QR menus, guest receipts, and tax invoices.
                   </p>
                   <Button
@@ -230,10 +230,10 @@ export const RestaurantBrandingPage: React.FC = () => {
           </Card>
 
           {/* 2. Restaurant Information */}
-          <Card variant="default">
+          <Card>
             <CardHeader>
-              <h3 className="text-sm font-bold text-white flex items-center gap-2">
-                <Store className="w-4 h-4 text-orange-400" />
+              <h3 className="text-sm font-bold text-[#211d1a] flex items-center gap-2">
+                <Store className="w-4 h-4 text-[#d96236]" />
                 <span>Establishment Details</span>
               </h3>
             </CardHeader>
@@ -246,7 +246,7 @@ export const RestaurantBrandingPage: React.FC = () => {
               />
 
               <div>
-                <label className="text-xs font-semibold text-stone-300 mb-1.5 block">
+                <label className="text-xs font-semibold text-[#4d443c] mb-1.5 block">
                   Short Tagline & Culinary Description
                 </label>
                 <textarea
@@ -283,10 +283,10 @@ export const RestaurantBrandingPage: React.FC = () => {
           </Card>
 
           {/* 3. Operating Hours & Taxes */}
-          <Card variant="default">
+          <Card>
             <CardHeader>
-              <h3 className="text-sm font-bold text-white flex items-center gap-2">
-                <Clock className="w-4 h-4 text-orange-400" />
+              <h3 className="text-sm font-bold text-[#211d1a] flex items-center gap-2">
+                <Clock className="w-4 h-4 text-[#d96236]" />
                 <span>Operating Hours & Tax Configuration</span>
               </h3>
             </CardHeader>
@@ -359,23 +359,23 @@ export const RestaurantBrandingPage: React.FC = () => {
           </Card>
 
           {/* 4. Color / Accent Selection */}
-          <Card variant="default">
+          <Card>
             <CardHeader>
-              <h3 className="text-sm font-bold text-white flex items-center gap-2">
-                <Palette className="w-4 h-4 text-orange-400" />
+              <h3 className="text-sm font-bold text-[#211d1a] flex items-center gap-2">
+                <Palette className="w-4 h-4 text-[#d96236]" />
                 <span>Theme & Accent Styling</span>
               </h3>
             </CardHeader>
             <CardBody className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="text-xs font-semibold text-stone-300 mb-1.5 block">
+                  <label className="text-xs font-semibold text-[#4d443c] mb-1.5 block">
                     Primary Brand Color
                   </label>
                   <div className="flex items-center gap-3">
                     <input
                       type="color"
-                      value={profile.themeConfiguration?.primaryColor || '#f97316'}
+                      value={profile.themeConfiguration?.primaryColor || '#d96236'}
                       onChange={(e) =>
                         setProfile({
                           ...profile,
@@ -387,20 +387,20 @@ export const RestaurantBrandingPage: React.FC = () => {
                       }
                       className="w-10 h-10 rounded-xl cursor-pointer bg-transparent border-0"
                     />
-                    <span className="text-xs font-mono text-stone-300">
-                      {profile.themeConfiguration?.primaryColor || '#f97316'}
+                    <span className="text-xs font-mono text-[#4d443c]">
+                      {profile.themeConfiguration?.primaryColor || '#d96236'}
                     </span>
                   </div>
                 </div>
 
                 <div>
-                  <label className="text-xs font-semibold text-stone-300 mb-1.5 block">
+                  <label className="text-xs font-semibold text-[#4d443c] mb-1.5 block">
                     Secondary Accent Color
                   </label>
                   <div className="flex items-center gap-3">
                     <input
                       type="color"
-                      value={profile.themeConfiguration?.accentColor || '#d97706'}
+                      value={profile.themeConfiguration?.accentColor || '#d89a20'}
                       onChange={(e) =>
                         setProfile({
                           ...profile,
@@ -412,8 +412,8 @@ export const RestaurantBrandingPage: React.FC = () => {
                       }
                       className="w-10 h-10 rounded-xl cursor-pointer bg-transparent border-0"
                     />
-                    <span className="text-xs font-mono text-stone-300">
-                      {profile.themeConfiguration?.accentColor || '#d97706'}
+                    <span className="text-xs font-mono text-[#4d443c]">
+                      {profile.themeConfiguration?.accentColor || '#d89a20'}
                     </span>
                   </div>
                 </div>
@@ -425,8 +425,8 @@ export const RestaurantBrandingPage: React.FC = () => {
         {/* Right Column: Live Customer Mobile Preview (5 cols) */}
         <div className="lg:col-span-5 sticky top-20 space-y-4">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-stone-400 uppercase tracking-wider flex items-center gap-1.5">
-              <Eye className="w-4 h-4 text-orange-400" />
+            <span className="text-xs font-bold text-[#7b726a] uppercase tracking-wider flex items-center gap-1.5">
+              <Eye className="w-4 h-4 text-[#d96236]" />
               <span>Live Customer Mobile Preview</span>
             </span>
             <Badge variant="brand" size="sm" dot>

@@ -34,12 +34,16 @@ export const useAuthStore = create<AuthState>((set) => {
     login: (token: string, user: User) => {
       localStorage.setItem(STORAGE_KEY_TOKEN, token);
       localStorage.setItem(STORAGE_KEY_USER, JSON.stringify(user));
+      localStorage.setItem('dineflow_token', token);
+      localStorage.setItem('dineflow_role', user.role);
       set({ token, user, isAuthenticated: true });
     },
 
     logout: () => {
       localStorage.removeItem(STORAGE_KEY_TOKEN);
       localStorage.removeItem(STORAGE_KEY_USER);
+      localStorage.removeItem('dineflow_token');
+      localStorage.removeItem('dineflow_role');
       set({ token: null, user: null, isAuthenticated: false });
     },
 

@@ -358,27 +358,26 @@ export async function seedInitialUsers() {
 
     const tablesToSeed = [
       { tableNumber: 'T01', capacity: 2, status: 'AVAILABLE', section: 'Window Booth' },
-      { tableNumber: 'T02', capacity: 4, status: 'OCCUPIED', section: 'Main Dining Hall' },
-      { tableNumber: 'T03', capacity: 4, status: 'PREPARING', section: 'Main Dining Hall' },
-      { tableNumber: 'T04', capacity: 6, status: 'READY', section: 'Patio Terrace' },
-      { tableNumber: 'T05', capacity: 2, status: 'PAYMENT', section: 'Courtyard' },
+      { tableNumber: 'T02', capacity: 4, status: 'AVAILABLE', section: 'Main Dining Hall' },
+      { tableNumber: 'T03', capacity: 4, status: 'AVAILABLE', section: 'Main Dining Hall' },
+      { tableNumber: 'T04', capacity: 6, status: 'AVAILABLE', section: 'Patio Terrace' },
+      { tableNumber: 'T05', capacity: 2, status: 'AVAILABLE', section: 'Courtyard' },
       { tableNumber: 'T06', capacity: 8, status: 'AVAILABLE', section: 'Private Dining Suite' },
-      { tableNumber: 'T07', capacity: 4, status: 'OCCUPIED', section: 'Main Dining Hall' },
+      { tableNumber: 'T07', capacity: 4, status: 'AVAILABLE', section: 'Main Dining Hall' },
     ];
-
-    let table07Doc: any = null;
 
     for (const t of tablesToSeed) {
       const token = t.tableNumber === 'T07' ? 'X7k92Lm' : generateSecureToken(8);
       const scanUrl = `${frontendUrl}/q/${token}`;
       const qrDataUrl = await generateQrDataUrl(scanUrl);
 
-      const createdTable = await Table.create({
+      await Table.create({
         tableNumber: t.tableNumber,
         capacity: t.capacity,
-        status: t.status,
+        status: 'AVAILABLE',
         section: t.section,
         active: true,
+        activeSessionId: null,
         qrCode: {
           token,
           active: true,
@@ -386,47 +385,9 @@ export async function seedInitialUsers() {
           qrDataUrl,
         },
       });
-
-      if (t.tableNumber === 'T07') {
-        table07Doc = createdTable;
-      }
     }
 
-    // Initialize Table 07 with Session #8291 and active members: Laksh, Priya
-    if (table07Doc) {
-      const session = await TableSession.create({
-        tableId: table07Doc._id,
-        tableNumber: 'T07',
-        sessionNumber: '8291',
-        status: 'ACTIVE',
-        startedAt: new Date(),
-        memberCount: 2,
-        paymentStatus: 'UNPAID',
-      });
-
-      await SessionMember.create([
-        {
-          sessionId: session._id,
-          displayName: 'Laksh (Host)',
-          temporaryMemberId: 'guest_laksh_host_1',
-          joinedAt: new Date(Date.now() - 1000 * 60 * 25),
-          active: true,
-        },
-        {
-          sessionId: session._id,
-          displayName: 'Priya',
-          temporaryMemberId: 'guest_priya_din_2',
-          joinedAt: new Date(Date.now() - 1000 * 60 * 20),
-          active: true,
-        },
-      ]);
-
-      table07Doc.activeSessionId = session._id;
-      await table07Doc.save();
-      logger.info('✅ Initialized Table 07 with Session #8291 and diners (Laksh & Priya).');
-    }
-
-    logger.info(`✅ Seeded ${tablesToSeed.length} restaurant tables with QR codes.`);
+    logger.info(`✅ Seeded ${tablesToSeed.length} restaurant tables — all clean and AVAILABLE.`);
   }
 }
 

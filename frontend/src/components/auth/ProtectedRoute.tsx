@@ -35,16 +35,16 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ allowedRoles, ch
     };
 
     return (
-      <div className="min-h-screen bg-[#0c0a09] text-stone-100 flex items-center justify-center p-4">
-        <Card variant="default" className="max-w-md w-full border-rose-500/30">
+      <div className="min-h-screen bg-[#fbf9f6] text-[#211d1a] flex items-center justify-center p-4 font-sans">
+        <Card className="max-w-md w-full border-[#fecaca] shadow-md">
           <CardBody className="p-6 text-center space-y-4">
-            <div className="w-14 h-14 mx-auto rounded-2xl bg-rose-500/10 border border-rose-500/30 text-rose-400 flex items-center justify-center">
+            <div className="w-14 h-14 mx-auto rounded-2xl bg-[#fef2f2] border border-[#fecaca] text-[#dc2626] flex items-center justify-center">
               <ShieldAlert className="w-7 h-7" />
             </div>
             <div>
-              <h2 className="text-xl font-bold text-white">Access Restricted</h2>
-              <p className="text-xs text-stone-400 mt-1">
-                Your role (<span className="text-orange-400 font-semibold">{user.role}</span>) is not
+              <h2 className="text-xl font-bold text-[#211d1a]">Access Restricted</h2>
+              <p className="text-xs text-[#7b726a] mt-1">
+                Your role (<span className="text-[#d96236] font-bold">{user.role}</span>) is not
                 authorized to view this area.
               </p>
             </div>

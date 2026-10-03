@@ -48,5 +48,6 @@ router.patch(
   requireRoles(ROLES.OWNER, ROLES.MANAGER),
   tableController.toggleQrActive
 );
+router.post('/reset-all-available', tableController.resetAllTables);
 
 export default router;
