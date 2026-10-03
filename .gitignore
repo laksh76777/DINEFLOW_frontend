@@ -1,0 +1,194 @@
+# =========================================
+
+# DINEFLOW - Root Git Ignore
+
+# =========================================
+
+# -------------------------------------------------
+
+# Environment Variables / Secrets
+
+# -------------------------------------------------
+
+.env
+.env.*
+!.env.example
+
+# Firebase / service credentials
+
+firebase-adminsdk*.json
+serviceAccountKey.json
+service-account*.json
+
+# Private keys / certificates
+
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+
+# -------------------------------------------------
+
+# Node.js
+
+# -------------------------------------------------
+
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# -------------------------------------------------
+
+# Frontend Build / Vite
+
+# -------------------------------------------------
+
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+frontend/.vite/
+frontend/.cache/
+
+# -------------------------------------------------
+
+# Backend Build
+
+# -------------------------------------------------
+
+backend/node_modules/
+backend/dist/
+backend/build/
+backend/.cache/
+
+# -------------------------------------------------
+
+# Logs
+
+# -------------------------------------------------
+
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# -------------------------------------------------
+
+# Coverage / Testing
+
+# -------------------------------------------------
+
+coverage/
+.nyc_output/
+*.lcov
+
+# -------------------------------------------------
+
+# IDE / Editors
+
+# -------------------------------------------------
+
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+
+.idea/
+*.iml
+
+# -------------------------------------------------
+
+# OS Files
+
+# -------------------------------------------------
+
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# -------------------------------------------------
+
+# Temporary Files
+
+# -------------------------------------------------
+
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+.cache/
+
+# -------------------------------------------------
+
+# Local Database / Storage
+
+# -------------------------------------------------
+
+*.sqlite
+*.sqlite3
+*.db
+
+# -------------------------------------------------
+
+# Uploads / Runtime Files
+
+# -------------------------------------------------
+
+backend/uploads/
+backend/storage/
+frontend/uploads/
+
+# -------------------------------------------------
+
+# Generated Files
+
+# -------------------------------------------------
+
+*.generated.*
+dist/
+build/
+
+# -------------------------------------------------
+
+# Vercel
+
+# -------------------------------------------------
+
+.vercel/
+
+# -------------------------------------------------
+
+# Render / Railway / Deployment
+
+# -------------------------------------------------
+
+.render/
+.railway/
+
+# -------------------------------------------------
+
+# OS / Misc
+
+# -------------------------------------------------
+
+.DS_Store
+Thumbs.db
+ehthumbs.db
+
+# -------------------------------------------------
+
+# Secrets / Configuration
+
+# -------------------------------------------------
+
+*.secret
+*.secrets
+*.credentials
+credentials.json
+secrets.json
+secrets.local.json
