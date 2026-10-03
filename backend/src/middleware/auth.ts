@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import mongoose from 'mongoose';
 import { ROLES, Role } from '../config/constants.js';
 import { AppError } from './errorHandler.js';
 import { User, IUser } from '../models/User.js';
@@ -27,11 +28,13 @@ export const authenticateStaff = async (
 
     if (demoRoleHeader && Object.values(ROLES).includes(demoRoleHeader as Role)) {
       let user: IUser | null = null;
-      if (demoUserId) {
-        user = await User.findById(demoUserId);
-      }
-      if (!user) {
-        user = await User.findOne({ role: demoRoleHeader, active: true });
+      if (mongoose.connection.readyState === 1) {
+        if (demoUserId) {
+          user = await User.findById(demoUserId);
+        }
+        if (!user) {
+          user = await User.findOne({ role: demoRoleHeader, active: true });
+        }
       }
 
       if (user && !user.active) {

@@ -16,6 +16,7 @@ import { orderRoutes } from './routes/orderRoutes.js';
 import { staffRequestRoutes } from './routes/staffRequestRoutes.js';
 import { paymentRoutes } from './routes/paymentRoutes.js';
 import { analyticsRoutes } from './routes/analyticsRoutes.js';
+import aiRoutes from './routes/aiRoutes.js';
 
 export function createApp(): Express {
   const app = express();
@@ -116,6 +117,7 @@ export function createApp(): Express {
   app.use('/api/requests', staffRequestRoutes);
   app.use('/api/payments', paymentRoutes);
   app.use('/api/analytics', analyticsRoutes);
+  app.use('/api/ai', aiRoutes);
 
   // 404 Handler for undefined API routes
   app.use('/api/*', (req: Request, res: Response) => {

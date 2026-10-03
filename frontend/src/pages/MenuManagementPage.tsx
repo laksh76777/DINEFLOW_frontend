@@ -33,6 +33,7 @@ import {
 } from '../components/ui';
 import { menuService, MenuItem, Category, FoodType } from '../services/menuService';
 import { uploadService } from '../services/uploadService';
+import { aiService } from '../services/aiService';
 import { useAuthStore } from '../stores/useAuthStore';
 import { toast } from '../stores/useToastStore';
 
@@ -66,6 +67,9 @@ export const MenuManagementPage: React.FC = () => {
   const [formSpiceLevel, setFormSpiceLevel] = useState<number>(1);
   const [formAllergens, setFormAllergens] = useState('');
   const [formIngredients, setFormIngredients] = useState('');
+  const [formCookingMethod, setFormCookingMethod] = useState('Wood-fired');
+  const [isGeneratingDescription, setIsGeneratingDescription] = useState(false);
+  const [aiDraftDescription, setAiDraftDescription] = useState<string | null>(null);
   const [formPrepTime, setFormPrepTime] = useState<number>(15);
   const [formStation, setFormStation] = useState('Main Kitchen');
   const [formFeatured, setFormFeatured] = useState(false);
@@ -135,11 +139,38 @@ export const MenuManagementPage: React.FC = () => {
       setFormSpiceLevel(1);
       setFormAllergens('');
       setFormIngredients('');
+      setFormCookingMethod('Wood-fired');
       setFormPrepTime(15);
       setFormStation('Main Kitchen');
       setFormFeatured(false);
     }
+    setAiDraftDescription(null);
     setIsItemModalOpen(true);
+  };
+
+  // Generate Menu Description with AI (Phase 15)
+  const handleGenerateAiDescription = async () => {
+    if (!formName.trim()) {
+      toast.error('Dish Name Required', 'Please enter a dish name first before generating draft with AI.');
+      return;
+    }
+    setIsGeneratingDescription(true);
+    try {
+      const res = await aiService.generateMenuDescription({
+        foodName: formName.trim(),
+        ingredients: formIngredients.trim() || 'Fresh aromatic herbs, spices, and seasonal reduction',
+        cookingMethod: formCookingMethod || 'Wood-fired',
+        category: categories.find((c) => c._id === formCategoryId)?.name,
+        foodType: formFoodType,
+        spiceLevel: formSpiceLevel,
+      });
+      setAiDraftDescription(res.draftDescription);
+      toast.success('AI Draft Generated', 'Review the sensory description below before applying');
+    } catch (err: any) {
+      toast.error('AI Drafting Failed', err.message);
+    } finally {
+      setIsGeneratingDescription(false);
+    }
   };
 
   // Upload food image via Cloudinary
@@ -705,15 +736,107 @@ export const MenuManagementPage: React.FC = () => {
             </div>
           </div>
 
-          <div>
-            <label className="text-xs font-semibold text-stone-300 mb-1.5 block">
-              Dish Description
-            </label>
+          {/* AI-Assisted Culinary Inputs */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <Input
+                label="Cooking Method / Technique"
+                placeholder="e.g. Wood-fired, Slow-braised, Pan-seared"
+                value={formCookingMethod}
+                onChange={(e) => setFormCookingMethod(e.target.value)}
+              />
+              <div className="flex flex-wrap gap-1.5 mt-1.5">
+                {['Wood-fired', 'Slow-braised', 'Charcoal-grilled', 'Pan-seared', 'Sous-vide', 'Tandoor-roasted'].map((m) => (
+                  <button
+                    key={m}
+                    type="button"
+                    onClick={() => setFormCookingMethod(m)}
+                    className={`text-[10px] px-2 py-0.5 rounded-md border transition-all ${
+                      formCookingMethod === m
+                        ? 'bg-orange-500/20 border-orange-500 text-orange-300'
+                        : 'bg-stone-900 border-stone-800 text-stone-400 hover:text-stone-200'
+                    }`}
+                  >
+                    {m}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <Input
+              label="Key Ingredients (comma separated)"
+              placeholder="e.g. Kashmiri Morels, Saffron Cream, Pistachio"
+              value={formIngredients}
+              onChange={(e) => setFormIngredients(e.target.value)}
+            />
+          </div>
+
+          {/* Dish Description with Gemini AI Assistant */}
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <label className="text-xs font-semibold text-stone-300 block">
+                Dish Description
+              </label>
+              <Button
+                type="button"
+                size="sm"
+                variant="outline"
+                className="border-orange-500/40 text-orange-400 hover:bg-orange-500/10 text-xs py-1 px-2.5 h-auto"
+                onClick={handleGenerateAiDescription}
+                isLoading={isGeneratingDescription}
+                leftIcon={<Sparkles className="w-3 h-3 text-orange-400" />}
+              >
+                Draft with AI
+              </Button>
+            </div>
+
+            {/* AI Draft Review Card */}
+            {aiDraftDescription && (
+              <motion.div
+                initial={{ opacity: 0, y: -6 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="p-3 rounded-xl bg-orange-950/40 border border-orange-500/50 space-y-2 shadow-lg"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-orange-300 flex items-center gap-1.5">
+                    <Sparkles className="w-3.5 h-3.5 text-orange-400" />
+                    AI Draft (Review before applying)
+                  </span>
+                  <div className="flex items-center gap-1">
+                    <Button
+                      type="button"
+                      size="sm"
+                      variant="primary"
+                      className="text-xs py-1 px-2.5 h-auto"
+                      onClick={() => {
+                        setFormDescription(aiDraftDescription);
+                        setAiDraftDescription(null);
+                        toast.success('Draft Applied', 'You can review and edit before saving dish.');
+                      }}
+                      leftIcon={<Check className="w-3 h-3" />}
+                    >
+                      Apply to Description
+                    </Button>
+                    <button
+                      type="button"
+                      onClick={() => setAiDraftDescription(null)}
+                      className="p-1 text-stone-400 hover:text-stone-200"
+                    >
+                      <X className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                </div>
+                <p className="text-xs text-stone-200 italic leading-relaxed bg-black/30 p-2 rounded-lg border border-stone-800">
+                  "{aiDraftDescription}"
+                </p>
+              </motion.div>
+            )}
+
             <textarea
               rows={2}
               value={formDescription}
               onChange={(e) => setFormDescription(e.target.value)}
-              placeholder="Sensory description of taste, texture, and preparation..."
+              placeholder="Sensory description of taste, texture, and culinary craft..."
               className="w-full bg-stone-900 border border-stone-800 text-stone-100 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-orange-500/60 focus:ring-2 focus:ring-orange-500/20"
             />
           </div>
@@ -775,14 +898,7 @@ export const MenuManagementPage: React.FC = () => {
             />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <Input
-              label="Key Ingredients (comma separated)"
-              placeholder="e.g. Paneer, Cardamom, Yogurt"
-              value={formIngredients}
-              onChange={(e) => setFormIngredients(e.target.value)}
-            />
-
+          <div>
             <Input
               label="Allergen Warnings (comma separated)"
               placeholder="e.g. Dairy, Peanuts, Gluten"

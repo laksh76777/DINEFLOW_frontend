@@ -4,16 +4,18 @@ import { cloudinary, isCloudinaryConfigured } from '../config/cloudinary.js';
 import { AppError } from '../middleware/errorHandler.js';
 import { logger } from '../utils/logger.js';
 
-// Configure multer for in-memory file handling (up to 10MB)
+// Configure multer for in-memory file handling with strict 5MB limit and format whitelist
 const storage = multer.memoryStorage();
+const ALLOWED_MIME_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/jpg', 'image/gif'];
+
 export const uploadMiddleware = multer({
   storage,
-  limits: { fileSize: 10 * 1024 * 1024 }, // 10MB limit
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB strict limit
   fileFilter: (_req, file, cb) => {
-    if (file.mimetype.startsWith('image/')) {
+    if (ALLOWED_MIME_TYPES.includes(file.mimetype.toLowerCase())) {
       cb(null, true);
     } else {
-      cb(new AppError('Only image files are allowed', 400));
+      cb(new AppError(`Invalid file format: ${file.mimetype}. Allowed formats: JPG, PNG, WEBP, GIF`, 400));
     }
   },
 });

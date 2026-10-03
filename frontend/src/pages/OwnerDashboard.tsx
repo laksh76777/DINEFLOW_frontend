@@ -35,6 +35,7 @@ import {
 } from '../components/ui';
 import { useAuthStore, getAuthHeaders } from '../stores/useAuthStore';
 import { analyticsService, DashboardAnalytics } from '../services/analyticsService';
+import { aiService } from '../services/aiService';
 import { toast } from '../stores/useToastStore';
 import {
   Users,
@@ -93,6 +94,7 @@ export const OwnerDashboard: React.FC = () => {
   const [aiPrompt, setAiPrompt] = useState('');
   const [aiAdvice, setAiAdvice] = useState<string | null>(null);
   const [aiSource, setAiSource] = useState<string>('');
+  const [aiTelemetry, setAiTelemetry] = useState<any | null>(null);
   const [isAskingAi, setIsAskingAi] = useState(false);
 
   // Staff State
@@ -148,19 +150,20 @@ export const OwnerDashboard: React.FC = () => {
     fetchAnalytics(range);
   };
 
-  // Handle AI Advisor Query
+  // Handle AI Operations Advisor Query (Phase 15)
   const handleAskAdvisor = async (customPrompt?: string) => {
     const question = customPrompt || aiPrompt;
     if (!question.trim()) return;
 
     setIsAskingAi(true);
     try {
-      const res = await analyticsService.askAiAdvisor(question);
-      setAiAdvice(res.advice);
+      const res = await aiService.getOperationsAdvice(question, 'yesterday');
+      setAiAdvice(res.explanation);
       setAiSource(res.source);
-      toast.success('AI Advisor Generated Insights');
+      setAiTelemetry(res.structuredContext);
+      toast.success('AI Operations Advisor', 'Telemetry aggregated and explanation generated');
     } catch (err: any) {
-      toast.error('AI Advisor Error', err.message);
+      toast.error('AI Operations Advisor Error', err.message);
     } finally {
       setIsAskingAi(false);
     }
@@ -691,10 +694,22 @@ export const OwnerDashboard: React.FC = () => {
             <CardBody className="p-4 space-y-4">
               {/* Quick Strategy Prompts */}
               <div className="flex flex-wrap gap-2">
+                <button
+                  onClick={() => {
+                    const q = 'Why was preparation time high yesterday?';
+                    setAiPrompt(q);
+                    handleAskAdvisor(q);
+                  }}
+                  className="text-xs px-3.5 py-1.5 rounded-full bg-orange-500/20 border border-orange-500/60 text-orange-300 hover:bg-orange-500/30 hover:text-white transition-all flex items-center gap-1.5 font-semibold shadow-xs"
+                >
+                  <Clock className="w-3.5 h-3.5 text-orange-400" />
+                  <span>"Why was preparation time high yesterday?"</span>
+                </button>
+
                 {[
-                  'Analyze tonight\'s dinner rush bottlenecks',
+                  'Analyze station bottlenecks during dinner rush',
+                  'Recommend kitchen mise-en-place pacing',
                   'Suggest high-margin appetizer pairings',
-                  'Recommend table turnaround optimizations',
                   'How to increase dessert attachment rate?',
                 ].map((promptText, i) => (
                   <button
@@ -705,7 +720,7 @@ export const OwnerDashboard: React.FC = () => {
                     }}
                     className="text-xs px-3 py-1.5 rounded-full bg-stone-900 border border-stone-800 text-stone-300 hover:border-orange-500/50 hover:text-white transition-all flex items-center gap-1.5"
                   >
-                    <Flame className="w-3 h-3 text-orange-400" />
+                    <Flame className="w-3 h-3 text-stone-400" />
                     <span>{promptText}</span>
                   </button>
                 ))}
@@ -714,11 +729,11 @@ export const OwnerDashboard: React.FC = () => {
               {/* Custom Input */}
               <div className="flex gap-2">
                 <Input
-                  placeholder="Ask DineFlow AI for culinary operations advice..."
+                  placeholder="Ask DineFlow AI for culinary operations advice (e.g. 'Why was prep time high yesterday?')..."
                   value={aiPrompt}
                   onChange={(e) => setAiPrompt(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleAskAdvisor()}
-                  className="bg-stone-900/90"
+                  className="bg-stone-900/90 text-xs sm:text-sm"
                 />
                 <Button
                   variant="primary"
@@ -731,21 +746,77 @@ export const OwnerDashboard: React.FC = () => {
                 </Button>
               </div>
 
+              {/* Structured Telemetry Metrics Panel */}
+              {aiTelemetry && (
+                <motion.div
+                  initial={{ opacity: 0, y: -4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="p-3.5 rounded-xl bg-stone-950 border border-stone-800/80 space-y-2.5"
+                >
+                  <div className="flex items-center justify-between text-xs border-b border-stone-800/80 pb-2">
+                    <span className="font-bold text-stone-300 flex items-center gap-1.5">
+                      <Layers className="w-3.5 h-3.5 text-orange-400" />
+                      Aggregated Restaurant Telemetry Context ({aiTelemetry.timeframe})
+                    </span>
+                    <Badge variant="brand" size="sm">
+                      Strictly Read-Only Data
+                    </Badge>
+                  </div>
+
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs">
+                    <div className="p-2 rounded-lg bg-stone-900/80 border border-stone-800">
+                      <div className="text-[10px] text-stone-400 uppercase tracking-wider font-semibold">Orders Analyzed</div>
+                      <div className="text-base font-bold text-white mt-0.5">{aiTelemetry.totalOrders} tickets</div>
+                    </div>
+
+                    <div className="p-2 rounded-lg bg-stone-900/80 border border-stone-800">
+                      <div className="text-[10px] text-stone-400 uppercase tracking-wider font-semibold">Actual vs Target SLA</div>
+                      <div className="text-base font-bold text-rose-400 mt-0.5">
+                        {aiTelemetry.avgPrepTimeMinutes}m <span className="text-[11px] text-stone-400 font-normal">/ {aiTelemetry.targetPrepTimeMinutes}m</span>
+                      </div>
+                    </div>
+
+                    <div className="p-2 rounded-lg bg-stone-900/80 border border-stone-800">
+                      <div className="text-[10px] text-stone-400 uppercase tracking-wider font-semibold">Peak Rush Window</div>
+                      <div className="text-xs font-bold text-amber-400 mt-1 truncate">{aiTelemetry.peakHourWindow}</div>
+                    </div>
+
+                    <div className="p-2 rounded-lg bg-stone-900/80 border border-stone-800">
+                      <div className="text-[10px] text-stone-400 uppercase tracking-wider font-semibold">Custom Modifiers</div>
+                      <div className="text-base font-bold text-sky-400 mt-0.5">{aiTelemetry.customNotesTicketsCount} tickets</div>
+                    </div>
+                  </div>
+
+                  {aiTelemetry.slowestDishes && aiTelemetry.slowestDishes.length > 0 && (
+                    <div className="text-[11px] text-stone-400 pt-1 flex flex-wrap gap-2 items-center">
+                      <span className="font-semibold text-stone-300">Longest Prep Dishes:</span>
+                      {aiTelemetry.slowestDishes.map((dish: any, idx: number) => (
+                        <span key={idx} className="px-2 py-0.5 rounded-md bg-stone-900 border border-stone-800 text-stone-200">
+                          {dish.name} (~{dish.avgTimeMinutes}m)
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </motion.div>
+              )}
+
               {/* AI Advice Response Card */}
               {aiAdvice && (
                 <motion.div
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="p-4 rounded-2xl bg-stone-900/90 border border-orange-500/30 text-xs text-stone-200 leading-relaxed space-y-2 whitespace-pre-line"
+                  className="p-4 rounded-2xl bg-stone-900/90 border border-orange-500/30 text-xs text-stone-200 leading-relaxed space-y-3"
                 >
                   <div className="flex items-center justify-between border-b border-stone-800 pb-2 text-[10px] text-stone-400 font-mono">
-                    <span className="flex items-center gap-1 text-orange-400">
+                    <span className="flex items-center gap-1 text-orange-400 font-bold">
                       <Bot className="w-3.5 h-3.5" />
-                      Executive Insights by {aiSource}
+                      DineFlow AI Operations Assistant ({aiSource})
                     </span>
-                    <span>Verified for Saffron & Sage</span>
+                    <span className="text-stone-400">🔒 AI Cannot Modify Restaurant Data</span>
                   </div>
-                  <div>{aiAdvice}</div>
+                  <div className="whitespace-pre-line leading-relaxed text-stone-200">
+                    {aiAdvice}
+                  </div>
                 </motion.div>
               )}
             </CardBody>
