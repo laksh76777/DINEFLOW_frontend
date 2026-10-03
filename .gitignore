@@ -1,194 +1,96 @@
 # =========================================
-
 # DINEFLOW - Root Git Ignore
-
 # =========================================
 
-# -------------------------------------------------
+# Dependencies
+node_modules/
+*/node_modules/
+package-lock.json.bak
 
-# Environment Variables / Secrets
+# Production & Transpiled Builds
+dist/
+build/
+out/
+*/dist/
+*/build/
+frontend/dist/
+backend/dist/
+frontend/.vite/
+backend/.cache/
 
-# -------------------------------------------------
-
+# Environment Variables & Secrets
 .env
 .env.*
+*.env
+*.env.*
 !.env.example
+!*.env.example
 
-# Firebase / service credentials
-
+# Service Accounts & Credentials
 firebase-adminsdk*.json
 serviceAccountKey.json
 service-account*.json
-
-# Private keys / certificates
-
+credentials.json
+secrets.json
+secrets.local.json
 *.pem
 *.key
 *.crt
 *.p12
 *.pfx
 
-# -------------------------------------------------
-
-# Node.js
-
-# -------------------------------------------------
-
-node_modules/
+# Runtime Logs
+*.log
+logs/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# -------------------------------------------------
-
-# Frontend Build / Vite
-
-# -------------------------------------------------
-
-frontend/node_modules/
-frontend/dist/
-frontend/build/
-frontend/.vite/
-frontend/.cache/
-
-# -------------------------------------------------
-
-# Backend Build
-
-# -------------------------------------------------
-
-backend/node_modules/
-backend/dist/
-backend/build/
-backend/.cache/
-
-# -------------------------------------------------
-
-# Logs
-
-# -------------------------------------------------
-
-*.log
-logs/
-npm-debug.log*
-yarn-debug.log*
-pnpm-debug.log*
-
-# -------------------------------------------------
-
-# Coverage / Testing
-
-# -------------------------------------------------
-
+# Testing & Coverage
 coverage/
 .nyc_output/
 *.lcov
 
-# -------------------------------------------------
-
-# IDE / Editors
-
-# -------------------------------------------------
-
+# IDE & Editor
 .vscode/*
 !.vscode/extensions.json
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
-
 .idea/
 *.iml
+*.sublime-project
+*.sublime-workspace
 
-# -------------------------------------------------
-
-# OS Files
-
-# -------------------------------------------------
-
+# Operating System Files
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
 Thumbs.db
+ehthumbs.db
 Desktop.ini
 
-# -------------------------------------------------
-
-# Temporary Files
-
-# -------------------------------------------------
-
+# Temporary & Swap Files
 *.tmp
 *.temp
 *.swp
 *.swo
 *~
 .cache/
+*/.cache/
 
-# -------------------------------------------------
+# User Uploads & Local Media Storage
+backend/uploads/*
+!backend/uploads/.gitkeep
+backend/storage/*
+!backend/storage/.gitkeep
+frontend/uploads/*
+!frontend/uploads/.gitkeep
 
-# Local Database / Storage
-
-# -------------------------------------------------
-
-*.sqlite
-*.sqlite3
-*.db
-
-# -------------------------------------------------
-
-# Uploads / Runtime Files
-
-# -------------------------------------------------
-
-backend/uploads/
-backend/storage/
-frontend/uploads/
-
-# -------------------------------------------------
-
-# Generated Files
-
-# -------------------------------------------------
-
-*.generated.*
-dist/
-build/
-
-# -------------------------------------------------
-
-# Vercel
-
-# -------------------------------------------------
-
+# Deployment Providers
 .vercel/
-
-# -------------------------------------------------
-
-# Render / Railway / Deployment
-
-# -------------------------------------------------
-
 .render/
 .railway/
-
-# -------------------------------------------------
-
-# OS / Misc
-
-# -------------------------------------------------
-
-.DS_Store
-Thumbs.db
-ehthumbs.db
-
-# -------------------------------------------------
-
-# Secrets / Configuration
-
-# -------------------------------------------------
-
-*.secret
-*.secrets
-*.credentials
-credentials.json
-secrets.json
-secrets.local.json

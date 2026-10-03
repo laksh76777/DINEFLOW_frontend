@@ -4,6 +4,7 @@ import { TableSession } from '../models/TableSession.js';
 import { Table } from '../models/Table.js';
 import { STAFF_REQUEST_STATUSES, STAFF_REQUEST_TYPES } from '../config/constants.js';
 import { socketBroadcaster } from '../sockets/socketServer.js';
+import { AnalyticsEvent } from '../models/AnalyticsEvent.js';
 import { logger } from '../utils/logger.js';
 
 export const staffRequestController = {
@@ -35,6 +36,15 @@ export const staffRequestController = {
       });
 
       const savedRequest = await newRequest.save();
+
+      // Record Phase 14 Telemetry Event
+      AnalyticsEvent.create({
+        eventType: 'STAFF_REQUEST',
+        sessionId: session._id.toString(),
+        tableNumber: effectiveTableNumber,
+        metadata: { requestType, memberName: memberName || 'Guest' },
+        timestamp: new Date(),
+      }).catch(() => {});
 
       // If customer requested BILL, update session & table state
       if (requestType === STAFF_REQUEST_TYPES.BILL || requestType === 'BILL' || requestType === 'Request Bill') {

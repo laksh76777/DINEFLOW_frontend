@@ -51,7 +51,8 @@ import { menuService, MenuItem, Category } from '../services/menuService';
 import { restaurantService, RestaurantProfile } from '../services/restaurantService';
 import { orderService, IOrder } from '../services/orderService';
 import { staffRequestService } from '../services/staffRequestService';
-import { paymentService, BillSummary } from '../services/paymentService';
+import { paymentService, BillSummary, SplitMode, DemoPaymentMethod } from '../services/paymentService';
+import { analyticsService } from '../services/analyticsService';
 import { socketService } from '../services/socketService';
 import { useCartStore, CartItem } from '../stores/useCartStore';
 import { toast } from '../stores/useToastStore';
@@ -125,10 +126,28 @@ export const CustomerMenuPage: React.FC = () => {
   const [serviceNotes, setServiceNotes] = useState('');
   const [isSendingRequest, setIsSendingRequest] = useState(false);
 
-  // Bill & DineFlow Pay
+  // Bill & DineFlow Pay (Phase 12 & Phase 13)
   const [billData, setBillData] = useState<BillSummary | null>(null);
   const [isBillModalOpen, setIsBillModalOpen] = useState(false);
-  const [selectedPayMethod, setSelectedPayMethod] = useState<'UPI' | 'CARD' | 'NET_BANKING'>('UPI');
+  const [splitMode, setSplitMode] = useState<SplitMode>('FULL');
+  const [splitCount, setSplitCount] = useState<number>(2);
+  const [customAmountInput, setCustomAmountInput] = useState<string>('');
+  
+  // DineFlow Pay Demo Modal state (strictly simulated, no external provider)
+  const [isDineFlowPayOpen, setIsDineFlowPayOpen] = useState(false);
+  const [selectedPayMethod, setSelectedPayMethod] = useState<DemoPaymentMethod>('UPI');
+  const [demoUpiId, setDemoUpiId] = useState('alex@upi');
+  const [demoCardNumber, setDemoCardNumber] = useState('4242 4242 4242 4242');
+  const [demoCardExpiry, setDemoCardExpiry] = useState('12/28');
+  const [demoCardCvv, setDemoCardCvv] = useState('888');
+  const [demoCardHolder, setDemoCardHolder] = useState('Alex Kumar');
+  const [demoBankName, setDemoBankName] = useState('HDFC Bank');
+  const [demoSimulateMode, setDemoSimulateMode] = useState<'SUCCESS' | 'FAILED'>('SUCCESS');
+  const [payStep, setPayStep] = useState<'DETAILS' | 'PROCESSING' | 'SUCCESS' | 'FAILED'>('DETAILS');
+  const [confirmedTxnId, setConfirmedTxnId] = useState<string>('');
+  const [confirmedAmount, setConfirmedAmount] = useState<number>(0);
+  const [demoInvoiceUrl, setDemoInvoiceUrl] = useState<string>('');
+  const [paymentError, setPaymentError] = useState<string | null>(null);
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
   const [paymentSuccess, setPaymentSuccess] = useState<any | null>(null);
 
@@ -436,51 +455,120 @@ export const CustomerMenuPage: React.FC = () => {
     }
   };
 
-  // Open Bill & Checkout
-  const handleOpenBill = async () => {
+  // Fetch Bill with Split Mode support (Phase 12)
+  const fetchBillSummary = async (
+    mode: SplitMode = splitMode,
+    count: number = splitCount,
+    custom?: number
+  ) => {
     if (!sessionId) {
       toast.error('Session Missing', 'Active dining session required to compute bill.');
       return;
     }
 
     try {
-      const data = await paymentService.getBillSummary(sessionId);
+      const data = await paymentService.getBillSummary(
+        sessionId,
+        mode,
+        myMemberId,
+        count,
+        custom !== undefined ? custom : customAmountInput ? Number(customAmountInput) : undefined
+      );
       setBillData(data);
-      setIsBillModalOpen(true);
     } catch (err: any) {
       toast.error('Could Not Calculate Bill', err.message);
     }
   };
 
-  // Simulate DineFlow Pay Checkout
-  const handleSimulatePayment = async (shouldFail: boolean = false) => {
+  const handleOpenBill = async () => {
+    await fetchBillSummary(splitMode, splitCount);
+  };
+
+  const handleChangeSplitMode = async (newMode: SplitMode) => {
+    setSplitMode(newMode);
+    await fetchBillSummary(newMode, splitCount);
+  };
+
+  const handleChangeSplitCount = async (newCount: number) => {
+    const validCount = Math.max(1, newCount);
+    setSplitCount(validCount);
+    await fetchBillSummary('EQUAL', validCount);
+  };
+
+  const handleApplyCustomAmount = async () => {
+    const num = Number(customAmountInput);
+    if (!num || num <= 0) {
+      toast.error('Invalid Amount', 'Please enter a valid amount to pay.');
+      return;
+    }
+    await fetchBillSummary('CUSTOM', splitCount, num);
+  };
+
+  // Open DineFlow Pay Demo Modal (Phase 13)
+  const handleOpenDineFlowPay = () => {
+    setPayStep('DETAILS');
+    setPaymentError(null);
+    setIsDineFlowPayOpen(true);
+  };
+
+  // Process Simulated Demo Payment (Phase 13)
+  const handleProcessDemoPayment = async () => {
     if (!sessionId || !billData) return;
 
+    setPayStep('PROCESSING');
     setIsProcessingPayment(true);
+    setPaymentError(null);
+
     try {
-      const res = await paymentService.simulatePayment({
+      // 1. Backend calculates bill strictly on server & creates payment record
+      const createRes = await paymentService.createDemoPayment({
         sessionId,
-        method: selectedPayMethod,
+        splitMode,
+        customerMemberId: myMemberId,
+        splitCount,
+        customAmount: splitMode === 'CUSTOM' ? Number(customAmountInput) : undefined,
+        paymentMethod: selectedPayMethod,
         payerName: myDisplayName,
-        payerMemberId: myMemberId,
-        paymentDetails: {
-          upiVpa: selectedPayMethod === 'UPI' ? `${myDisplayName.toLowerCase()}@okhdfcbank` : undefined,
-          cardLast4: selectedPayMethod === 'CARD' ? '4829' : undefined,
-          bankName: selectedPayMethod === 'NET_BANKING' ? 'HDFC Bank Ltd.' : undefined,
-        },
-        shouldFail,
       });
 
-      if (res.success) {
-        setPaymentSuccess(res.data.payment);
-        confetti({ particleCount: 150, spread: 80, origin: { y: 0.5 } });
+      // Simulated authentic gateway delay for demo experience
+      await new Promise((r) => setTimeout(r, 1200));
+
+      // 2. Confirm demo payment with predictable outcome (SUCCESS or FAILED)
+      const confirmRes = await paymentService.confirmDemoPayment({
+        paymentId: createRes.paymentId,
+        paymentMethod: selectedPayMethod,
+        demoDetails: {
+          upiVpa: selectedPayMethod === 'UPI' ? demoUpiId : undefined,
+          cardLast4: selectedPayMethod === 'CARD' ? demoCardNumber.slice(-4) : undefined,
+          cardHolder: selectedPayMethod === 'CARD' ? demoCardHolder : undefined,
+          bankName: selectedPayMethod === 'NET_BANKING' ? demoBankName : undefined,
+        },
+        simulateResult: demoSimulateMode,
+        failureReason:
+          demoSimulateMode === 'FAILED'
+            ? 'Demo payment could not be completed.'
+            : undefined,
+      });
+
+      if (confirmRes.success) {
+        setConfirmedTxnId(confirmRes.payment.demoTransactionId || createRes.demoTransactionId);
+        setConfirmedAmount(confirmRes.payment.amount || createRes.amount);
+        setDemoInvoiceUrl(confirmRes.invoiceUrl || `/api/payments/invoice/${sessionId}`);
+        setPaymentSuccess(confirmRes.payment);
+        setPayStep('SUCCESS');
+        confetti({ particleCount: 160, spread: 85, origin: { y: 0.5 } });
+        soundManager.playOrderReadyChime();
         toast.success(
-          'Payment Successful!',
-          `Transaction ID: ${res.data.payment.transactionId}. Table session complete!`
+          'Demo Payment Successful!',
+          `Txn ID: ${confirmRes.payment.demoTransactionId}. Official invoice ready.`
         );
+        fetchBillSummary(splitMode, splitCount);
       }
     } catch (err: any) {
-      toast.error('Payment Simulation Error', err.message || 'Transaction was declined');
+      setPayStep('FAILED');
+      setPaymentError(err.message || 'Demo payment could not be completed.');
+      toast.error('Demo Payment Failed', err.message || 'Transaction could not be completed.');
     } finally {
       setIsProcessingPayment(false);
     }
@@ -1119,144 +1207,236 @@ export const CustomerMenuPage: React.FC = () => {
       )}
 
       {/* ============================================================ */}
-      {/* TAB 3: VIEW BILL & DINEFLOW PAY */}
+      {/* TAB 3: VIEW BILL & SPLIT MODES (PHASE 12) */}
       {/* ============================================================ */}
       {activeTab === 'bill' && billData && (
         <div className="space-y-4">
-          <Card variant="glass" className="border-stone-800 shadow-2xl">
-            <CardHeader className="p-4 border-b border-stone-800/80">
+          <Card variant="glass" className="border-stone-800 shadow-2xl overflow-hidden">
+            <CardHeader className="p-4 border-b border-stone-800/80 bg-stone-900/40">
               <div className="flex items-center justify-between">
                 <div>
-                  <div className="text-xs text-stone-400 uppercase font-mono">Dining Session Bill</div>
-                  <h2 className="text-lg font-black text-white font-serif">
-                    Table {billData.session.tableNumber} • Session #{billData.session.sessionNumber}
+                  <div className="text-[10px] text-stone-400 uppercase font-mono tracking-wider">
+                    Official Session Bill
+                  </div>
+                  <h2 className="text-base font-black text-white font-serif flex items-center gap-2">
+                    <span>Table {billData.session.tableNumber}</span>
+                    <span className="text-stone-500">•</span>
+                    <span className="text-orange-400 font-mono text-sm">
+                      #{billData.session.sessionNumber}
+                    </span>
                   </h2>
                 </div>
-                <Badge variant={billData.payment ? 'success' : 'warning'} size="sm" dot>
-                  {billData.payment ? 'PAID' : 'PAYMENT PENDING'}
+                <Badge
+                  variant={paymentSuccess || billData.payment?.status === 'SUCCESS' ? 'success' : 'warning'}
+                  size="sm"
+                  dot
+                >
+                  {paymentSuccess || billData.payment?.status === 'SUCCESS' ? 'PAID' : 'PAYMENT PENDING'}
                 </Badge>
               </div>
-            </CardHeader>
 
-            <CardBody className="p-4 space-y-4">
-              <div className="space-y-2 text-xs">
-                <div className="flex justify-between text-stone-400">
-                  <span>Items Subtotal ({billData.summary.itemCount} items)</span>
-                  <span className="font-mono text-stone-200">
-                    {currency}
-                    {billData.summary.subtotal.toFixed(2)}
-                  </span>
-                </div>
-                <div className="flex justify-between text-stone-400">
-                  <span>GST ({billData.restaurant.taxRate}%)</span>
-                  <span className="font-mono text-stone-200">
-                    {currency}
-                    {billData.summary.tax.toFixed(2)}
-                  </span>
-                </div>
-                <div className="flex justify-between text-stone-400">
-                  <span>Service Charge ({billData.restaurant.serviceRate}%)</span>
-                  <span className="font-mono text-stone-200">
-                    {currency}
-                    {billData.summary.serviceCharge.toFixed(2)}
-                  </span>
-                </div>
-
-                <div className="pt-2 border-t border-stone-800 flex justify-between items-center text-sm font-extrabold text-white">
-                  <span>Grand Total</span>
-                  <span className="text-base text-orange-400 font-mono">
-                    {currency}
-                    {billData.summary.grandTotal.toFixed(2)}
-                  </span>
-                </div>
-              </div>
-
-              {/* Split Breakdown */}
-              {billData.memberSplits && billData.memberSplits.length > 0 && (
-                <div className="pt-3 border-t border-stone-800 space-y-2">
-                  <div className="flex items-center justify-between text-xs font-bold text-stone-300">
-                    <span className="flex items-center gap-1.5">
-                      <Users className="w-3.5 h-3.5 text-orange-400" />
-                      <span>Individual Diner Breakdown</span>
-                    </span>
-                    <span className="text-[10px] text-stone-400">Shared tax applied</span>
+              {/* Split Mode Selector (Phase 12: Full, Own Items, Equal, Custom) */}
+              {!(paymentSuccess || billData.payment?.status === 'SUCCESS') && (
+                <div className="pt-3">
+                  <div className="text-[10px] uppercase font-mono tracking-wider text-stone-400 mb-1.5 flex items-center justify-between">
+                    <span>Select Bill Split Mode:</span>
+                    <span className="text-orange-400 font-bold">Backend Verified</span>
                   </div>
-
-                  <div className="space-y-1.5">
-                    {billData.memberSplits.map((split, idx) => (
-                      <div
-                        key={idx}
-                        className="p-2.5 rounded-xl bg-stone-900/90 border border-stone-800/80 flex items-center justify-between text-xs"
-                      >
-                        <div className="min-w-0 pr-2">
-                          <div className="font-bold text-white flex items-center gap-1.5">
-                            <span>{split.memberName}</span>
-                            {split.memberName.includes(myDisplayName) && (
-                              <span className="text-[10px] text-orange-400 font-mono">(You)</span>
-                            )}
-                          </div>
-                          <div className="text-[10px] text-stone-400">
-                            {split.items.map((i) => `${i.quantity}x ${i.name}`).join(', ')}
-                          </div>
-                        </div>
-                        <div className="text-right shrink-0">
-                          <div className="font-extrabold text-white font-mono">
-                            {currency}
-                            {split.grandTotal.toFixed(2)}
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Payment Checkout Options */}
-              {!paymentSuccess && !billData.payment ? (
-                <div className="pt-4 border-t border-stone-800 space-y-3">
-                  <div className="text-xs font-bold text-stone-200 flex items-center gap-1.5">
-                    <CreditCard className="w-3.5 h-3.5 text-orange-400" />
-                    <span>DineFlow Pay Demo Checkout</span>
-                  </div>
-
-                  <div className="grid grid-cols-3 gap-2">
-                    {(['UPI', 'CARD', 'NET_BANKING'] as const).map((method) => (
+                  <div className="grid grid-cols-4 gap-1.5 p-1 bg-stone-950/80 rounded-xl border border-stone-800/90 text-xs">
+                    {(
+                      [
+                        { id: 'FULL', label: 'Full Bill' },
+                        { id: 'OWN_ITEMS', label: 'My Items' },
+                        { id: 'EQUAL', label: 'Equal Split' },
+                        { id: 'CUSTOM', label: 'Custom' },
+                      ] as const
+                    ).map((mode) => (
                       <button
-                        key={method}
-                        onClick={() => setSelectedPayMethod(method)}
-                        className={`p-2.5 rounded-xl border text-xs font-bold text-center transition-all ${
-                          selectedPayMethod === method
-                            ? 'bg-orange-500/20 text-orange-300 border-orange-500 shadow-md'
-                            : 'bg-stone-900 text-stone-400 border-stone-800'
+                        key={mode.id}
+                        onClick={() => handleChangeSplitMode(mode.id)}
+                        className={`py-1.5 px-2 rounded-lg font-bold text-center transition-all ${
+                          splitMode === mode.id
+                            ? 'bg-orange-500 text-white shadow-md shadow-orange-950/80'
+                            : 'text-stone-400 hover:text-stone-200'
                         }`}
                       >
-                        {method}
+                        {mode.label}
                       </button>
                     ))}
                   </div>
 
-                  <div className="space-y-2 pt-2">
+                  {/* Equal Split Diners Counter */}
+                  {splitMode === 'EQUAL' && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -4 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="mt-2.5 p-2.5 rounded-xl bg-stone-900/90 border border-stone-800 flex items-center justify-between text-xs"
+                    >
+                      <span className="text-stone-300 font-medium">Split equally among diners:</span>
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => handleChangeSplitCount(splitCount - 1)}
+                          className="w-7 h-7 rounded-lg bg-stone-800 text-stone-300 hover:bg-stone-700 flex items-center justify-center font-bold"
+                        >
+                          <Minus className="w-3.5 h-3.5" />
+                        </button>
+                        <span className="font-mono text-sm font-bold text-white w-6 text-center">
+                          {splitCount}
+                        </span>
+                        <button
+                          onClick={() => handleChangeSplitCount(splitCount + 1)}
+                          className="w-7 h-7 rounded-lg bg-stone-800 text-stone-300 hover:bg-stone-700 flex items-center justify-center font-bold"
+                        >
+                          <Plus className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    </motion.div>
+                  )}
+
+                  {/* Custom Split Amount Input */}
+                  {splitMode === 'CUSTOM' && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -4 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="mt-2.5 p-2.5 rounded-xl bg-stone-900/90 border border-stone-800 space-y-2 text-xs"
+                    >
+                      <label className="text-stone-300 block font-medium">Enter custom amount to pay:</label>
+                      <div className="flex gap-2">
+                        <div className="relative flex-1">
+                          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400 font-mono">
+                            {currency}
+                          </span>
+                          <input
+                            type="number"
+                            placeholder="e.g. 500"
+                            value={customAmountInput}
+                            onChange={(e) => setCustomAmountInput(e.target.value)}
+                            className="w-full pl-8 pr-3 py-2 bg-stone-950 border border-stone-700 rounded-xl text-xs text-white focus:outline-none focus:border-orange-500 font-mono"
+                          />
+                        </div>
+                        <Button
+                          variant="secondary"
+                          size="sm"
+                          className="font-bold shrink-0"
+                          onClick={handleApplyCustomAmount}
+                        >
+                          Apply
+                        </Button>
+                      </div>
+                    </motion.div>
+                  )}
+                </div>
+              )}
+            </CardHeader>
+
+            <CardBody className="p-4 space-y-4">
+              {/* Food Items Breakdown */}
+              <div className="space-y-1.5">
+                <div className="text-[10px] uppercase font-mono tracking-wider text-stone-400 flex justify-between">
+                  <span>Item Description</span>
+                  <span>Qty • Price • Total</span>
+                </div>
+
+                <div className="divide-y divide-stone-800/80 max-h-56 overflow-y-auto pr-1">
+                  {(billData.selectedSplit?.items || billData.summary.items || []).map((item, idx) => (
+                    <div key={idx} className="py-2 flex items-center justify-between text-xs">
+                      <div className="space-y-0.5 min-w-0 pr-2">
+                        <div className="font-bold text-white truncate">{item.name}</div>
+                        <div className="text-[10px] text-stone-400 flex items-center gap-1.5">
+                          {item.orderedBy && (
+                            <span className="px-1.5 py-0.2 rounded bg-stone-800 text-stone-300">
+                              👤 {item.orderedBy}
+                            </span>
+                          )}
+                          {item.roundNumber && (
+                            <span className="text-stone-500">R-{item.roundNumber}</span>
+                          )}
+                        </div>
+                      </div>
+
+                      <div className="text-right shrink-0">
+                        <div className="text-[10px] text-stone-400 font-mono">
+                          {item.quantity} × {currency}{item.price.toFixed(2)}
+                        </div>
+                        <div className="font-mono font-bold text-stone-200">
+                          {currency}{item.total.toFixed(2)}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Subtotal, Tax, and Grand Total */}
+              <div className="pt-3 border-t border-stone-800 space-y-2 text-xs">
+                <div className="flex justify-between text-stone-400">
+                  <span>
+                    Subtotal{' '}
+                    {splitMode !== 'FULL' && (
+                      <span className="text-orange-400 font-mono text-[10px]">
+                        ({splitMode.replace('_', ' ')})
+                      </span>
+                    )}
+                  </span>
+                  <span className="font-mono text-stone-200">
+                    {currency}
+                    {(billData.selectedSplit?.subtotal ?? billData.summary.subtotal).toFixed(2)}
+                  </span>
+                </div>
+
+                <div className="flex justify-between text-stone-400">
+                  <span>GST ({billData.restaurant.taxRate}%)</span>
+                  <span className="font-mono text-stone-200">
+                    {currency}
+                    {(billData.selectedSplit?.tax ?? billData.summary.tax).toFixed(2)}
+                  </span>
+                </div>
+
+                <div className="flex justify-between text-stone-400">
+                  <span>Service Charge ({billData.restaurant.serviceRate}%)</span>
+                  <span className="font-mono text-stone-200">
+                    {currency}
+                    {(billData.selectedSplit?.serviceCharge ?? billData.summary.serviceCharge).toFixed(2)}
+                  </span>
+                </div>
+
+                <div className="pt-2.5 border-t border-stone-800 flex justify-between items-center text-sm font-black text-white">
+                  <span className="text-stone-200">Total Amount to Pay</span>
+                  <span className="text-lg text-orange-400 font-mono font-black">
+                    {currency}
+                    {(billData.selectedSplit?.total ?? billData.summary.grandTotal).toFixed(2)}
+                  </span>
+                </div>
+              </div>
+
+              {/* Action: Pay Now (Phase 12 & Phase 13) */}
+              {!(paymentSuccess || billData.payment?.status === 'SUCCESS') ? (
+                <div className="pt-2">
+                  <motion.div whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.98 }}>
                     <Button
                       variant="primary"
                       size="lg"
-                      className="w-full font-bold shadow-glow-orange"
-                      onClick={() => handleSimulatePayment(false)}
-                      isLoading={isProcessingPayment}
+                      className="w-full font-bold shadow-glow-orange flex items-center justify-center gap-2"
+                      onClick={handleOpenDineFlowPay}
                     >
-                      Simulate Pay {currency}
-                      {billData.summary.grandTotal.toFixed(2)}
+                      <CreditCard className="w-4 h-4 text-white" />
+                      <span>
+                        Pay Now • {currency}
+                        {(billData.selectedSplit?.total ?? billData.summary.grandTotal).toFixed(2)}
+                      </span>
+                      <ArrowRight className="w-4 h-4 text-white" />
                     </Button>
-                  </div>
+                  </motion.div>
                 </div>
               ) : (
                 <div className="p-4 rounded-2xl bg-emerald-950/40 border border-emerald-500/40 text-center space-y-3">
-                  <div className="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 mx-auto flex items-center justify-center">
-                    <CheckCircle2 className="w-6 h-6" />
+                  <div className="w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 mx-auto flex items-center justify-center border border-emerald-500/40 shadow-glow-green">
+                    <CheckCircle2 className="w-7 h-7" />
                   </div>
                   <div>
-                    <h3 className="text-base font-bold text-white">Payment Completed!</h3>
-                    <p className="text-xs text-stone-300">
-                      Txn ID: {paymentSuccess?.transactionId || billData.payment?.transactionId}
+                    <h3 className="text-base font-bold text-white">Payment Successful</h3>
+                    <p className="text-xs text-stone-300 font-mono mt-0.5">
+                      Transaction: {paymentSuccess?.demoTransactionId || billData.payment?.demoTransactionId || billData.payment?.transactionId}
                     </p>
                   </div>
 
@@ -1275,6 +1455,292 @@ export const CustomerMenuPage: React.FC = () => {
           </Card>
         </div>
       )}
+
+      {/* ============================================================ */}
+      {/* DINEFLOW PAY (PHASE 13: SIMULATED DEMO PAYMENT MODAL) */}
+      {/* ============================================================ */}
+      <Modal
+        isOpen={isDineFlowPayOpen}
+        onClose={() => {
+          if (!isProcessingPayment) setIsDineFlowPayOpen(false);
+        }}
+        title="DineFlow Pay"
+        size="md"
+      >
+        <div className="space-y-4">
+          {/* Header Banner with DEMO PAYMENT Badge */}
+          <div className="flex items-center justify-between p-3 rounded-2xl bg-gradient-to-r from-stone-900 to-stone-950 border border-stone-800">
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="font-extrabold text-white text-sm">DineFlow Pay</span>
+                <span className="px-2 py-0.5 rounded-full bg-cyan-950 text-cyan-400 border border-cyan-800 text-[10px] font-mono font-bold">
+                  DEMO PAYMENT
+                </span>
+              </div>
+              <p className="text-[10px] text-stone-400 mt-0.5">
+                Simulated checkout demonstration. No real financial data stored.
+              </p>
+            </div>
+            <div className="text-right">
+              <span className="text-[10px] text-stone-400 block font-mono">Amount Due</span>
+              <span className="text-base font-black text-orange-400 font-mono">
+                {currency}
+                {(billData?.selectedSplit?.total ?? billData?.summary.grandTotal ?? 0).toFixed(2)}
+              </span>
+            </div>
+          </div>
+
+          {/* STEP 1: ENTER DEMO DETAILS */}
+          {payStep === 'DETAILS' && (
+            <div className="space-y-4">
+              {/* Method Selector: UPI | CARD | NET BANKING */}
+              <div className="grid grid-cols-3 gap-2">
+                {(['UPI', 'CARD', 'NET_BANKING'] as const).map((method) => (
+                  <button
+                    key={method}
+                    type="button"
+                    onClick={() => setSelectedPayMethod(method)}
+                    className={`py-2 px-3 rounded-xl border text-xs font-bold text-center transition-all ${
+                      selectedPayMethod === method
+                        ? 'bg-orange-500/20 text-orange-300 border-orange-500 shadow-md ring-1 ring-orange-500/50'
+                        : 'bg-stone-900 text-stone-400 border-stone-800 hover:border-stone-700'
+                    }`}
+                  >
+                    {method.replace('_', ' ')}
+                  </button>
+                ))}
+              </div>
+
+              {/* UPI Form */}
+              {selectedPayMethod === 'UPI' && (
+                <div className="space-y-2 p-3 rounded-xl bg-stone-900/60 border border-stone-800/80">
+                  <label className="text-xs font-bold text-stone-300 block">UPI ID / VPA</label>
+                  <Input
+                    placeholder="example@upi"
+                    value={demoUpiId}
+                    onChange={(e) => setDemoUpiId(e.target.value)}
+                  />
+                  <div className="flex gap-1.5 text-[10px] text-stone-400 pt-1">
+                    <span className="text-stone-500">Demo shortcuts:</span>
+                    {['alex@okhdfcbank', 'sarah@okaxis', 'fail@upi'].map((v) => (
+                      <button
+                        key={v}
+                        type="button"
+                        onClick={() => setDemoUpiId(v)}
+                        className="underline hover:text-white"
+                      >
+                        {v}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* CARD Form */}
+              {selectedPayMethod === 'CARD' && (
+                <div className="space-y-2.5 p-3 rounded-xl bg-stone-900/60 border border-stone-800/80">
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold text-stone-300">Card Number</label>
+                    <Input
+                      placeholder="4242 •••• •••• 4242"
+                      value={demoCardNumber}
+                      onChange={(e) => setDemoCardNumber(e.target.value)}
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-2">
+                    <div className="space-y-1">
+                      <label className="text-xs font-bold text-stone-300">Expiry</label>
+                      <Input
+                        placeholder="MM/YY"
+                        value={demoCardExpiry}
+                        onChange={(e) => setDemoCardExpiry(e.target.value)}
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-xs font-bold text-stone-300">CVV</label>
+                      <Input
+                        placeholder="•••"
+                        type="password"
+                        maxLength={4}
+                        value={demoCardCvv}
+                        onChange={(e) => setDemoCardCvv(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold text-stone-300">Cardholder Name</label>
+                    <Input
+                      placeholder="Alex Kumar"
+                      value={demoCardHolder}
+                      onChange={(e) => setDemoCardHolder(e.target.value)}
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* NET BANKING Form */}
+              {selectedPayMethod === 'NET_BANKING' && (
+                <div className="space-y-2 p-3 rounded-xl bg-stone-900/60 border border-stone-800/80">
+                  <label className="text-xs font-bold text-stone-300 block">Select Demo Bank</label>
+                  <select
+                    value={demoBankName}
+                    onChange={(e) => setDemoBankName(e.target.value)}
+                    className="w-full px-3 py-2 bg-stone-950 border border-stone-800 rounded-xl text-xs text-white focus:outline-none focus:border-orange-500"
+                  >
+                    <option value="HDFC Bank">HDFC Bank Ltd.</option>
+                    <option value="ICICI Bank">ICICI Bank Ltd.</option>
+                    <option value="State Bank of India">State Bank of India (SBI)</option>
+                    <option value="Axis Bank">Axis Bank Ltd.</option>
+                    <option value="Kotak Mahindra">Kotak Mahindra Bank</option>
+                  </select>
+                </div>
+              )}
+
+              {/* Testing Predictability Switch (Phase 13 requirement) */}
+              <div className="p-3 rounded-xl bg-stone-950 border border-stone-800/80 space-y-1.5">
+                <div className="text-[10px] font-mono uppercase text-stone-400 font-bold">
+                  Predictable Test Behavior:
+                </div>
+                <div className="grid grid-cols-2 gap-2 text-xs">
+                  <button
+                    type="button"
+                    onClick={() => setDemoSimulateMode('SUCCESS')}
+                    className={`py-1.5 px-2 rounded-lg font-bold transition-all ${
+                      demoSimulateMode === 'SUCCESS'
+                        ? 'bg-emerald-500 text-white shadow-sm'
+                        : 'bg-stone-900 text-stone-400 hover:text-white'
+                    }`}
+                  >
+                    ✓ Simulate Success
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setDemoSimulateMode('FAILED')}
+                    className={`py-1.5 px-2 rounded-lg font-bold transition-all ${
+                      demoSimulateMode === 'FAILED'
+                        ? 'bg-rose-500 text-white shadow-sm'
+                        : 'bg-stone-900 text-stone-400 hover:text-white'
+                    }`}
+                  >
+                    × Simulate Failure
+                  </button>
+                </div>
+              </div>
+
+              {/* Submit CTA */}
+              <Button
+                variant="primary"
+                size="lg"
+                className="w-full font-bold shadow-glow-orange"
+                onClick={handleProcessDemoPayment}
+              >
+                Confirm Demo Payment ({currency}
+                {(billData?.selectedSplit?.total ?? billData?.summary.grandTotal ?? 0).toFixed(2)})
+              </Button>
+            </div>
+          )}
+
+          {/* STEP 2: PROCESSING ANIMATION */}
+          {payStep === 'PROCESSING' && (
+            <div className="py-8 text-center space-y-4">
+              <div className="relative w-16 h-16 mx-auto">
+                <div className="w-16 h-16 rounded-full border-4 border-orange-500/20 border-t-orange-500 animate-spin" />
+                <Sparkles className="w-6 h-6 text-orange-400 absolute inset-0 m-auto animate-pulse" />
+              </div>
+
+              <div>
+                <h3 className="text-base font-black text-white">Processing Demo Payment</h3>
+                <p className="text-xs text-stone-400 mt-1">
+                  Connecting to DineFlow Pay gateway simulator...
+                </p>
+              </div>
+
+              <div className="space-y-1.5 text-[11px] text-stone-500 font-mono">
+                <div>✓ Validating active dining session</div>
+                <div>✓ Recalculating tax & split integrity</div>
+                <div className="text-orange-400 animate-pulse">⚙ Awaiting backend confirmation...</div>
+              </div>
+            </div>
+          )}
+
+          {/* STEP 3: SUCCESS (Phase 13 user specified format) */}
+          {payStep === 'SUCCESS' && (
+            <div className="py-4 text-center space-y-4">
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ type: 'spring', damping: 12 }}
+                className="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 mx-auto flex items-center justify-center border-2 border-emerald-500 shadow-glow-green text-3xl font-black"
+              >
+                ✓
+              </motion.div>
+
+              <div>
+                <h3 className="text-lg font-black text-white">Payment Successful</h3>
+                <div className="text-2xl font-black text-emerald-400 font-mono mt-1">
+                  {currency}{confirmedAmount.toFixed(2)}
+                </div>
+              </div>
+
+              <div className="p-3 rounded-xl bg-stone-900 border border-stone-800 text-xs font-mono">
+                <span className="text-stone-400">Transaction:</span>
+                <span className="text-white font-bold ml-1.5">{confirmedTxnId}</span>
+              </div>
+
+              <div className="flex flex-col gap-2 pt-1">
+                <a
+                  href={demoInvoiceUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-full py-2.5 px-4 rounded-xl bg-orange-500 text-white font-bold text-xs shadow-lg hover:bg-orange-600 transition-colors flex items-center justify-center gap-1.5"
+                >
+                  <FileText className="w-4 h-4" />
+                  View Invoice
+                </a>
+
+                <Button
+                  variant="outline"
+                  size="md"
+                  onClick={() => setIsDineFlowPayOpen(false)}
+                >
+                  Back to Table
+                </Button>
+              </div>
+            </div>
+          )}
+
+          {/* STEP 4: FAILURE (Phase 13 user specified format) */}
+          {payStep === 'FAILED' && (
+            <div className="py-4 text-center space-y-4">
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ type: 'spring', damping: 12 }}
+                className="w-16 h-16 rounded-full bg-rose-500/20 text-rose-400 mx-auto flex items-center justify-center border-2 border-rose-500 text-3xl font-black"
+              >
+                ×
+              </motion.div>
+
+              <div>
+                <h3 className="text-lg font-black text-white">Payment Failed</h3>
+                <p className="text-xs text-stone-400 mt-1">
+                  {paymentError || 'Demo payment could not be completed.'}
+                </p>
+              </div>
+
+              <Button
+                variant="primary"
+                size="md"
+                className="w-full font-bold"
+                onClick={() => setPayStep('DETAILS')}
+              >
+                Try Again
+              </Button>
+            </div>
+          )}
+        </div>
+      </Modal>
+
 
       {/* ============================================================ */}
       {/* 4. STICKY CART CAPSULE (PHASE 7 & 8 REQUIREMENT) */}
