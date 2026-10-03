@@ -5,7 +5,8 @@ let socket: Socket | null = null;
 export function getSocket(): Socket {
   if (!socket) {
     // In dev, Vite proxies or connects to backend origin; in prod, connects to Render backend
-    const configuredUrl = (import.meta.env.VITE_SOCKET_URL || import.meta.env.VITE_API_URL || '').trim();
+    const defaultProdBackend = 'https://dinesetu-backend-1.onrender.com';
+    const configuredUrl = (import.meta.env.VITE_SOCKET_URL || import.meta.env.VITE_API_URL || (import.meta.env.PROD ? defaultProdBackend : '')).trim();
     const socketUrl = configuredUrl ? configuredUrl.replace(/\/+$/, '') : window.location.origin;
     socket = io(socketUrl, {
       autoConnect: true,

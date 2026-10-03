@@ -6,7 +6,8 @@ import App from './App';
 import './index.css';
 
 // Production API URL interceptor (for Vercel deployment connected to Render backend)
-const rawApiUrl = (import.meta.env.VITE_API_URL || '').trim();
+const defaultProdBackend = 'https://dinesetu-backend-1.onrender.com';
+const rawApiUrl = (import.meta.env.VITE_API_URL || (import.meta.env.PROD ? defaultProdBackend : '')).trim();
 if (rawApiUrl) {
   const normalizedBase = rawApiUrl.replace(/\/+$/, '');
   const originalFetch = window.fetch;
