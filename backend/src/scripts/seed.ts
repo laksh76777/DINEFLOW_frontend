@@ -382,6 +382,9 @@ export async function seedInitialUsers() {
     console.log(`[Bootstrap] Seeded ${tablesToSeed.length} restaurant tables.`);
   }
 
+  // Purge any temporary audit tables
+  await Table.deleteMany({ tableNumber: { $regex: /^AUDIT/i } });
+
   // Ensure ALL floor tables in DB are set to AVAILABLE with 0 active customer sessions
   await Table.updateMany(
     {},

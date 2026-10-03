@@ -15,6 +15,9 @@ export async function resetAllTablesToAvailable() {
 
   logger.info('Initializing all restaurant tables to fresh AVAILABLE state...');
 
+  // Purge any temporary audit test tables
+  await Table.deleteMany({ tableNumber: { $regex: /^AUDIT/i } });
+
   // 1. Reset all tables to AVAILABLE with no active sessions
   const tableResult = await Table.updateMany(
     {},

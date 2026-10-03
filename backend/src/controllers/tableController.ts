@@ -41,6 +41,18 @@ export const tableController = {
     }
   },
 
+  // Public tables directory for guest QR dining & table selector
+  async getPublicTables(_req: Request, res: Response, next: NextFunction) {
+    try {
+      const tables = await Table.find({ active: true, 'qrCode.active': true })
+        .select('tableNumber capacity status section qrCode')
+        .sort({ tableNumber: 1 });
+      res.json({ success: true, data: tables });
+    } catch (err) {
+      next(err);
+    }
+  },
+
   // Create table & generate QR code
   async createTable(req: Request, res: Response, next: NextFunction) {
     try {

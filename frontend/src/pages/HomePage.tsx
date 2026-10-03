@@ -18,10 +18,12 @@ import {
   ChevronRight,
 } from 'lucide-react';
 import { Button, Card, CardBody, Badge } from '../components/ui';
+import { TableSelectorModal } from '../components/common/TableSelectorModal';
 
 export const HomePage: React.FC = () => {
   const navigate = useNavigate();
   const [healthStatus, setHealthStatus] = useState<any>(null);
+  const [isTableModalOpen, setIsTableModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     fetch('/api/health')
@@ -167,8 +169,14 @@ export const HomePage: React.FC = () => {
                 key={idx}
                 variant="default"
                 isHoverable
-                onClick={() => navigate(item.path)}
-                className="group relative flex flex-col justify-between border-[#e9e3dc] hover:border-[#ffc9b5] transition-all bg-white"
+                onClick={() => {
+                  if (item.path === '/customer') {
+                    setIsTableModalOpen(true);
+                  } else {
+                    navigate(item.path);
+                  }
+                }}
+                className="group relative flex flex-col justify-between border-[#e9e3dc] hover:border-[#ffc9b5] transition-all bg-white cursor-pointer"
               >
                 <CardBody className="p-6 space-y-4">
                   <div className="flex items-center justify-between">
@@ -189,16 +197,30 @@ export const HomePage: React.FC = () => {
                       {item.role}
                     </p>
                     <p className="text-xs text-[#7b726a] leading-relaxed">{item.desc}</p>
+                    {item.path === '/customer' && (
+                      <div className="mt-3 flex items-center gap-1.5">
+                        <span className="text-[10px] font-bold text-[#d96236] bg-[#fff4ef] px-2 py-0.5 rounded-md border border-[#ffc9b5] flex items-center gap-1">
+                          <QrCode className="w-3 h-3" />
+                          Choose from 7 Live Tables &amp; QR
+                        </span>
+                      </div>
+                    )}
                   </div>
                 </CardBody>
                 <div className="p-4 bg-[#fbf9f6] border-t border-[#e9e3dc] flex items-center justify-between text-xs font-bold text-[#d96236] group-hover:text-[#be4d27]">
-                  <span>Launch Workspace</span>
+                  <span>{item.path === '/customer' ? 'Choose Table & Dine' : 'Launch Workspace'}</span>
                   <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
                 </div>
               </Card>
             );
           })}
         </div>
+
+        {/* Table Selector & QR Dining Modal */}
+        <TableSelectorModal
+          isOpen={isTableModalOpen}
+          onClose={() => setIsTableModalOpen(false)}
+        />
 
         {/* Feature Highlights Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 border-t border-[#e9e3dc] pt-10">

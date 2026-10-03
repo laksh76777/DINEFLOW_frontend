@@ -59,6 +59,7 @@ import { socketService } from '../services/socketService';
 import { useCartStore, CartItem } from '../stores/useCartStore';
 import { toast } from '../stores/useToastStore';
 import { soundManager } from '../utils/sound';
+import { TableSelectorModal } from '../components/common/TableSelectorModal';
 
 export const CustomerMenuPage: React.FC = () => {
   const navigate = useNavigate();
@@ -142,6 +143,7 @@ export const CustomerMenuPage: React.FC = () => {
   const [serviceType, setServiceType] = useState<string>('Water');
   const [serviceNotes, setServiceNotes] = useState('');
   const [isSendingRequest, setIsSendingRequest] = useState(false);
+  const [isTableModalOpen, setIsTableModalOpen] = useState(false);
 
   // Bill & DineFlow Pay (Phase 12 & Phase 13)
   const [billData, setBillData] = useState<BillSummary | null>(null);
@@ -455,7 +457,9 @@ export const CustomerMenuPage: React.FC = () => {
   const handlePlaceRoundOrder = async () => {
     if (cartItems.length === 0) return;
     if (!sessionId) {
-      toast.error('Session Missing', 'Please scan a table QR code to start or join a dining session.');
+      setIsCartOpen(false);
+      setIsTableModalOpen(true);
+      toast.info('Select Dining Table', 'Please choose your table to send this order to the kitchen.');
       return;
     }
 
@@ -500,7 +504,9 @@ export const CustomerMenuPage: React.FC = () => {
   // Send Staff Assistance Call
   const handleSendServiceRequest = async () => {
     if (!sessionId) {
-      toast.error('Session Missing', 'Please scan table QR code first.');
+      setIsServiceModalOpen(false);
+      setIsTableModalOpen(true);
+      toast.info('Select Dining Table', 'Please select your table first so floor staff can assist you.');
       return;
     }
 
@@ -677,10 +683,14 @@ export const CustomerMenuPage: React.FC = () => {
 
         {/* Top Badges Bar */}
         <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-10">
-          <span className="px-3 py-1 rounded-full bg-white/95 text-[#211d1a] font-mono font-bold text-xs border border-[#e9e3dc] shadow-md flex items-center gap-1.5 backdrop-blur-md">
+          <button
+            onClick={() => setIsTableModalOpen(true)}
+            className="px-3 py-1 rounded-full bg-white/95 text-[#211d1a] font-mono font-bold text-xs border border-[#e9e3dc] shadow-md flex items-center gap-1.5 backdrop-blur-md hover:border-[#d96236] transition-all cursor-pointer"
+            title="Click to view all restaurant tables & QR codes"
+          >
             <span className={`w-2 h-2 rounded-full ${tableNumber ? 'bg-[#059669] animate-pulse' : 'bg-[#e59b2a]'}`} />
-            {tableNumber ? `TABLE ${tableNumber}` : 'DIGITAL MENU'}
-          </span>
+            {tableNumber ? `TABLE ${tableNumber}` : 'CHOOSE TABLE • PREVIEW'}
+          </button>
 
           <div className="flex items-center gap-1.5">
             <button
@@ -727,6 +737,30 @@ export const CustomerMenuPage: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* 1.1. Preview Mode Notice Banner with Direct Table Selection */}
+      {!sessionId && (
+        <div className="p-3 rounded-2xl bg-[#fff4ef] border border-[#ffc9b5] flex flex-col sm:flex-row items-center justify-between gap-3 shadow-xs">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-xl bg-[#d96236] text-white flex items-center justify-center shrink-0 shadow-xs">
+              <QrCode className="w-4 h-4" />
+            </div>
+            <div>
+              <p className="text-xs font-bold text-[#211d1a]">You are viewing the menu in Preview Mode</p>
+              <p className="text-[11px] text-[#7b726a]">Select an available table or scan your table QR to place orders &amp; split bills.</p>
+            </div>
+          </div>
+          <Button
+            variant="primary"
+            size="sm"
+            onClick={() => setIsTableModalOpen(true)}
+            leftIcon={<QrCode className="w-3.5 h-3.5" />}
+            className="shrink-0 text-xs py-1.5 px-3"
+          >
+            Choose Dining Table
+          </Button>
+        </div>
+      )}
 
       {/* 2. Collaborative Companions Ribbon */}
       <div className="p-2.5 rounded-2xl bg-white border border-[#e9e3dc] flex items-center justify-between gap-2 overflow-x-auto shadow-xs">
@@ -2276,6 +2310,12 @@ export const CustomerMenuPage: React.FC = () => {
           </Button>
         </div>
       </Modal>
+
+      {/* Table Selector & QR Dining Modal */}
+      <TableSelectorModal
+        isOpen={isTableModalOpen}
+        onClose={() => setIsTableModalOpen(false)}
+      />
     </div>
   );
 };

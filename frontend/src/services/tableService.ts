@@ -74,6 +74,13 @@ export interface ResolveTableResponse {
 }
 
 export const tableService = {
+  async getPublicTables(): Promise<TableItem[]> {
+    const res = await fetch('/api/tables/public');
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || 'Failed to fetch public tables');
+    return data.data;
+  },
+
   async getAllTables(): Promise<TableItem[]> {
     const res = await fetch('/api/tables', {
       headers: getAuthHeaders(),

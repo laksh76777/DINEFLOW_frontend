@@ -6,6 +6,7 @@ import { ROLES } from '../config/constants.js';
 const router = Router();
 
 // Public endpoints
+router.get('/public', tableController.getPublicTables);
 router.get('/resolve/:token', tableController.resolveQrToken);
 router.get('/qr/:token/download', tableController.downloadQrImage);
 
