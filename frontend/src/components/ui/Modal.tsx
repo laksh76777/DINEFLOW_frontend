@@ -48,7 +48,7 @@ export const Modal: React.FC<ModalProps> = ({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-black/75 backdrop-blur-sm transition-opacity"
+            className="fixed inset-0 bg-[#211d1a]/40 backdrop-blur-sm transition-opacity"
           />
 
           {/* Dialog Card */}
@@ -59,23 +59,23 @@ export const Modal: React.FC<ModalProps> = ({
             transition={{ type: 'spring', damping: 25, stiffness: 350 }}
             className={twMerge(
               clsx(
-                'relative w-full bg-stone-900 border border-stone-800 rounded-2xl shadow-2xl overflow-hidden z-10 my-8',
+                'relative w-full bg-white border border-[#e9e3dc] rounded-2xl shadow-[0_24px_60px_rgba(43,31,24,0.14)] overflow-hidden z-10 my-8 text-[#211d1a]',
                 sizes[size]
               )
             )}
           >
             {/* Header */}
             {(title || description) && (
-              <div className="flex items-start justify-between p-5 border-b border-stone-800/80">
+              <div className="flex items-start justify-between p-5 border-b border-[#e9e3dc]">
                 <div>
-                  {title && <h3 className="text-lg font-bold text-stone-100">{title}</h3>}
+                  {title && <h3 className="text-lg font-bold text-[#211d1a]">{title}</h3>}
                   {description && (
-                    <p className="text-xs text-stone-400 mt-0.5">{description}</p>
+                    <p className="text-xs text-[#7b726a] mt-0.5">{description}</p>
                   )}
                 </div>
                 <button
                   onClick={onClose}
-                  className="text-stone-400 hover:text-white p-1 rounded-lg hover:bg-stone-800 transition-colors"
+                  className="text-[#7b726a] hover:text-[#211d1a] p-1.5 rounded-lg hover:bg-[#f5f1ec] transition-colors"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -87,7 +87,7 @@ export const Modal: React.FC<ModalProps> = ({
 
             {/* Footer */}
             {footer && (
-              <div className="flex items-center justify-end gap-3 p-4 bg-stone-950/60 border-t border-stone-800/80">
+              <div className="flex items-center justify-end gap-3 p-4 bg-[#fbf9f6] border-t border-[#e9e3dc]">
                 {footer}
               </div>
             )}

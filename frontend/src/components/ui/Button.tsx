@@ -29,27 +29,27 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const baseStyles =
-      'inline-flex items-center justify-center font-medium rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-orange-500/50 disabled:opacity-50 disabled:cursor-not-allowed select-none active:scale-[0.98]';
+      'inline-flex items-center justify-center font-semibold rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#d96236]/40 disabled:opacity-50 disabled:cursor-not-allowed select-none active:scale-[0.98] cursor-pointer';
 
     const variants = {
       primary:
-        'bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-600 hover:to-amber-700 text-white shadow-lg shadow-orange-950/40 border border-orange-400/20',
+        'bg-[#d96236] hover:bg-[#be4d27] text-white shadow-sm shadow-[#d96236]/25 border border-[#d96236]/40',
       secondary:
-        'bg-stone-800 hover:bg-stone-700 text-stone-100 border border-stone-700 hover:border-stone-600',
+        'bg-white hover:bg-[#f5f1ec] text-[#49423c] hover:text-[#211d1a] border border-[#e9e3dc] shadow-sm',
       outline:
-        'border border-stone-700 hover:border-orange-500/50 hover:bg-orange-500/10 text-stone-200 hover:text-orange-300',
+        'border border-[#e9e3dc] hover:border-[#d96236] hover:bg-[#fff4ef] text-[#49423c] hover:text-[#d96236]',
       ghost:
-        'text-stone-300 hover:text-white hover:bg-stone-800/60',
+        'text-[#7b726a] hover:text-[#211d1a] hover:bg-[#f5f1ec]',
       danger:
-        'bg-gradient-to-r from-rose-600 to-red-700 hover:from-rose-700 hover:to-red-800 text-white shadow-lg shadow-rose-950/40 border border-rose-500/30',
+        'bg-[#c54e4a] hover:bg-[#ac423f] text-white shadow-sm border border-[#c54e4a]/30',
       success:
-        'bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white shadow-lg shadow-emerald-950/40 border border-emerald-500/30',
+        'bg-[#23865b] hover:bg-[#1c734e] text-white shadow-sm border border-[#23865b]/30',
     };
 
     const sizes = {
       sm: 'text-xs px-3 py-1.5 gap-1.5',
       md: 'text-sm px-4 py-2.5 gap-2',
-      lg: 'text-base px-6 py-3.5 gap-2.5 font-semibold',
+      lg: 'text-base px-6 py-3.5 gap-2.5 font-bold',
     };
 
     return (

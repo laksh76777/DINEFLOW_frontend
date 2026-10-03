@@ -15,19 +15,19 @@ export const Card: React.FC<CardProps> = ({
   ...props
 }) => {
   const variants = {
-    default: 'bg-stone-900/90 border border-stone-800/80 shadow-xl shadow-black/20',
-    glass: 'glass-panel shadow-2xl shadow-black/40',
-    accent: 'bg-gradient-to-br from-stone-900 to-stone-950 border border-orange-500/20 shadow-glow',
-    flat: 'bg-stone-900 border border-stone-800',
+    default: 'bg-white border border-[#e9e3dc] shadow-[0_1px_2px_rgba(43,31,24,0.04),0_3px_10px_rgba(43,31,24,0.03)]',
+    glass: 'bg-white/90 backdrop-blur-md border border-[#e9e3dc] shadow-[0_8px_28px_rgba(43,31,24,0.08)]',
+    accent: 'bg-gradient-to-br from-white to-[#fff4ef] border border-[#ffc9b5] shadow-[0_5px_14px_rgba(217,98,54,0.12)]',
+    flat: 'bg-[#fbf9f6] border border-[#e9e3dc]',
   };
 
   return (
     <div
       className={twMerge(
         clsx(
-          'rounded-2xl transition-all duration-200 overflow-hidden',
+          'rounded-2xl transition-all duration-200 overflow-hidden text-[#211d1a]',
           variants[variant],
-          isHoverable && 'hover:border-stone-700 hover:shadow-2xl hover:-translate-y-0.5 cursor-pointer',
+          isHoverable && 'hover:border-[#d7cec4] hover:shadow-[0_8px_28px_rgba(43,31,24,0.08)] hover:-translate-y-0.5 cursor-pointer',
           className
         )
       )}
@@ -43,7 +43,7 @@ export const CardHeader: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
   children,
   ...props
 }) => (
-  <div className={twMerge(clsx('p-5 border-b border-stone-800/60', className))} {...props}>
+  <div className={twMerge(clsx('p-5 border-b border-[#e9e3dc]', className))} {...props}>
     {children}
   </div>
 );
@@ -64,7 +64,7 @@ export const CardFooter: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
   ...props
 }) => (
   <div
-    className={twMerge(clsx('p-5 bg-stone-950/40 border-t border-stone-800/60', className))}
+    className={twMerge(clsx('p-5 bg-[#fbf9f6] border-t border-[#e9e3dc]', className))}
     {...props}
   >
     {children}

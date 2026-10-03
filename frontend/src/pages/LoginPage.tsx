@@ -2,19 +2,19 @@ import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  UtensilsCrossed,
+  Utensils,
   Lock,
   Mail,
   ArrowRight,
-  ShieldAlert,
+  ShieldCheck,
   Sparkles,
-  UserCheck,
   ChefHat,
   ConciergeBell,
   Layers,
   Store,
+  Check,
 } from 'lucide-react';
-import { Button, Input, Card, CardBody, Badge } from '../components/ui';
+import { Button, Input, Badge } from '../components/ui';
 import { useAuthStore } from '../stores/useAuthStore';
 import { toast } from '../stores/useToastStore';
 import { Role } from '../types/auth';
@@ -24,8 +24,8 @@ export const LoginPage: React.FC = () => {
   const location = useLocation();
   const { login } = useAuthStore();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('owner@dineflow.com');
+  const [password, setPassword] = useState('dineflow-demo');
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -85,198 +85,181 @@ export const LoginPage: React.FC = () => {
   const quickProfiles = [
     {
       role: 'OWNER' as Role,
-      title: 'Restaurant Owner',
+      title: 'Owner',
       email: 'owner@dineflow.com',
       icon: Store,
-      badgeColor: 'border-orange-500/40 text-orange-400 bg-orange-950/40',
+      badgeColor: 'border-[#ffc9b5] text-[#be4d27] bg-[#fff4ef]',
     },
     {
       role: 'MANAGER' as Role,
-      title: 'Floor Manager',
+      title: 'Manager',
       email: 'manager@dineflow.com',
       icon: Layers,
-      badgeColor: 'border-sky-500/40 text-sky-400 bg-sky-950/40',
+      badgeColor: 'border-[#bfdbfe] text-[#3974b9] bg-[#eaf2fb]',
     },
     {
       role: 'KITCHEN' as Role,
-      title: 'Kitchen Staff',
+      title: 'Kitchen',
       email: 'kitchen@dineflow.com',
       icon: ChefHat,
-      badgeColor: 'border-amber-500/40 text-amber-400 bg-amber-950/40',
+      badgeColor: 'border-[#fed7aa] text-[#bf7a13] bg-[#fff8e7]',
     },
     {
       role: 'WAITER' as Role,
-      title: 'Service Waiter',
+      title: 'Waiter',
       email: 'waiter@dineflow.com',
       icon: ConciergeBell,
-      badgeColor: 'border-emerald-500/40 text-emerald-400 bg-emerald-950/40',
+      badgeColor: 'border-[#a5d8be] text-[#23865b] bg-[#e8f6ef]',
     },
   ];
 
   return (
-    <div className="relative min-h-screen bg-[#0c0a09] text-stone-100 flex items-center justify-center p-4 overflow-hidden selection:bg-orange-500 selection:text-white">
-      {/* Restaurant Atmosphere Background Image */}
-      <div className="absolute inset-0 z-0">
-        <img
-          src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=2000&q=85"
-          alt="Restaurant Ambience"
-          className="w-full h-full object-cover object-center filter blur-[2px] scale-105 transform transition-transform duration-1000"
-        />
-        {/* Dark Warm Vignette Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-[#0c0a09]/85 to-stone-950/90" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-orange-950/20 via-stone-950/60 to-black/90" />
-      </div>
-
-      {/* Main Login Card Container */}
-      <motion.div
-        initial={{ opacity: 0, y: 25, scale: 0.96 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-        className="relative z-10 w-full max-w-md my-8"
-      >
-        <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-white/10 shadow-2xl shadow-black/80 backdrop-blur-2xl">
-          {/* Animated DineFlow Brand Header */}
-          <div className="text-center mb-6">
-            <motion.div
-              initial={{ scale: 0.8, rotate: -8 }}
-              animate={{ scale: 1, rotate: 0 }}
-              transition={{ type: 'spring', stiffness: 260, damping: 20 }}
-              className="inline-flex w-16 h-16 rounded-2xl bg-gradient-to-tr from-orange-600 via-amber-500 to-orange-400 items-center justify-center text-white shadow-xl shadow-orange-950/60 mb-4 ring-4 ring-orange-500/20 relative"
-            >
-              <UtensilsCrossed className="w-8 h-8 drop-shadow-md" />
-              <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-emerald-400 rounded-full border-2 border-stone-900 animate-pulse" />
-            </motion.div>
-
-            <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-white font-serif">
-              DINEFLOW
-            </h1>
-            <p className="text-xs text-stone-400 mt-1 uppercase tracking-widest font-mono">
-              Staff & Management Portal
-            </p>
-          </div>
-
-          {/* Error Message Alert */}
-          <AnimatePresence>
-            {errorMessage && (
-              <motion.div
-                initial={{ opacity: 0, height: 0, y: -8 }}
-                animate={{ opacity: 1, height: 'auto', y: 0 }}
-                exit={{ opacity: 0, height: 0, y: -8 }}
-                className="mb-4 p-3.5 rounded-xl bg-rose-950/60 border border-rose-500/40 text-rose-200 text-xs flex items-start gap-2.5 shadow-lg"
-              >
-                <ShieldAlert className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
-                <div className="flex-1 leading-relaxed">{errorMessage}</div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          {/* Login Form */}
-          <form onSubmit={handleLoginSubmit} className="space-y-4">
-            <Input
-              label="Staff Email Address"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="e.g. owner@dineflow.com"
-              leftIcon={<Mail className="w-4 h-4" />}
-              autoComplete="username"
-              required
-            />
-
-            <Input
-              label="Password / Access PIN"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
-              leftIcon={<Lock className="w-4 h-4" />}
-              autoComplete="current-password"
-            />
-
-            <Button
-              type="submit"
-              variant="primary"
-              size="lg"
-              className="w-full mt-2"
-              isLoading={isLoading}
-              rightIcon={<ArrowRight className="w-4 h-4" />}
-            >
-              Sign In to Terminal
-            </Button>
-          </form>
-
-          {/* 1-Click Role Switcher Demo */}
-          <div className="mt-6 pt-5 border-t border-stone-800/80">
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-[11px] font-bold text-stone-400 uppercase tracking-wider flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-                <span>Instant Role Switcher</span>
+    <div className="min-h-screen bg-[#fbf9f6] text-[#211d1a] flex font-sans">
+      <div className="w-full min-h-screen grid grid-cols-1 lg:grid-cols-2">
+        {/* Left Visual Side (Desktop) */}
+        <div className="hidden lg:block relative m-4 rounded-3xl overflow-hidden shadow-xl">
+          <img
+            src="https://images.unsplash.com/photo-1551530241-1ccbaa7a9a84?auto=format&fit=crop&w=1400&q=85"
+            alt="Warm restaurant interior"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#211d1a]/85 via-[#211d1a]/40 to-transparent" />
+          
+          <div className="absolute bottom-12 left-12 right-12 text-white">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 rounded-xl bg-white text-[#d96236] flex items-center justify-center font-bold shadow-lg">
+                <Utensils className="w-5 h-5" />
+              </div>
+              <span className="text-2xl font-black tracking-tight text-white">
+                Dine<span className="text-[#ffedbd]">Flow</span>
               </span>
-              <span className="text-[10px] text-stone-400 font-mono">Phase 2 Verified</span>
             </div>
 
-            <div className="grid grid-cols-2 gap-2">
-              {quickProfiles.map((p) => {
-                const Icon = p.icon;
-                return (
-                  <button
-                    key={p.role}
-                    type="button"
-                    onClick={() => {
-                      setEmail(p.email);
-                      setPassword('dineflow123');
-                      performLogin({ email: p.email, password: 'dineflow123' });
-                    }}
-                    disabled={isLoading}
-                    className="flex items-center gap-2 p-2.5 rounded-xl bg-stone-900/90 hover:bg-stone-800/90 border border-stone-800 text-left transition-all hover:border-orange-500/30 group"
-                  >
-                    <div
-                      className={`w-7 h-7 rounded-lg border flex items-center justify-center shrink-0 ${p.badgeColor}`}
-                    >
-                      <Icon className="w-3.5 h-3.5" />
-                    </div>
-                    <div className="min-w-0">
-                      <div className="text-xs font-bold text-white group-hover:text-orange-300 truncate">
-                        {p.title}
-                      </div>
-                      <div className="text-[10px] text-stone-400 truncate">{p.email}</div>
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
+            <h2 className="text-3xl font-extrabold tracking-tight mb-3 font-serif leading-tight">
+              Hospitality, beautifully in flow.
+            </h2>
+            <p className="text-white/80 text-sm max-w-md leading-relaxed mb-6">
+              One elegant platform connecting every table, kitchen ticket, and staff member into harmonious dining rhythm.
+            </p>
 
-            {/* Test Inactive Account Button */}
-            <div className="mt-3">
-              <button
-                type="button"
-                onClick={() => {
-                  setEmail('inactive@dineflow.com');
-                  setPassword('dineflow123');
-                  performLogin({ email: 'inactive@dineflow.com', password: 'dineflow123' });
-                }}
-                disabled={isLoading}
-                className="w-full py-2 px-3 rounded-xl bg-rose-950/20 hover:bg-rose-950/40 border border-rose-500/20 text-rose-300 text-xs font-medium flex items-center justify-center gap-2 transition-colors"
-              >
-                <ShieldAlert className="w-3.5 h-3.5 text-rose-400" />
-                <span>Test Deactivated Account Handling (403 Test)</span>
-              </button>
+            <div className="flex items-center gap-3">
+              <span className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center text-xs font-bold text-white font-mono">
+                SS
+              </span>
+              <div className="text-xs">
+                <strong className="block text-white">Saffron & Sage Bistro</strong>
+                <span className="text-white/60">New Delhi • Live Station Node</span>
+              </div>
             </div>
-          </div>
-
-          {/* Guest Table QR Shortcut */}
-          <div className="mt-4 text-center">
-            <button
-              type="button"
-              onClick={() => navigate('/customer')}
-              className="text-xs text-stone-400 hover:text-orange-400 transition-colors inline-flex items-center gap-1.5"
-            >
-              <span>Switch to Customer QR Mobile Menu</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </button>
           </div>
         </div>
-      </motion.div>
+
+        {/* Right Form Side */}
+        <div className="flex items-center justify-center p-6 sm:p-12">
+          <div className="w-full max-w-md space-y-6">
+            <div className="flex items-center gap-3 lg:hidden mb-4">
+              <div className="w-10 h-10 rounded-xl bg-[#d96236] text-white flex items-center justify-center font-bold shadow-md shadow-[#d96236]/25">
+                <Utensils className="w-5 h-5" />
+              </div>
+              <span className="text-2xl font-black text-[#211d1a]">
+                Dine<span className="text-[#d96236]">Flow</span>
+              </span>
+            </div>
+
+            <div>
+              <span className="text-[10px] font-extrabold tracking-widest text-[#d96236] uppercase font-mono">
+                STAFF WORKSPACE ACCESS
+              </span>
+              <h1 className="text-2xl sm:text-3xl font-black text-[#211d1a] tracking-tight mt-1">
+                Welcome back
+              </h1>
+              <p className="text-xs text-[#7b726a] mt-1">
+                Sign in to manage tonight's service operations and floor orders.
+              </p>
+            </div>
+
+            {/* Quick 1-Click Role Logins */}
+            <div className="p-4 bg-white border border-[#e9e3dc] rounded-2xl shadow-2xs space-y-2.5">
+              <div className="text-[11px] font-bold text-[#49423c] flex items-center justify-between">
+                <span>Quick Demo Profiles (1-Click)</span>
+                <span className="text-[9px] text-[#7b726a] font-mono">Instant Sign-in</span>
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                {quickProfiles.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <button
+                      key={item.role}
+                      type="button"
+                      onClick={() => {
+                        setEmail(item.email);
+                        setPassword('dineflow-demo');
+                        performLogin({ email: item.email, password: 'dineflow-demo' });
+                      }}
+                      className="flex items-center gap-2 p-2.5 rounded-xl border border-[#e9e3dc] hover:border-[#ffc9b5] bg-[#fbf9f6] hover:bg-[#fff4ef] transition-all text-left group"
+                    >
+                      <div className="w-7 h-7 rounded-lg bg-white border border-[#e9e3dc] flex items-center justify-center text-[#d96236] shrink-0 group-hover:scale-105 transition-transform shadow-2xs">
+                        <Icon className="w-3.5 h-3.5" />
+                      </div>
+                      <div className="min-w-0">
+                        <div className="text-xs font-bold text-[#211d1a] truncate group-hover:text-[#d96236]">
+                          {item.title}
+                        </div>
+                        <div className="text-[9px] text-[#7b726a] truncate">{item.email.split('@')[0]}</div>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Standard Form */}
+            <form onSubmit={handleLoginSubmit} className="space-y-4">
+              {errorMessage && (
+                <div className="p-3 bg-[#fde8e8] border border-[#fca5a5] rounded-xl text-xs font-semibold text-[#c54e4a]">
+                  {errorMessage}
+                </div>
+              )}
+
+              <Input
+                label="Staff Email Address"
+                type="email"
+                placeholder="e.g. owner@dineflow.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                leftIcon={<Mail className="w-4 h-4" />}
+                required
+              />
+
+              <Input
+                label="Security Password"
+                type="password"
+                placeholder="••••••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                leftIcon={<Lock className="w-4 h-4" />}
+                required
+              />
+
+              <Button
+                type="submit"
+                variant="primary"
+                size="lg"
+                className="w-full font-bold"
+                isLoading={isLoading}
+                rightIcon={<ArrowRight className="w-4 h-4" />}
+              >
+                Sign In to DineFlow
+              </Button>
+            </form>
+
+            <div className="flex items-center justify-center gap-2 text-[11px] text-[#7b726a] pt-2">
+              <ShieldCheck className="w-4 h-4 text-[#23865b]" />
+              <span>Protected by DineFlow Role-Aware Security</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

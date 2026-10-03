@@ -206,84 +206,84 @@ export const FloorPlanPage: React.FC = () => {
     switch (status) {
       case 'AVAILABLE':
         return {
-          bg: 'bg-stone-900/80',
-          border: 'border-emerald-500/30',
-          ring: 'ring-emerald-500/20',
-          text: 'text-emerald-400',
-          badge: 'bg-emerald-950/60 text-emerald-300 border-emerald-700/50',
-          dot: 'bg-emerald-400',
+          bg: 'bg-white',
+          border: 'border-[#a7f3d0]',
+          ring: 'ring-[#a7f3d0]',
+          text: 'text-[#059669]',
+          badge: 'bg-[#ecfdf5] text-[#059669] border-[#a7f3d0]',
+          dot: 'bg-[#059669]',
           label: 'AVAILABLE',
         };
       case 'ACTIVE':
       case 'OCCUPIED':
         return {
-          bg: 'bg-cyan-950/20',
-          border: 'border-cyan-500/50',
-          ring: 'ring-cyan-500/30',
-          text: 'text-cyan-300',
-          badge: 'bg-cyan-950/80 text-cyan-300 border-cyan-700/50',
-          dot: 'bg-cyan-400 animate-pulse',
+          bg: 'bg-[#fff4ef]',
+          border: 'border-[#ffc9b5]',
+          ring: 'ring-[#ffc9b5]',
+          text: 'text-[#be4d27]',
+          badge: 'bg-[#ffedd5] text-[#c2410c] border-[#fdba74]',
+          dot: 'bg-[#ea580c] animate-pulse',
           label: 'SEATED / ACTIVE',
         };
       case 'ORDERING':
         return {
-          bg: 'bg-blue-950/20',
-          border: 'border-blue-500/50',
-          ring: 'ring-blue-500/30',
-          text: 'text-blue-300',
-          badge: 'bg-blue-950/80 text-blue-300 border-blue-700/50',
-          dot: 'bg-blue-400 animate-pulse',
+          bg: 'bg-[#eff6ff]',
+          border: 'border-[#bfdbfe]',
+          ring: 'ring-[#bfdbfe]',
+          text: 'text-[#1d4ed8]',
+          badge: 'bg-[#dbeafe] text-[#1e40af] border-[#93c5fd]',
+          dot: 'bg-[#2563eb] animate-pulse',
           label: 'ORDERING',
         };
       case 'PREPARING':
         return {
-          bg: 'bg-amber-950/20',
-          border: 'border-amber-500/60',
-          ring: 'ring-amber-500/30',
-          text: 'text-amber-300',
-          badge: 'bg-amber-950/80 text-amber-300 border-amber-700/50',
-          dot: 'bg-amber-400 animate-pulse',
+          bg: 'bg-[#fff8e7]',
+          border: 'border-[#fde68a]',
+          ring: 'ring-[#fde68a]',
+          text: 'text-[#b45309]',
+          badge: 'bg-[#fef3c7] text-[#92400e] border-[#fcd34d]',
+          dot: 'bg-[#d97706] animate-pulse',
           label: 'PREPARING',
         };
       case 'READY':
         return {
-          bg: 'bg-emerald-950/40',
-          border: 'border-emerald-400 shadow-glow-green',
-          ring: 'ring-2 ring-emerald-400',
-          text: 'text-emerald-300 font-black',
-          badge: 'bg-emerald-500 text-stone-950 font-black border-emerald-400',
-          dot: 'bg-emerald-300 animate-ping',
+          bg: 'bg-[#ecfdf5]',
+          border: 'border-[#059669]',
+          ring: 'ring-2 ring-[#059669]',
+          text: 'text-[#065f46] font-black',
+          badge: 'bg-[#059669] text-white font-black border-[#059669]',
+          dot: 'bg-[#059669] animate-ping',
           label: 'FOOD READY',
         };
       case 'SERVING':
         return {
-          bg: 'bg-indigo-950/30',
-          border: 'border-indigo-500/60',
-          ring: 'ring-indigo-500/30',
-          text: 'text-indigo-300',
-          badge: 'bg-indigo-950/80 text-indigo-300 border-indigo-700/50',
-          dot: 'bg-indigo-400',
+          bg: 'bg-[#f5f3ff]',
+          border: 'border-[#ddd6fe]',
+          ring: 'ring-[#ddd6fe]',
+          text: 'text-[#6d28d9]',
+          badge: 'bg-[#ede9fe] text-[#5b21b6] border-[#c4b5fd]',
+          dot: 'bg-[#7c3aed]',
           label: 'SERVING',
         };
       case 'PAYMENT_PENDING':
       case 'PAYMENT':
         return {
-          bg: 'bg-orange-950/30',
-          border: 'border-orange-500 shadow-glow-orange',
-          ring: 'ring-2 ring-orange-500',
-          text: 'text-orange-300 font-black',
-          badge: 'bg-orange-500 text-white font-bold border-orange-400',
-          dot: 'bg-orange-400 animate-bounce',
+          bg: 'bg-[#fff4ef]',
+          border: 'border-[#d96236]',
+          ring: 'ring-2 ring-[#d96236]',
+          text: 'text-[#be4d27] font-black',
+          badge: 'bg-[#d96236] text-white font-bold border-[#d96236]',
+          dot: 'bg-[#d96236] animate-bounce',
           label: 'BILL REQUESTED',
         };
       default:
         return {
-          bg: 'bg-stone-900',
-          border: 'border-stone-800',
-          ring: 'ring-stone-700',
-          text: 'text-stone-300',
-          badge: 'bg-stone-800 text-stone-300 border-stone-700',
-          dot: 'bg-stone-500',
+          bg: 'bg-white',
+          border: 'border-[#e9e3dc]',
+          ring: 'ring-[#e9e3dc]',
+          text: 'text-[#7b726a]',
+          badge: 'bg-[#f5f1ec] text-[#4d443c] border-[#e9e3dc]',
+          dot: 'bg-[#a69c93]',
           label: String(status),
         };
     }
@@ -312,32 +312,32 @@ export const FloorPlanPage: React.FC = () => {
   const billCount = tables.filter((t) => t.status === 'PAYMENT' || t.status === 'PAYMENT_PENDING').length;
 
   return (
-    <div className="space-y-6 selection:bg-orange-500 selection:text-white">
+    <div className="space-y-6 selection:bg-[#d96236] selection:text-white">
       {/* 1. Page Header & View Mode Switcher */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-3xl bg-stone-900/90 border border-stone-800 shadow-2xl backdrop-blur-md">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-3xl bg-white border border-[#e9e3dc] shadow-sm">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-xl font-black text-white font-serif tracking-tight">
+            <h1 className="text-xl font-black text-[#211d1a] font-serif tracking-tight">
               Live Restaurant Floor View
             </h1>
             <Badge variant="brand" size="sm">
-              Phase 11
+              Live Sync
             </Badge>
           </div>
-          <p className="text-xs text-stone-400 mt-0.5 font-mono">
+          <p className="text-xs text-[#7b726a] mt-0.5 font-mono">
             Interactive table layout • Real-time socket sync • Floor occupancy: {occupiedCount}/{tables.length}
           </p>
         </div>
 
         <div className="flex items-center gap-2">
           {/* View Mode Toggle */}
-          <div className="flex items-center p-1 bg-stone-950 rounded-2xl border border-stone-800">
+          <div className="flex items-center p-1 bg-[#f5f1ec] rounded-2xl border border-[#e9e3dc]">
             <button
               onClick={() => setViewMode('FLOOR_VISUALIZER')}
               className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
                 viewMode === 'FLOOR_VISUALIZER'
-                  ? 'bg-orange-500 text-white shadow-md shadow-orange-950'
-                  : 'text-stone-400 hover:text-white'
+                  ? 'bg-[#d96236] text-white shadow-xs'
+                  : 'text-[#7b726a] hover:text-[#211d1a]'
               }`}
             >
               <Sparkles className="w-3.5 h-3.5" />
@@ -347,8 +347,8 @@ export const FloorPlanPage: React.FC = () => {
               onClick={() => setViewMode('TABLE_MANAGEMENT')}
               className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
                 viewMode === 'TABLE_MANAGEMENT'
-                  ? 'bg-orange-500 text-white shadow-md shadow-orange-950'
-                  : 'text-stone-400 hover:text-white'
+                  ? 'bg-[#d96236] text-white shadow-xs'
+                  : 'text-[#7b726a] hover:text-[#211d1a]'
               }`}
             >
               <QrCode className="w-3.5 h-3.5" />
@@ -366,7 +366,7 @@ export const FloorPlanPage: React.FC = () => {
               setIsAddModalOpen(true);
             }}
             leftIcon={<Plus className="w-3.5 h-3.5" />}
-            className="text-xs font-bold"
+            className="text-xs font-bold shadow-sm"
           >
             Add Table
           </Button>
@@ -385,57 +385,57 @@ export const FloorPlanPage: React.FC = () => {
 
       {/* 2. Quick Floor Statistics HUD */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3.5">
-        <div className="p-3.5 rounded-2xl bg-stone-900/80 border border-stone-800 flex items-center justify-between shadow-lg">
+        <div className="p-3.5 rounded-2xl bg-white border border-[#e9e3dc] flex items-center justify-between shadow-xs">
           <div>
-            <div className="text-[10px] font-mono text-stone-400 uppercase font-bold">Occupied Tables</div>
-            <div className="text-xl font-black text-cyan-400 font-mono mt-0.5">
+            <div className="text-[10px] font-mono text-[#7b726a] uppercase font-bold">Occupied Tables</div>
+            <div className="text-xl font-black text-[#be4d27] font-mono mt-0.5">
               {occupiedCount} / {tables.length}
             </div>
           </div>
-          <div className="w-9 h-9 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center border border-cyan-500/30">
+          <div className="w-9 h-9 rounded-xl bg-[#fff4ef] text-[#d96236] flex items-center justify-center border border-[#ffc9b5]">
             <Users className="w-4 h-4" />
           </div>
         </div>
 
-        <div className="p-3.5 rounded-2xl bg-stone-900/80 border border-stone-800 flex items-center justify-between shadow-lg">
+        <div className="p-3.5 rounded-2xl bg-white border border-[#e9e3dc] flex items-center justify-between shadow-xs">
           <div>
-            <div className="text-[10px] font-mono text-stone-400 uppercase font-bold">Cooking / In Prep</div>
-            <div className="text-xl font-black text-amber-400 font-mono mt-0.5">
+            <div className="text-[10px] font-mono text-[#7b726a] uppercase font-bold">Cooking / In Prep</div>
+            <div className="text-xl font-black text-[#b45309] font-mono mt-0.5">
               {preparingCount} tables
             </div>
           </div>
-          <div className="w-9 h-9 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center border border-amber-500/30">
+          <div className="w-9 h-9 rounded-xl bg-[#fff8e7] text-[#d97706] flex items-center justify-center border border-[#fde68a]">
             <Flame className="w-4 h-4" />
           </div>
         </div>
 
-        <div className="p-3.5 rounded-2xl bg-stone-900/80 border border-stone-800 flex items-center justify-between shadow-lg">
+        <div className="p-3.5 rounded-2xl bg-white border border-[#e9e3dc] flex items-center justify-between shadow-xs">
           <div>
-            <div className="text-[10px] font-mono text-stone-400 uppercase font-bold">Food Ready on Pass</div>
-            <div className="text-xl font-black text-emerald-400 font-mono mt-0.5">
+            <div className="text-[10px] font-mono text-[#7b726a] uppercase font-bold">Food Ready on Pass</div>
+            <div className="text-xl font-black text-[#059669] font-mono mt-0.5">
               {readyCount} tables
             </div>
           </div>
-          <div className="w-9 h-9 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center border border-emerald-500/30">
+          <div className="w-9 h-9 rounded-xl bg-[#ecfdf5] text-[#059669] flex items-center justify-center border border-[#a7f3d0]">
             <ChefHat className="w-4 h-4" />
           </div>
         </div>
 
-        <div className="p-3.5 rounded-2xl bg-stone-900/80 border border-stone-800 flex items-center justify-between shadow-lg">
+        <div className="p-3.5 rounded-2xl bg-white border border-[#e9e3dc] flex items-center justify-between shadow-xs">
           <div>
-            <div className="text-[10px] font-mono text-stone-400 uppercase font-bold">Bill Settlement</div>
-            <div className="text-xl font-black text-orange-400 font-mono mt-0.5">
+            <div className="text-[10px] font-mono text-[#7b726a] uppercase font-bold">Bill Settlement</div>
+            <div className="text-xl font-black text-[#d96236] font-mono mt-0.5">
               {billCount} tables
             </div>
           </div>
-          <div className="w-9 h-9 rounded-xl bg-orange-500/10 text-orange-400 flex items-center justify-center border border-orange-500/30">
+          <div className="w-9 h-9 rounded-xl bg-[#fff4ef] text-[#d96236] flex items-center justify-center border border-[#ffc9b5]">
             <Receipt className="w-4 h-4" />
           </div>
         </div>
       </div>
 
       {/* 3. Section and Status Filter Toolbar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 rounded-2xl bg-stone-900/60 border border-stone-800/80">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 rounded-2xl bg-white border border-[#e9e3dc] shadow-xs">
         {/* Status Chips */}
         <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5 text-xs">
           {[
@@ -451,8 +451,8 @@ export const FloorPlanPage: React.FC = () => {
               onClick={() => setStatusFilter(st.id)}
               className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
                 statusFilter === st.id
-                  ? 'bg-orange-500 text-white shadow-md shadow-orange-950'
-                  : 'bg-stone-950 text-stone-400 hover:text-white border border-stone-800'
+                  ? 'bg-[#d96236] text-white shadow-xs'
+                  : 'bg-[#fbf9f6] text-[#7b726a] hover:text-[#211d1a] border border-[#e9e3dc]'
               }`}
             >
               {st.label}
@@ -462,11 +462,11 @@ export const FloorPlanPage: React.FC = () => {
 
         {/* Section Filter */}
         <div className="flex items-center gap-2 shrink-0 text-xs">
-          <span className="text-stone-400">Section:</span>
+          <span className="text-[#7b726a]">Section:</span>
           <select
             value={sectionFilter}
             onChange={(e) => setSectionFilter(e.target.value)}
-            className="bg-stone-950 border border-stone-800 text-white rounded-xl px-2.5 py-1 text-xs focus:outline-none focus:border-orange-500"
+            className="bg-[#fbf9f6] border border-[#e9e3dc] text-[#211d1a] rounded-xl px-2.5 py-1 text-xs focus:outline-none focus:border-[#d96236]"
           >
             <option value="ALL">All Sections</option>
             {sections.map((sec) => (
@@ -479,23 +479,23 @@ export const FloorPlanPage: React.FC = () => {
       </div>
 
       {/* ============================================================ */}
-      {/* 4. LIVE INTERACTIVE FLOOR VISUALIZER (PHASE 11 REQUIREMENT) */}
+      {/* 4. LIVE INTERACTIVE FLOOR VISUALIZER */}
       {/* ============================================================ */}
       {viewMode === 'FLOOR_VISUALIZER' && (
         <div className="space-y-4">
-          <div className="p-4 sm:p-6 rounded-3xl bg-stone-950 border border-stone-800/80 shadow-2xl relative overflow-hidden">
+          <div className="p-4 sm:p-6 rounded-3xl bg-[#fbf9f6] border border-[#e9e3dc] shadow-sm relative overflow-hidden">
             {/* Ambient Floor Grid Backdrop */}
-            <div className="absolute inset-0 bg-[radial-gradient(#292524_1px,transparent_1px)] [background-size:20px_20px] opacity-40 pointer-events-none" />
+            <div className="absolute inset-0 bg-[radial-gradient(#e9e3dc_1px,transparent_1px)] [background-size:20px_20px] opacity-60 pointer-events-none" />
 
             <div className="relative z-10 space-y-6">
-              <div className="flex items-center justify-between border-b border-stone-800/80 pb-3">
+              <div className="flex items-center justify-between border-b border-[#e9e3dc] pb-3">
                 <div className="flex items-center gap-2">
-                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-                  <span className="text-xs font-bold text-stone-200 uppercase tracking-wider font-mono">
+                  <div className="w-2.5 h-2.5 rounded-full bg-[#059669] animate-pulse" />
+                  <span className="text-xs font-bold text-[#211d1a] uppercase tracking-wider font-mono">
                     Floor Map • {sectionFilter === 'ALL' ? 'Full Dining Room' : sectionFilter}
                   </span>
                 </div>
-                <span className="text-[11px] text-stone-400">Click any table to inspect live session</span>
+                <span className="text-[11px] text-[#7b726a]">Click any table to inspect live session</span>
               </div>
 
               {/* Modern Table Cards / Circles Grid */}
@@ -516,14 +516,14 @@ export const FloorPlanPage: React.FC = () => {
                       className={`relative cursor-pointer transition-all flex flex-col items-center justify-center text-center p-4 ${
                         isRoundTable ? 'rounded-full aspect-square' : 'rounded-3xl aspect-[1.1/1]'
                       } ${style.bg} border-2 ${style.border} ${
-                        isInspected ? 'ring-4 ring-orange-500 shadow-glow-orange' : ''
+                        isInspected ? 'ring-4 ring-[#d96236] shadow-md shadow-[#d96236]/20' : ''
                       } ${
-                        isAnimating ? 'ring-4 ring-amber-400 animate-bounce' : ''
-                      } shadow-xl hover:shadow-2xl group`}
+                        isAnimating ? 'ring-4 ring-[#d97706] animate-bounce' : ''
+                      } shadow-xs hover:shadow-md group`}
                     >
                       {/* Radial Seating Dots around Table */}
                       <div className="absolute inset-1 pointer-events-none flex items-center justify-center">
-                        <div className="w-full h-full rounded-full border border-dashed border-stone-700/40 opacity-50" />
+                        <div className="w-full h-full rounded-full border border-dashed border-[#e9e3dc] opacity-75" />
                       </div>
 
                       {/* Top Status Indicator Dot */}
@@ -533,10 +533,10 @@ export const FloorPlanPage: React.FC = () => {
 
                       {/* Center: Table Number in Bold High-Contrast Typography */}
                       <div className="relative z-10 space-y-0.5 mt-2">
-                        <div className="text-2xl sm:text-3xl font-black font-mono text-white tracking-tight drop-shadow-md">
+                        <div className="text-2xl sm:text-3xl font-black font-mono text-[#211d1a] tracking-tight">
                           {tbl.tableNumber}
                         </div>
-                        <div className="text-[10px] font-mono text-stone-400 uppercase font-semibold">
+                        <div className="text-[10px] font-mono text-[#7b726a] uppercase font-semibold">
                           Cap: {tbl.capacity}
                         </div>
                       </div>
@@ -544,7 +544,7 @@ export const FloorPlanPage: React.FC = () => {
                       {/* Bottom Status Pill */}
                       <div className="relative z-10 mt-2">
                         <span
-                          className={`px-2 py-0.5 rounded-full text-[9px] font-mono font-black uppercase tracking-wider border shadow-sm ${style.badge}`}
+                          className={`px-2 py-0.5 rounded-full text-[9px] font-mono font-black uppercase tracking-wider border shadow-xs ${style.badge}`}
                         >
                           {style.label}
                         </span>
@@ -552,8 +552,8 @@ export const FloorPlanPage: React.FC = () => {
 
                       {/* Active Diners Callout if Seated */}
                       {tbl.status !== 'AVAILABLE' && (
-                        <div className="absolute -bottom-2 bg-stone-900 text-stone-300 border border-stone-700 rounded-full px-2 py-0.5 text-[9px] font-mono font-bold shadow flex items-center gap-1">
-                          <Users className="w-2.5 h-2.5 text-orange-400" />
+                        <div className="absolute -bottom-2 bg-white text-[#4d443c] border border-[#e9e3dc] rounded-full px-2 py-0.5 text-[9px] font-mono font-bold shadow-xs flex items-center gap-1">
+                          <Users className="w-2.5 h-2.5 text-[#d96236]" />
                           <span>Seated</span>
                         </div>
                       )}
@@ -576,13 +576,13 @@ export const FloorPlanPage: React.FC = () => {
               const style = getStatusColor(tbl.status);
 
               return (
-                <Card key={tbl._id} variant="default" className="border-stone-800 shadow-xl overflow-hidden">
-                  <CardHeader className="p-4 border-b border-stone-800 flex items-center justify-between bg-stone-900/60">
+                <Card key={tbl._id} variant="default" className="border-[#e9e3dc] shadow-sm overflow-hidden bg-white">
+                  <CardHeader className="p-4 border-b border-[#e9e3dc] flex items-center justify-between bg-[#fbf9f6]">
                     <div className="flex items-center gap-2">
-                      <span className="text-lg font-black font-mono text-white">
+                      <span className="text-lg font-black font-mono text-[#211d1a]">
                         TABLE {tbl.tableNumber}
                       </span>
-                      <span className="text-xs text-stone-400 font-mono">({tbl.section})</span>
+                      <span className="text-xs text-[#7b726a] font-mono">({tbl.section})</span>
                     </div>
 
                     <span className={`px-2.5 py-0.5 rounded-full text-xs font-mono font-bold border ${style.badge}`}>
@@ -595,7 +595,7 @@ export const FloorPlanPage: React.FC = () => {
                       {/* QR Thumbnail */}
                       <div
                         onClick={() => setSelectedTableForQr(tbl)}
-                        className="w-20 h-20 rounded-2xl bg-white p-1.5 cursor-pointer shadow-lg hover:scale-105 transition-transform shrink-0"
+                        className="w-20 h-20 rounded-2xl bg-white p-1.5 cursor-pointer shadow-sm border border-[#e9e3dc] hover:scale-105 transition-transform shrink-0"
                       >
                         <img
                           src={tbl.qrCode.qrDataUrl}
@@ -604,21 +604,21 @@ export const FloorPlanPage: React.FC = () => {
                         />
                       </div>
 
-                      <div className="flex-1 space-y-1 text-xs text-stone-400">
+                      <div className="flex-1 space-y-1 text-xs text-[#7b726a]">
                         <div>
-                          Capacity: <strong className="text-white">{tbl.capacity} Seats</strong>
+                          Capacity: <strong className="text-[#211d1a]">{tbl.capacity} Seats</strong>
                         </div>
                         <div>
-                          Token: <span className="font-mono text-orange-400">{tbl.qrCode.token}</span>
+                          Token: <span className="font-mono text-[#d96236]">{tbl.qrCode.token}</span>
                         </div>
-                        <div className="text-[10px] text-stone-500">
+                        <div className="text-[10px] text-[#a69c93]">
                           Gen: {new Date(tbl.qrCode.generatedAt).toLocaleDateString()}
                         </div>
                       </div>
                     </div>
 
                     {/* Management Action Buttons */}
-                    <div className="grid grid-cols-2 gap-2 pt-2 border-t border-stone-800">
+                    <div className="grid grid-cols-2 gap-2 pt-2 border-t border-[#f5f1ec]">
                       <Button
                         variant="outline"
                         size="sm"
@@ -654,7 +654,7 @@ export const FloorPlanPage: React.FC = () => {
       )}
 
       {/* ============================================================ */}
-      {/* 6. TABLE LIVE INSPECTOR MODAL (PHASE 11 CLICK TABLE TO VIEW) */}
+      {/* 6. TABLE LIVE INSPECTOR MODAL */}
       {/* ============================================================ */}
       <Modal
         isOpen={!!inspectingTableId}
@@ -664,25 +664,25 @@ export const FloorPlanPage: React.FC = () => {
       >
         {isLoadingDetails ? (
           <div className="py-16 text-center space-y-3">
-            <RefreshCw className="w-6 h-6 animate-spin text-orange-500 mx-auto" />
-            <p className="text-xs text-stone-400 font-mono">Fetching real-time dining state...</p>
+            <RefreshCw className="w-6 h-6 animate-spin text-[#d96236] mx-auto" />
+            <p className="text-xs text-[#7b726a] font-mono">Fetching real-time dining state...</p>
           </div>
         ) : tableLiveDetails ? (
           <div className="space-y-4">
             {/* Top Table Summary Bar */}
-            <div className="p-3.5 rounded-2xl bg-stone-900 border border-stone-800 flex flex-wrap items-center justify-between gap-3">
+            <div className="p-3.5 rounded-2xl bg-[#fbf9f6] border border-[#e9e3dc] flex flex-wrap items-center justify-between gap-3">
               <div>
                 <div className="flex items-center gap-2">
-                  <span className="text-lg font-black text-white font-mono">
+                  <span className="text-lg font-black text-[#211d1a] font-mono">
                     TABLE {tableLiveDetails.table.tableNumber}
                   </span>
                   <Badge variant="brand" size="sm">
                     {tableLiveDetails.table.section}
                   </Badge>
-                  <span className="text-xs text-stone-400">Cap: {tableLiveDetails.table.capacity}</span>
+                  <span className="text-xs text-[#7b726a]">Cap: {tableLiveDetails.table.capacity}</span>
                 </div>
 
-                <div className="text-xs text-stone-400 mt-0.5">
+                <div className="text-xs text-[#7b726a] mt-0.5">
                   {tableLiveDetails.session ? (
                     <span>
                       Active Session #{tableLiveDetails.session.sessionNumber} • Started{' '}
@@ -692,21 +692,21 @@ export const FloorPlanPage: React.FC = () => {
                       })}
                     </span>
                   ) : (
-                    <span className="text-emerald-400 font-bold">Table is currently AVAILABLE</span>
+                    <span className="text-[#059669] font-bold">Table is currently AVAILABLE</span>
                   )}
                 </div>
               </div>
 
               <div className="text-right">
-                <span className="text-xs text-stone-400 block font-mono">Current Bill</span>
-                <span className="text-lg font-black text-orange-400 font-mono">
+                <span className="text-xs text-[#7b726a] block font-mono">Current Bill</span>
+                <span className="text-lg font-black text-[#d96236] font-mono">
                   ₹{tableLiveDetails.currentBill.grandTotal.toFixed(2)}
                 </span>
               </div>
             </div>
 
-            {/* 6 Tabs as specified in Phase 11: members, orders, current bill, requests, payment, timeline */}
-            <div className="grid grid-cols-3 sm:grid-cols-6 gap-1 bg-stone-950 p-1 rounded-2xl border border-stone-800">
+            {/* 6 Tabs: members, orders, current bill, requests, payment, timeline */}
+            <div className="grid grid-cols-3 sm:grid-cols-6 gap-1 bg-[#f5f1ec] p-1 rounded-2xl border border-[#e9e3dc]">
               {[
                 { id: 'orders', label: 'Orders', count: tableLiveDetails.orders?.length || 0 },
                 { id: 'members', label: 'Members', count: tableLiveDetails.members?.length || 0 },
@@ -720,13 +720,13 @@ export const FloorPlanPage: React.FC = () => {
                   onClick={() => setInspectTab(tb.id as any)}
                   className={`py-2 px-2 rounded-xl text-xs font-bold transition-all text-center flex items-center justify-center gap-1 ${
                     inspectTab === tb.id
-                      ? 'bg-orange-500 text-white shadow-md'
-                      : 'text-stone-400 hover:text-white'
+                      ? 'bg-[#d96236] text-white shadow-xs'
+                      : 'text-[#7b726a] hover:text-[#211d1a]'
                   }`}
                 >
                   <span>{tb.label}</span>
                   {tb.count !== null && tb.count > 0 && (
-                    <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-stone-800 text-stone-200">
+                    <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-white text-[#4d443c] border border-[#e9e3dc]">
                       {tb.count}
                     </span>
                   )}
@@ -738,25 +738,25 @@ export const FloorPlanPage: React.FC = () => {
             {inspectTab === 'orders' && (
               <div className="space-y-3 max-h-80 overflow-y-auto pr-1">
                 {tableLiveDetails.orders.length === 0 ? (
-                  <div className="py-8 text-center text-xs text-stone-500">No orders placed yet.</div>
+                  <div className="py-8 text-center text-xs text-[#a69c93]">No orders placed yet.</div>
                 ) : (
                   tableLiveDetails.orders.map((ord: any) => (
-                    <div key={ord._id} className="p-3 rounded-xl bg-stone-900 border border-stone-800 space-y-2 text-xs">
-                      <div className="flex items-center justify-between border-b border-stone-800 pb-1.5">
-                        <span className="font-bold text-orange-400 font-mono">ROUND #{ord.roundNumber}</span>
-                        <span className="text-stone-400">By: {ord.placedByMemberName}</span>
+                    <div key={ord._id} className="p-3 rounded-xl bg-white border border-[#e9e3dc] space-y-2 text-xs shadow-xs">
+                      <div className="flex items-center justify-between border-b border-[#f5f1ec] pb-1.5">
+                        <span className="font-bold text-[#d96236] font-mono">ROUND #{ord.roundNumber}</span>
+                        <span className="text-[#7b726a]">By: {ord.placedByMemberName}</span>
                         <Badge variant="station" size="sm">
                           {ord.status}
                         </Badge>
                       </div>
 
-                      <div className="divide-y divide-stone-800/80">
+                      <div className="divide-y divide-[#f5f1ec]">
                         {ord.items.map((it: any, i: number) => (
                           <div key={i} className="py-1 flex items-center justify-between">
-                            <span className="font-bold text-white">
+                            <span className="font-bold text-[#211d1a]">
                               {it.quantity}× {it.name}
                             </span>
-                            <span className="font-mono text-stone-300">
+                            <span className="font-mono text-[#4d443c]">
                               ₹{(it.priceSnapshot * it.quantity).toFixed(2)}
                             </span>
                           </div>
@@ -772,24 +772,24 @@ export const FloorPlanPage: React.FC = () => {
             {inspectTab === 'members' && (
               <div className="space-y-2 max-h-80 overflow-y-auto pr-1">
                 {tableLiveDetails.members.length === 0 ? (
-                  <div className="py-8 text-center text-xs text-stone-500">No diners seated at this table.</div>
+                  <div className="py-8 text-center text-xs text-[#a69c93]">No diners seated at this table.</div>
                 ) : (
                   tableLiveDetails.members.map((m: any, idx: number) => (
                     <div
                       key={idx}
-                      className="p-3 rounded-xl bg-stone-900 border border-stone-800 flex items-center justify-between text-xs"
+                      className="p-3 rounded-xl bg-white border border-[#e9e3dc] flex items-center justify-between text-xs shadow-xs"
                     >
                       <div className="flex items-center gap-2">
-                        <div className="w-7 h-7 rounded-full bg-orange-500/20 text-orange-400 flex items-center justify-center font-bold">
+                        <div className="w-7 h-7 rounded-full bg-[#fff4ef] text-[#d96236] flex items-center justify-center font-bold border border-[#ffc9b5]">
                           {m.displayName.charAt(0)}
                         </div>
                         <div>
-                          <div className="font-bold text-white">{m.displayName}</div>
-                          <div className="text-[10px] text-stone-500 font-mono">ID: {m.temporaryMemberId}</div>
+                          <div className="font-bold text-[#211d1a]">{m.displayName}</div>
+                          <div className="text-[10px] text-[#a69c93] font-mono">ID: {m.temporaryMemberId}</div>
                         </div>
                       </div>
 
-                      <span className="text-[10px] text-stone-400 font-mono">
+                      <span className="text-[10px] text-[#7b726a] font-mono">
                         Joined {new Date(m.joinedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                       </span>
                     </div>
@@ -800,22 +800,22 @@ export const FloorPlanPage: React.FC = () => {
 
             {/* TAB CONTENT: CURRENT BILL */}
             {inspectTab === 'bill' && (
-              <div className="space-y-3 text-xs p-4 rounded-2xl bg-stone-900 border border-stone-800">
-                <div className="flex justify-between text-stone-400">
+              <div className="space-y-3 text-xs p-4 rounded-2xl bg-white border border-[#e9e3dc] shadow-xs">
+                <div className="flex justify-between text-[#7b726a]">
                   <span>Subtotal ({tableLiveDetails.currentBill.itemCount} items)</span>
-                  <span className="font-mono text-white">₹{tableLiveDetails.currentBill.subtotal.toFixed(2)}</span>
+                  <span className="font-mono text-[#211d1a]">₹{tableLiveDetails.currentBill.subtotal.toFixed(2)}</span>
                 </div>
-                <div className="flex justify-between text-stone-400">
+                <div className="flex justify-between text-[#7b726a]">
                   <span>GST (5%)</span>
-                  <span className="font-mono text-white">₹{tableLiveDetails.currentBill.tax.toFixed(2)}</span>
+                  <span className="font-mono text-[#211d1a]">₹{tableLiveDetails.currentBill.tax.toFixed(2)}</span>
                 </div>
-                <div className="flex justify-between text-stone-400">
+                <div className="flex justify-between text-[#7b726a]">
                   <span>Service Charge (5%)</span>
-                  <span className="font-mono text-white">₹{tableLiveDetails.currentBill.serviceCharge.toFixed(2)}</span>
+                  <span className="font-mono text-[#211d1a]">₹{tableLiveDetails.currentBill.serviceCharge.toFixed(2)}</span>
                 </div>
-                <div className="pt-2 border-t border-stone-800 flex justify-between items-center text-sm font-extrabold text-white">
+                <div className="pt-2 border-t border-[#e9e3dc] flex justify-between items-center text-sm font-extrabold text-[#211d1a]">
                   <span>Grand Total:</span>
-                  <span className="text-base text-orange-400 font-mono">
+                  <span className="text-base text-[#d96236] font-mono">
                     ₹{tableLiveDetails.currentBill.grandTotal.toFixed(2)}
                   </span>
                 </div>
@@ -826,16 +826,16 @@ export const FloorPlanPage: React.FC = () => {
             {inspectTab === 'requests' && (
               <div className="space-y-2 max-h-80 overflow-y-auto pr-1">
                 {tableLiveDetails.requests.length === 0 ? (
-                  <div className="py-8 text-center text-xs text-stone-500">No service assistance calls.</div>
+                  <div className="py-8 text-center text-xs text-[#a69c93]">No service assistance calls.</div>
                 ) : (
                   tableLiveDetails.requests.map((r: any) => (
-                    <div key={r._id} className="p-3 rounded-xl bg-stone-900 border border-stone-800 flex justify-between items-center text-xs">
+                    <div key={r._id} className="p-3 rounded-xl bg-white border border-[#e9e3dc] flex justify-between items-center text-xs shadow-xs">
                       <div>
-                        <div className="font-bold text-white flex items-center gap-1.5">
-                          <Bell className="w-3.5 h-3.5 text-amber-400" />
+                        <div className="font-bold text-[#211d1a] flex items-center gap-1.5">
+                          <Bell className="w-3.5 h-3.5 text-[#d97706]" />
                           <span>{r.requestType}</span>
                         </div>
-                        {r.notes && <div className="text-[10px] text-amber-300 italic">"{r.notes}"</div>}
+                        {r.notes && <div className="text-[10px] text-[#b45309] italic">"{r.notes}"</div>}
                       </div>
 
                       <Badge variant={r.status === 'COMPLETED' ? 'success' : 'warning'} size="sm">
@@ -849,30 +849,30 @@ export const FloorPlanPage: React.FC = () => {
 
             {/* TAB CONTENT: PAYMENT */}
             {inspectTab === 'payment' && (
-              <div className="p-4 rounded-2xl bg-stone-900 border border-stone-800 text-xs space-y-2">
+              <div className="p-4 rounded-2xl bg-white border border-[#e9e3dc] text-xs space-y-2 shadow-xs">
                 {tableLiveDetails.payment ? (
                   <div className="space-y-2">
-                    <div className="flex items-center gap-2 text-emerald-400 font-bold">
+                    <div className="flex items-center gap-2 text-[#059669] font-bold">
                       <CheckCircle2 className="w-4 h-4" />
                       <span>Payment Completed</span>
                     </div>
-                    <div className="flex justify-between text-stone-400">
+                    <div className="flex justify-between text-[#7b726a]">
                       <span>Transaction ID:</span>
-                      <span className="font-mono text-white">{tableLiveDetails.payment.transactionId}</span>
+                      <span className="font-mono text-[#211d1a]">{tableLiveDetails.payment.transactionId}</span>
                     </div>
-                    <div className="flex justify-between text-stone-400">
+                    <div className="flex justify-between text-[#7b726a]">
                       <span>Method:</span>
-                      <span className="font-mono text-white">{tableLiveDetails.payment.paymentMethod}</span>
+                      <span className="font-mono text-[#211d1a]">{tableLiveDetails.payment.paymentMethod}</span>
                     </div>
-                    <div className="flex justify-between text-stone-400">
+                    <div className="flex justify-between text-[#7b726a]">
                       <span>Amount Settled:</span>
-                      <span className="font-mono text-emerald-400 font-bold">
+                      <span className="font-mono text-[#059669] font-bold">
                         ₹{tableLiveDetails.payment.amount.toFixed(2)}
                       </span>
                     </div>
                   </div>
                 ) : (
-                  <div className="py-6 text-center text-stone-400">
+                  <div className="py-6 text-center text-[#7b726a]">
                     No payment settled yet for this active table.
                   </div>
                 )}
@@ -883,15 +883,15 @@ export const FloorPlanPage: React.FC = () => {
             {inspectTab === 'timeline' && (
               <div className="space-y-3 max-h-80 overflow-y-auto pr-1">
                 {tableLiveDetails.timeline.length === 0 ? (
-                  <div className="py-8 text-center text-xs text-stone-500">No events in timeline.</div>
+                  <div className="py-8 text-center text-xs text-[#a69c93]">No events in timeline.</div>
                 ) : (
-                  <div className="relative border-l border-stone-800 ml-3 space-y-4 py-2">
+                  <div className="relative border-l border-[#e9e3dc] ml-3 space-y-4 py-2">
                     {tableLiveDetails.timeline.map((ev: any, idx: number) => (
                       <div key={idx} className="relative pl-6 text-xs">
-                        <div className="absolute -left-1.5 top-0.5 w-3 h-3 rounded-full bg-orange-500 border-2 border-stone-950" />
-                        <div className="font-bold text-white">{ev.title}</div>
-                        <div className="text-[10px] text-stone-400">{ev.description}</div>
-                        <div className="text-[9px] text-stone-500 font-mono">
+                        <div className="absolute -left-1.5 top-0.5 w-3 h-3 rounded-full bg-[#d96236] border-2 border-white shadow-xs" />
+                        <div className="font-bold text-[#211d1a]">{ev.title}</div>
+                        <div className="text-[10px] text-[#7b726a]">{ev.description}</div>
+                        <div className="text-[9px] text-[#a69c93] font-mono">
                           {new Date(ev.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
                         </div>
                       </div>

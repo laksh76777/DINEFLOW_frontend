@@ -17,6 +17,7 @@ frontend/dist/
 backend/dist/
 frontend/.vite/
 backend/.cache/
+/figma
 
 # Environment Variables & Secrets
 .env

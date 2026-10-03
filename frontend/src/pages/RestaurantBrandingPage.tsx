@@ -253,7 +253,7 @@ export const RestaurantBrandingPage: React.FC = () => {
                   value={profile.description}
                   onChange={(e) => setProfile({ ...profile, description: e.target.value })}
                   rows={3}
-                  className="w-full bg-stone-900 border border-stone-800 text-stone-100 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-orange-500/60 focus:ring-2 focus:ring-orange-500/20"
+                  className="w-full bg-white border border-[#e9e3dc] text-[#211d1a] rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#d96236] focus:ring-2 focus:ring-[#d96236]/20"
                 />
               </div>
 
@@ -435,20 +435,20 @@ export const RestaurantBrandingPage: React.FC = () => {
           </div>
 
           {/* Smartphone Shell Frame */}
-          <div className="w-full max-w-sm mx-auto bg-stone-950 rounded-[2.5rem] p-3 border-4 border-stone-800 shadow-2xl shadow-black relative overflow-hidden">
+          <div className="w-full max-w-sm mx-auto bg-white rounded-[2.5rem] p-3 border-4 border-[#e9e3dc] shadow-xl relative overflow-hidden">
             {/* Phone Speaker Notch */}
-            <div className="w-28 h-4 bg-stone-900 rounded-full mx-auto mb-2" />
+            <div className="w-28 h-4 bg-[#e9e3dc] rounded-full mx-auto mb-2" />
 
             {/* Inner Mobile Screen Content */}
-            <div className="rounded-[1.8rem] bg-stone-900/90 overflow-hidden border border-stone-800/80 min-h-[520px] flex flex-col text-stone-100">
+            <div className="rounded-[1.8rem] bg-[#fbf9f6] overflow-hidden border border-[#e9e3dc] min-h-[520px] flex flex-col text-[#211d1a]">
               {/* Cover Banner with Gradient Overlay */}
-              <div className="relative h-40 w-full overflow-hidden">
+              <div className="relative h-40 w-full overflow-hidden bg-[#211d1a]">
                 <img
                   src={profile.coverImage}
                   alt="Live Cover"
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/40 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#211d1a]/80 via-[#211d1a]/20 to-transparent" />
                 <div className="absolute top-3 right-3">
                   <Badge variant="brand" size="sm" dot>
                     Table 07
@@ -459,49 +459,49 @@ export const RestaurantBrandingPage: React.FC = () => {
               {/* Logo & Identity Box */}
               <div className="p-4 -mt-10 relative z-10 space-y-3">
                 <div className="flex items-end gap-3">
-                  <div className="w-16 h-16 rounded-2xl overflow-hidden border-2 border-stone-900 shadow-xl ring-2 ring-orange-500/20 bg-stone-950 shrink-0">
+                  <div className="w-16 h-16 rounded-2xl overflow-hidden border-2 border-white shadow-lg bg-white shrink-0">
                     <img src={profile.logo} alt="Live Logo" className="w-full h-full object-cover" />
                   </div>
                   <div className="min-w-0">
-                    <span className="text-[10px] uppercase font-mono tracking-widest text-orange-400 font-bold">
+                    <span className="text-[10px] uppercase font-mono tracking-widest text-[#d96236] font-bold bg-[#fff4ef] px-1.5 py-0.5 rounded border border-[#ffc9b5]">
                       {profile.currency} • Contemporary Bistro
                     </span>
-                    <h3 className="text-lg font-black text-white font-serif truncate">
+                    <h3 className="text-lg font-black text-white font-serif truncate drop-shadow-sm mt-1">
                       {profile.name}
                     </h3>
                   </div>
                 </div>
 
-                <p className="text-[11px] text-stone-300 leading-relaxed line-clamp-2">
+                <p className="text-[11px] text-[#4d443c] leading-relaxed line-clamp-2">
                   {profile.description}
                 </p>
 
-                <div className="p-2.5 rounded-xl bg-stone-950/60 border border-stone-800/80 text-[10px] text-stone-400 space-y-1">
+                <div className="p-2.5 rounded-xl bg-white border border-[#e9e3dc] text-[10px] text-[#7b726a] space-y-1 shadow-xs">
                   <div className="flex items-center gap-1.5">
-                    <Clock className="w-3 h-3 text-amber-400 shrink-0" />
+                    <Clock className="w-3 h-3 text-[#d97706] shrink-0" />
                     <span>
                       {profile.openingTime} – {profile.closingTime}
                     </span>
                   </div>
                   <div className="flex items-center gap-1.5 truncate">
-                    <MapPin className="w-3 h-3 text-orange-400 shrink-0" />
+                    <MapPin className="w-3 h-3 text-[#d96236] shrink-0" />
                     <span className="truncate">{profile.address}</span>
                   </div>
                 </div>
 
                 {/* Simulated Customer Menu Chips Preview */}
-                <div className="pt-2 border-t border-stone-800/60">
-                  <div className="text-[10px] font-bold uppercase text-stone-400 mb-2">
+                <div className="pt-2 border-t border-[#e9e3dc]">
+                  <div className="text-[10px] font-bold uppercase text-[#7b726a] mb-2">
                     Digital Menu Categories
                   </div>
                   <div className="flex gap-1.5 overflow-x-auto pb-1 text-[10px]">
-                    <span className="px-2.5 py-1 rounded-full bg-orange-500 text-white font-bold shrink-0">
+                    <span className="px-2.5 py-1 rounded-full bg-[#d96236] text-white font-bold shrink-0 shadow-xs">
                       All Items
                     </span>
-                    <span className="px-2.5 py-1 rounded-full bg-stone-800 text-stone-300 shrink-0">
+                    <span className="px-2.5 py-1 rounded-full bg-white text-[#4d443c] border border-[#e9e3dc] shrink-0">
                       Small Plates
                     </span>
-                    <span className="px-2.5 py-1 rounded-full bg-stone-800 text-stone-300 shrink-0">
+                    <span className="px-2.5 py-1 rounded-full bg-white text-[#4d443c] border border-[#e9e3dc] shrink-0">
                       Curries
                     </span>
                   </div>
@@ -509,12 +509,12 @@ export const RestaurantBrandingPage: React.FC = () => {
               </div>
 
               {/* Bottom Simulated Dock */}
-              <div className="mt-auto p-3 bg-stone-950/90 border-t border-stone-800 flex items-center justify-between text-[10px]">
-                <span className="text-emerald-400 flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <div className="mt-auto p-3 bg-white border-t border-[#e9e3dc] flex items-center justify-between text-[10px]">
+                <span className="text-[#059669] flex items-center gap-1 font-semibold">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#059669] animate-pulse" />
                   Table Session #8291
                 </span>
-                <span className="font-bold text-orange-400">DineFlow Verified</span>
+                <span className="font-bold text-[#d96236]">DineFlow Verified</span>
               </div>
             </div>
           </div>

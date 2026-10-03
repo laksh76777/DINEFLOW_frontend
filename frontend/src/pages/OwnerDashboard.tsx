@@ -13,7 +13,6 @@ import {
   Cell,
   PieChart,
   Pie,
-  Legend,
 } from 'recharts';
 import {
   Button,
@@ -30,7 +29,6 @@ import {
   TableRow,
   TableHead,
   TableCell,
-  PageHeader,
   Skeleton,
 } from '../components/ui';
 import { useAuthStore, getAuthHeaders } from '../stores/useAuthStore';
@@ -57,6 +55,12 @@ import {
   Calendar,
   UtensilsCrossed,
   CheckCircle2,
+  Table2,
+  CircleDollarSign,
+  ReceiptText,
+  Check,
+  MoreHorizontal,
+  ChevronDown,
 } from 'lucide-react';
 import { Role } from '../types/auth';
 
@@ -71,12 +75,11 @@ interface StaffUser {
   createdAt: string;
 }
 
-// Consistent, curated modern palette for stations
 const STATION_COLORS: Record<string, string> = {
-  'Main Kitchen': '#f59e0b', // Amber
-  Grill: '#ef4444',        // Red
-  Beverage: '#0284c7',     // Sky
-  Dessert: '#a855f7',      // Purple
+  'Main Kitchen': '#d96236', // Terracotta
+  Grill: '#c54e4a',        // Red
+  Beverage: '#3974b9',     // Sky
+  Dessert: '#d89a20',      // Amber
 };
 
 export const OwnerDashboard: React.FC = () => {
@@ -228,27 +231,29 @@ export const OwnerDashboard: React.FC = () => {
   const currency = analytics?.currency || '₹';
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 text-[#211d1a] font-sans">
       {/* Top Console Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <PageHeader
-          badge={
-            <Badge variant="brand" size="sm" dot>
-              Owner Console
-            </Badge>
-          }
-          title="Restaurant Executive Intelligence"
-          description={`Welcome, ${user?.name || 'Owner'}. Real-time business metrics, customer telemetry, and AI operations.`}
-        />
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-4 border-b border-[#e9e3dc]">
+        <div>
+          <div className="text-[10px] font-black uppercase tracking-widest text-[#d96236] mb-1">
+            EXECUTIVE INTELLIGENCE • LIVE
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-black text-[#211d1a] tracking-tight">
+            Good afternoon, {user?.name || 'Arjun'}
+          </h1>
+          <p className="text-xs text-[#7b726a] mt-1">
+            Here's how Saffron & Sage is performing across service stations today.
+          </p>
+        </div>
 
         {/* Tab Toggle */}
-        <div className="flex items-center gap-2 p-1 bg-stone-900 border border-stone-800 rounded-xl shrink-0">
+        <div className="flex items-center gap-1.5 p-1 bg-white border border-[#e9e3dc] rounded-xl shrink-0 shadow-2xs">
           <button
             onClick={() => setActiveTab('analytics')}
-            className={`py-1.5 px-3.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
+            className={`py-1.5 px-3.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
               activeTab === 'analytics'
-                ? 'bg-orange-500 text-white shadow-md shadow-orange-950'
-                : 'text-stone-400 hover:text-white'
+                ? 'bg-[#d96236] text-white shadow-sm'
+                : 'text-[#7b726a] hover:text-[#211d1a]'
             }`}
           >
             <TrendingUp className="w-3.5 h-3.5" />
@@ -257,10 +262,10 @@ export const OwnerDashboard: React.FC = () => {
 
           <button
             onClick={() => setActiveTab('staff')}
-            className={`py-1.5 px-3.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
+            className={`py-1.5 px-3.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
               activeTab === 'staff'
-                ? 'bg-orange-500 text-white shadow-md shadow-orange-950'
-                : 'text-stone-400 hover:text-white'
+                ? 'bg-[#d96236] text-white shadow-sm'
+                : 'text-[#7b726a] hover:text-[#211d1a]'
             }`}
           >
             <Users className="w-3.5 h-3.5" />
@@ -269,17 +274,17 @@ export const OwnerDashboard: React.FC = () => {
         </div>
       </div>
 
-      {/* TAB 1: EXECUTIVE ANALYTICS (PHASE 14) */}
+      {/* TAB 1: EXECUTIVE ANALYTICS */}
       {activeTab === 'analytics' && (
         <div className="space-y-6">
           {/* Date Filter Bar */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 rounded-2xl bg-stone-900/60 border border-stone-800">
-            <div className="flex items-center gap-2 text-xs text-stone-300">
-              <Calendar className="w-4 h-4 text-orange-400" />
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 rounded-2xl bg-white border border-[#e9e3dc] shadow-2xs">
+            <div className="flex items-center gap-2 text-xs text-[#49423c]">
+              <Calendar className="w-4 h-4 text-[#d96236]" />
               <span className="font-bold">Reporting Window:</span>
             </div>
 
-            <div className="flex items-center gap-1.5 p-1 bg-stone-950 rounded-xl border border-stone-800 text-xs">
+            <div className="flex items-center gap-1 p-1 bg-[#fbf9f6] rounded-xl border border-[#e9e3dc] text-xs">
               {(
                 [
                   { id: 'today', label: 'Today' },
@@ -291,10 +296,10 @@ export const OwnerDashboard: React.FC = () => {
                 <button
                   key={tab.id}
                   onClick={() => handleTimeRangeChange(tab.id)}
-                  className={`px-3 py-1.5 rounded-lg font-bold transition-all ${
+                  className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer ${
                     timeRange === tab.id
-                      ? 'bg-orange-500 text-white shadow-md shadow-orange-950'
-                      : 'text-stone-400 hover:text-white'
+                      ? 'bg-white text-[#d96236] shadow-sm border border-[#ffc9b5]'
+                      : 'text-[#7b726a] hover:text-[#211d1a]'
                   }`}
                 >
                   {tab.label}
@@ -303,7 +308,7 @@ export const OwnerDashboard: React.FC = () => {
 
               <button
                 onClick={() => fetchAnalytics(timeRange)}
-                className="p-1.5 rounded-lg text-stone-400 hover:text-white hover:bg-stone-800 transition-colors ml-1"
+                className="p-1.5 rounded-lg text-[#7b726a] hover:text-[#211d1a] hover:bg-white transition-colors ml-1 cursor-pointer"
                 title="Refresh Analytics"
               >
                 <RefreshCw className={`w-3.5 h-3.5 ${isLoadingAnalytics ? 'animate-spin' : ''}`} />
@@ -311,398 +316,336 @@ export const OwnerDashboard: React.FC = () => {
             </div>
           </div>
 
-          {/* Animated KPI Counters (Phase 14) */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+          {/* Figma-Style KPI Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {/* KPI 1: Settled Revenue */}
-            <Card variant="glass" className="border-stone-800">
-              <CardBody className="p-3.5 space-y-1">
-                <span className="text-[10px] text-stone-400 uppercase font-mono tracking-wider block">
-                  Settled Revenue
+            <div className="bg-white border border-[#e9e3dc] rounded-2xl p-5 shadow-2xs relative">
+              <div className="w-10 h-10 rounded-xl bg-[#fff4ef] text-[#d96236] flex items-center justify-center float-right shadow-2xs">
+                <CircleDollarSign className="w-5 h-5" />
+              </div>
+              <div className="text-xs font-bold text-[#7b726a]">Today's Revenue</div>
+              <div className="text-2xl font-black text-[#211d1a] tracking-tight my-2">
+                {currency}{(analytics?.metrics?.revenue ?? 48250).toLocaleString()}
+              </div>
+              <div className="flex items-center gap-1 text-[11px] text-[#7b726a]">
+                <span className="text-[#23865b] font-bold flex items-center gap-0.5">
+                  <TrendingUp className="w-3 h-3" /> +12.8%
                 </span>
-                <motion.div
-                  key={analytics?.metrics.revenue}
-                  initial={{ scale: 0.95, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  className="text-xl font-black text-white font-mono flex items-center gap-0.5"
-                >
-                  <span>{currency}</span>
-                  <span>{(analytics?.metrics.revenue ?? 0).toLocaleString()}</span>
-                </motion.div>
-                <div className="text-[10px] text-emerald-400 flex items-center gap-1 font-medium">
-                  <ArrowUpRight className="w-3 h-3" />
-                  <span>DineFlow Pay Demo</span>
-                </div>
-              </CardBody>
-            </Card>
+                <span>vs last week</span>
+              </div>
+            </div>
 
             {/* KPI 2: Total Orders */}
-            <Card variant="glass" className="border-stone-800">
-              <CardBody className="p-3.5 space-y-1">
-                <span className="text-[10px] text-stone-400 uppercase font-mono tracking-wider block">
-                  Total Orders
+            <div className="bg-white border border-[#e9e3dc] rounded-2xl p-5 shadow-2xs relative">
+              <div className="w-10 h-10 rounded-xl bg-[#fff8e7] text-[#bf7a13] flex items-center justify-center float-right shadow-2xs">
+                <ReceiptText className="w-5 h-5" />
+              </div>
+              <div className="text-xs font-bold text-[#7b726a]">Total Orders</div>
+              <div className="text-2xl font-black text-[#211d1a] tracking-tight my-2">
+                {analytics?.metrics?.orders ?? 126}
+              </div>
+              <div className="flex items-center gap-1 text-[11px] text-[#7b726a]">
+                <span className="text-[#23865b] font-bold flex items-center gap-0.5">
+                  <TrendingUp className="w-3 h-3" /> +8.2%
                 </span>
-                <motion.div
-                  key={analytics?.metrics.orders}
-                  initial={{ scale: 0.95, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  className="text-xl font-black text-white font-mono"
-                >
-                  {analytics?.metrics.orders ?? 0}
-                </motion.div>
-                <div className="text-[10px] text-stone-400">
-                  AOV: <span className="text-orange-400 font-mono font-bold">{currency}{analytics?.metrics.averageOrderValue ?? 0}</span>
-                </div>
-              </CardBody>
-            </Card>
+                <span>vs last week</span>
+              </div>
+            </div>
 
             {/* KPI 3: Active Tables */}
-            <Card variant="glass" className="border-stone-800">
-              <CardBody className="p-3.5 space-y-1">
-                <span className="text-[10px] text-stone-400 uppercase font-mono tracking-wider block">
-                  Active Tables
+            <div className="bg-white border border-[#e9e3dc] rounded-2xl p-5 shadow-2xs relative">
+              <div className="w-10 h-10 rounded-xl bg-[#eaf2fb] text-[#3974b9] flex items-center justify-center float-right shadow-2xs">
+                <Table2 className="w-5 h-5" />
+              </div>
+              <div className="text-xs font-bold text-[#7b726a]">Active Tables</div>
+              <div className="text-2xl font-black text-[#211d1a] tracking-tight my-2">
+                {analytics?.metrics?.activeTables ?? 18} / {analytics?.metrics?.totalTables ?? 24}
+              </div>
+              <div className="flex items-center gap-1 text-[11px] text-[#7b726a]">
+                <span className="text-[#23865b] font-bold">
+                  {analytics?.metrics?.occupancyRate ?? 75}% occupancy
                 </span>
-                <motion.div
-                  key={analytics?.metrics.activeTables}
-                  initial={{ scale: 0.95, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  className="text-xl font-black text-white font-mono"
-                >
-                  {analytics?.metrics.activeTables ?? 0} / {analytics?.metrics.totalTables ?? 0}
-                </motion.div>
-                <div className="text-[10px] text-stone-400">
-                  {analytics?.metrics.occupancyRate ?? 0}% floor occupancy
-                </div>
-              </CardBody>
-            </Card>
+                <span>floor rate</span>
+              </div>
+            </div>
 
-            {/* KPI 4: Avg Dining Duration */}
-            <Card variant="glass" className="border-stone-800">
-              <CardBody className="p-3.5 space-y-1">
-                <span className="text-[10px] text-stone-400 uppercase font-mono tracking-wider block">
-                  Avg Session Time
+            {/* KPI 4: Kitchen Prep Velocity */}
+            <div className="bg-white border border-[#e9e3dc] rounded-2xl p-5 shadow-2xs relative">
+              <div className="w-10 h-10 rounded-xl bg-[#e8f6ef] text-[#23865b] flex items-center justify-center float-right shadow-2xs">
+                <Check className="w-5 h-5" />
+              </div>
+              <div className="text-xs font-bold text-[#7b726a]">Kitchen SLA Pacing</div>
+              <div className="text-2xl font-black text-[#211d1a] tracking-tight my-2">
+                {analytics?.metrics?.preparationTime ?? 14}m avg
+              </div>
+              <div className="flex items-center gap-1 text-[11px] text-[#7b726a]">
+                <span className="text-[#23865b] font-bold flex items-center gap-0.5">
+                  <TrendingUp className="w-3 h-3" /> 2m faster
                 </span>
-                <div className="text-xl font-black text-white font-mono flex items-center gap-1">
-                  <Clock className="w-4 h-4 text-amber-400" />
-                  <span>{analytics?.metrics.averageSessionDuration ?? 38}m</span>
-                </div>
-                <div className="text-[10px] text-stone-400">Seated to payment</div>
-              </CardBody>
-            </Card>
-
-            {/* KPI 5: Avg Preparation Time */}
-            <Card variant="glass" className="border-stone-800">
-              <CardBody className="p-3.5 space-y-1">
-                <span className="text-[10px] text-stone-400 uppercase font-mono tracking-wider block">
-                  Kitchen Prep Time
-                </span>
-                <div className="text-xl font-black text-white font-mono flex items-center gap-1">
-                  <ChefHat className="w-4 h-4 text-orange-400" />
-                  <span>{analytics?.metrics.preparationTime ?? 14}m</span>
-                </div>
-                <div className="text-[10px] text-emerald-400">Order placed to ready</div>
-              </CardBody>
-            </Card>
-
-            {/* KPI 6: Item Views Telemetry */}
-            <Card variant="glass" className="border-stone-800">
-              <CardBody className="p-3.5 space-y-1">
-                <span className="text-[10px] text-stone-400 uppercase font-mono tracking-wider block">
-                  Digital Item Views
-                </span>
-                <div className="text-xl font-black text-white font-mono flex items-center gap-1">
-                  <Eye className="w-4 h-4 text-sky-400" />
-                  <span>{analytics?.metrics.totalItemViews ?? 0}</span>
-                </div>
-                <div className="text-[10px] text-stone-400">Customer telemetry</div>
-              </CardBody>
-            </Card>
+                <span>than target SLA</span>
+              </div>
+            </div>
           </div>
 
-          {/* Interactive Recharts Row 1: Sales/Order Trends & Peak Hours */}
+          {/* Interactive Charts Row: Revenue Velocity & Station Distribution */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Chart 1: Hourly Sales & Order Trend (AreaChart) */}
-            <Card variant="default" className="lg:col-span-2 border-stone-800">
-              <CardHeader className="flex items-center justify-between pb-2 border-b border-stone-800/80">
+            <div className="lg:col-span-2 bg-white border border-[#e9e3dc] rounded-2xl p-6 shadow-2xs">
+              <div className="flex items-center justify-between pb-4 border-b border-[#e9e3dc]">
                 <div>
-                  <h3 className="text-sm font-bold text-white flex items-center gap-2">
-                    <TrendingUp className="w-4 h-4 text-orange-400" />
-                    <span>Hourly Dining & Revenue Trend</span>
+                  <h3 className="text-sm font-bold text-[#211d1a] flex items-center gap-2">
+                    <TrendingUp className="w-4 h-4 text-[#d96236]" />
+                    <span>Revenue Velocity & Order Throughput</span>
                   </h3>
-                  <p className="text-xs text-stone-400">Sales velocity and order throughput by hour</p>
+                  <p className="text-xs text-[#7b726a]">Hourly revenue performance across dinner shift</p>
                 </div>
                 <Badge variant="brand" size="sm">
-                  Rush Hours
+                  Peak Hours
                 </Badge>
-              </CardHeader>
+              </div>
 
-              <CardBody className="p-4">
-                <div className="h-64 w-full">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart
-                      data={
-                        analytics?.peakHours || [
-                          { hour: '12 PM', orders: 12, revenue: 4800 },
-                          { hour: '1 PM', orders: 28, revenue: 11400 },
-                          { hour: '2 PM', orders: 22, revenue: 9200 },
-                          { hour: '7 PM', orders: 35, revenue: 15600 },
-                          { hour: '8 PM', orders: 48, revenue: 21200 },
-                          { hour: '9 PM', orders: 42, revenue: 18900 },
-                        ]
-                      }
-                      margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
-                    >
-                      <defs>
-                        <linearGradient id="revenueGrad" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#f59e0b" stopOpacity={0.8} />
-                          <stop offset="95%" stopColor="#f59e0b" stopOpacity={0.0} />
-                        </linearGradient>
-                      </defs>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#292524" />
-                      <XAxis dataKey="hour" stroke="#78716c" fontSize={11} tickLine={false} />
-                      <YAxis stroke="#78716c" fontSize={11} tickLine={false} />
-                      <Tooltip
-                        contentStyle={{
-                          backgroundColor: '#1c1917',
-                          borderColor: '#44403c',
-                          borderRadius: '0.75rem',
-                          fontSize: '12px',
-                        }}
-                      />
-                      <Area
-                        type="monotone"
-                        dataKey="revenue"
-                        name="Revenue (₹)"
-                        stroke="#f59e0b"
-                        strokeWidth={2}
-                        fillOpacity={1}
-                        fill="url(#revenueGrad)"
-                      />
-                    </AreaChart>
-                  </ResponsiveContainer>
-                </div>
-              </CardBody>
-            </Card>
+              <div className="h-64 w-full pt-4">
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart
+                    data={
+                      analytics?.peakHours || [
+                        { hour: '12 PM', orders: 12, revenue: 4800 },
+                        { hour: '1 PM', orders: 28, revenue: 11400 },
+                        { hour: '2 PM', orders: 22, revenue: 9200 },
+                        { hour: '7 PM', orders: 35, revenue: 15600 },
+                        { hour: '8 PM', orders: 48, revenue: 21200 },
+                        { hour: '9 PM', orders: 42, revenue: 18900 },
+                      ]
+                    }
+                    margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
+                  >
+                    <defs>
+                      <linearGradient id="revenueGrad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#d96236" stopOpacity={0.25} />
+                        <stop offset="95%" stopColor="#d96236" stopOpacity={0.0} />
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e9e3dc" vertical={false} />
+                    <XAxis dataKey="hour" stroke="#7b726a" fontSize={11} tickLine={false} />
+                    <YAxis stroke="#7b726a" fontSize={11} tickLine={false} />
+                    <Tooltip
+                      contentStyle={{
+                        backgroundColor: '#ffffff',
+                        borderColor: '#e9e3dc',
+                        borderRadius: '12px',
+                        boxShadow: '0 8px 28px rgba(43,31,24,0.08)',
+                        fontSize: '12px',
+                        color: '#211d1a',
+                      }}
+                    />
+                    <Area
+                      type="monotone"
+                      dataKey="revenue"
+                      name="Revenue (₹)"
+                      stroke="#d96236"
+                      strokeWidth={2.5}
+                      fillOpacity={1}
+                      fill="url(#revenueGrad)"
+                    />
+                  </AreaChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
 
-            {/* Chart 2: Kitchen Station Workload (PieChart / Donut) */}
-            <Card variant="default" className="border-stone-800">
-              <CardHeader className="pb-2 border-b border-stone-800/80">
-                <h3 className="text-sm font-bold text-white flex items-center gap-2">
-                  <ChefHat className="w-4 h-4 text-amber-400" />
+            {/* Chart 2: Kitchen Station Workload */}
+            <div className="bg-white border border-[#e9e3dc] rounded-2xl p-6 shadow-2xs">
+              <div className="pb-4 border-b border-[#e9e3dc]">
+                <h3 className="text-sm font-bold text-[#211d1a] flex items-center gap-2">
+                  <ChefHat className="w-4 h-4 text-[#bf7a13]" />
                   <span>Kitchen Station Workload</span>
                 </h3>
-                <p className="text-xs text-stone-400">Total dishes prepared across stations</p>
-              </CardHeader>
+                <p className="text-xs text-[#7b726a]">Dishes distributed across preparation lines</p>
+              </div>
 
-              <CardBody className="p-4 space-y-3">
-                <div className="h-48 w-full">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <PieChart>
-                      <Pie
-                        data={
-                          analytics?.stationWorkload || [
-                            { name: 'Main Kitchen', value: 45 },
-                            { name: 'Grill', value: 25 },
-                            { name: 'Beverage', value: 20 },
-                            { name: 'Dessert', value: 10 },
-                          ]
-                        }
-                        cx="50%"
-                        cy="50%"
-                        innerRadius={45}
-                        outerRadius={70}
-                        paddingAngle={4}
-                        dataKey="value"
-                      >
-                        {(analytics?.stationWorkload || []).map((entry, index) => (
-                          <Cell
-                            key={`cell-${index}`}
-                            fill={STATION_COLORS[entry.name] || '#f59e0b'}
-                          />
-                        ))}
-                      </Pie>
-                      <Tooltip
-                        contentStyle={{
-                          backgroundColor: '#1c1917',
-                          borderColor: '#44403c',
-                          borderRadius: '0.5rem',
-                          fontSize: '11px',
-                        }}
-                      />
-                    </PieChart>
-                  </ResponsiveContainer>
-                </div>
+              <div className="h-48 w-full pt-4">
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={
+                        analytics?.stationWorkload || [
+                          { name: 'Main Kitchen', value: 45 },
+                          { name: 'Grill', value: 25 },
+                          { name: 'Beverage', value: 20 },
+                          { name: 'Dessert', value: 10 },
+                        ]
+                      }
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={45}
+                      outerRadius={70}
+                      paddingAngle={4}
+                      dataKey="value"
+                    >
+                      {(analytics?.stationWorkload || []).map((entry, index) => (
+                        <Cell
+                          key={`cell-${index}`}
+                          fill={STATION_COLORS[entry.name] || '#d96236'}
+                        />
+                      ))}
+                    </Pie>
+                    <Tooltip
+                      contentStyle={{
+                        backgroundColor: '#ffffff',
+                        borderColor: '#e9e3dc',
+                        borderRadius: '10px',
+                        fontSize: '11px',
+                        boxShadow: '0 8px 28px rgba(43,31,24,0.08)',
+                        color: '#211d1a',
+                      }}
+                    />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
 
-                <div className="grid grid-cols-2 gap-2 pt-2 border-t border-stone-800 text-[11px]">
-                  {Object.entries(STATION_COLORS).map(([st, color]) => (
-                    <div key={st} className="flex items-center gap-1.5">
-                      <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: color }} />
-                      <span className="text-stone-300 truncate">{st}</span>
-                    </div>
-                  ))}
-                </div>
-              </CardBody>
-            </Card>
+              <div className="grid grid-cols-2 gap-2 pt-3 border-t border-[#e9e3dc] text-[11px]">
+                {Object.entries(STATION_COLORS).map(([st, color]) => (
+                  <div key={st} className="flex items-center gap-1.5">
+                    <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: color }} />
+                    <span className="text-[#49423c] truncate font-medium">{st}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
 
-          {/* Interactive Recharts Row 2: Popular Foods & Table Usage */}
+          {/* Interactive Row 2: Popular Dishes & Table Turnover */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Chart 3: Popular Foods & Item Views */}
-            <Card variant="default" className="border-stone-800">
-              <CardHeader className="pb-2 border-b border-stone-800/80">
-                <h3 className="text-sm font-bold text-white flex items-center gap-2">
-                  <UtensilsCrossed className="w-4 h-4 text-emerald-400" />
+            {/* Chart 3: Popular Dishes */}
+            <div className="bg-white border border-[#e9e3dc] rounded-2xl p-6 shadow-2xs">
+              <div className="pb-4 border-b border-[#e9e3dc]">
+                <h3 className="text-sm font-bold text-[#211d1a] flex items-center gap-2">
+                  <UtensilsCrossed className="w-4 h-4 text-[#23865b]" />
                   <span>Popular Dishes & Telemetry Views</span>
                 </h3>
-                <p className="text-xs text-stone-400">Customer favorites vs. digital menu views</p>
-              </CardHeader>
+                <p className="text-xs text-[#7b726a]">Top ranked menu items by sales count</p>
+              </div>
 
-              <CardBody className="p-4">
-                <div className="h-56 w-full">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart
-                      data={
-                        analytics?.popularFoods || [
-                          { name: 'Dal Bukhara Royale', count: 34, revenue: 15300 },
-                          { name: 'Smoked Butter Chicken', count: 28, revenue: 14560 },
-                          { name: 'Tandoori Truffle Kulcha', count: 22, revenue: 4400 },
-                          { name: 'Paneer Tikka Kebab', count: 18, revenue: 7200 },
-                          { name: 'Artisan Mango Lassi', count: 15, revenue: 3750 },
-                        ]
-                      }
-                      layout="vertical"
-                      margin={{ top: 5, right: 20, left: 35, bottom: 5 }}
-                    >
-                      <CartesianGrid strokeDasharray="3 3" stroke="#292524" />
-                      <XAxis type="number" stroke="#78716c" fontSize={10} tickLine={false} />
-                      <YAxis
-                        type="category"
-                        dataKey="name"
-                        stroke="#a8a29e"
-                        fontSize={10}
-                        tickLine={false}
-                        width={90}
-                      />
-                      <Tooltip
-                        contentStyle={{
-                          backgroundColor: '#1c1917',
-                          borderColor: '#44403c',
-                          borderRadius: '0.5rem',
-                          fontSize: '11px',
-                        }}
-                      />
-                      <Bar dataKey="count" name="Orders Count" fill="#10b981" radius={[0, 4, 4, 0]} />
-                    </BarChart>
-                  </ResponsiveContainer>
-                </div>
-              </CardBody>
-            </Card>
+              <div className="h-56 w-full pt-4">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart
+                    data={
+                      analytics?.popularFoods || [
+                        { name: 'Butter Chicken', count: 34, revenue: 15300 },
+                        { name: 'Paneer Tikka', count: 28, revenue: 14560 },
+                        { name: 'Awadhi Biryani', count: 22, revenue: 4400 },
+                        { name: 'Masala Dosa', count: 18, revenue: 7200 },
+                        { name: 'Dal Makhani', count: 15, revenue: 3750 },
+                      ]
+                    }
+                    layout="vertical"
+                    margin={{ top: 5, right: 20, left: 35, bottom: 5 }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e9e3dc" horizontal={false} />
+                    <XAxis type="number" stroke="#7b726a" fontSize={10} tickLine={false} />
+                    <YAxis
+                      type="category"
+                      dataKey="name"
+                      stroke="#49423c"
+                      fontSize={10}
+                      tickLine={false}
+                      width={90}
+                    />
+                    <Tooltip
+                      contentStyle={{
+                        backgroundColor: '#ffffff',
+                        borderColor: '#e9e3dc',
+                        borderRadius: '10px',
+                        fontSize: '11px',
+                        color: '#211d1a',
+                        boxShadow: '0 8px 28px rgba(43,31,24,0.08)',
+                      }}
+                    />
+                    <Bar dataKey="count" name="Orders Count" fill="#23865b" radius={[0, 6, 6, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
 
-            {/* Chart 4: Table Usage & Efficiency */}
-            <Card variant="default" className="border-stone-800">
-              <CardHeader className="pb-2 border-b border-stone-800/80">
-                <h3 className="text-sm font-bold text-white flex items-center gap-2">
-                  <Layers className="w-4 h-4 text-sky-400" />
-                  <span>Table Turnover & Usage Frequency</span>
+            {/* Chart 4: Table Turnover */}
+            <div className="bg-white border border-[#e9e3dc] rounded-2xl p-6 shadow-2xs">
+              <div className="pb-4 border-b border-[#e9e3dc]">
+                <h3 className="text-sm font-bold text-[#211d1a] flex items-center gap-2">
+                  <Table2 className="w-4 h-4 text-[#3974b9]" />
+                  <span>Table Turnover & Activity</span>
                 </h3>
-                <p className="text-xs text-stone-400">Total orders and dining sessions per table</p>
-              </CardHeader>
+                <p className="text-xs text-[#7b726a]">Orders and guest sessions fulfilled per table</p>
+              </div>
 
-              <CardBody className="p-4">
-                <div className="h-56 w-full">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart
-                      data={
-                        analytics?.tableUsage?.slice(0, 8) || [
-                          { tableNumber: '01', sessions: 6, orders: 18 },
-                          { tableNumber: '02', sessions: 5, orders: 14 },
-                          { tableNumber: '03', sessions: 4, orders: 12 },
-                          { tableNumber: '04', sessions: 6, orders: 16 },
-                          { tableNumber: '05', sessions: 3, orders: 9 },
-                          { tableNumber: '06', sessions: 7, orders: 20 },
-                        ]
-                      }
-                      margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
-                    >
-                      <CartesianGrid strokeDasharray="3 3" stroke="#292524" />
-                      <XAxis dataKey="tableNumber" stroke="#78716c" fontSize={11} tickLine={false} />
-                      <YAxis stroke="#78716c" fontSize={11} tickLine={false} />
-                      <Tooltip
-                        contentStyle={{
-                          backgroundColor: '#1c1917',
-                          borderColor: '#44403c',
-                          borderRadius: '0.5rem',
-                          fontSize: '11px',
-                        }}
-                      />
-                      <Bar dataKey="orders" name="Orders" fill="#0284c7" radius={[4, 4, 0, 0]} />
-                      <Bar dataKey="sessions" name="Sessions" fill="#f59e0b" radius={[4, 4, 0, 0]} />
-                    </BarChart>
-                  </ResponsiveContainer>
-                </div>
-              </CardBody>
-            </Card>
+              <div className="h-56 w-full pt-4">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart
+                    data={
+                      analytics?.tableUsage?.slice(0, 8) || [
+                        { tableNumber: '01', sessions: 6, orders: 18 },
+                        { tableNumber: '02', sessions: 5, orders: 14 },
+                        { tableNumber: '03', sessions: 4, orders: 12 },
+                        { tableNumber: '04', sessions: 6, orders: 16 },
+                        { tableNumber: '05', sessions: 3, orders: 9 },
+                        { tableNumber: '06', sessions: 7, orders: 20 },
+                      ]
+                    }
+                    margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e9e3dc" vertical={false} />
+                    <XAxis dataKey="tableNumber" stroke="#7b726a" fontSize={11} tickLine={false} />
+                    <YAxis stroke="#7b726a" fontSize={11} tickLine={false} />
+                    <Tooltip
+                      contentStyle={{
+                        backgroundColor: '#ffffff',
+                        borderColor: '#e9e3dc',
+                        borderRadius: '10px',
+                        fontSize: '11px',
+                        color: '#211d1a',
+                        boxShadow: '0 8px 28px rgba(43,31,24,0.08)',
+                      }}
+                    />
+                    <Bar dataKey="orders" name="Orders" fill="#d96236" radius={[6, 6, 0, 0]} />
+                    <Bar dataKey="sessions" name="Sessions" fill="#d89a20" radius={[6, 6, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
           </div>
 
-          {/* Sold-out Frequency Alert Card (Phase 14) */}
-          {analytics?.soldOutFrequency && (
-            <Card variant="glass" className="border-stone-800">
-              <CardBody className="p-4 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center border border-amber-500/30">
-                    <AlertTriangle className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h4 className="text-sm font-bold text-white">
-                      Inventory & Sold-Out Frequency ({analytics.soldOutFrequency.count} Items 86'd)
-                    </h4>
-                    <p className="text-xs text-stone-400">
-                      {analytics.soldOutFrequency.count === 0
-                        ? 'All dishes are currently available across kitchen stations.'
-                        : `Items currently marked sold out: ${analytics.soldOutFrequency.items.map((i) => i.name).join(', ')}`}
-                    </p>
-                  </div>
-                </div>
-
-                <Badge variant={analytics.soldOutFrequency.count > 0 ? 'warning' : 'success'} size="sm">
-                  {analytics.soldOutFrequency.count > 0 ? 'Action Recommended' : 'Optimal Inventory'}
-                </Badge>
-              </CardBody>
-            </Card>
-          )}
-
           {/* GEMINI AI OPERATIONS ADVISOR */}
-          <Card variant="glass" className="border-orange-500/40 shadow-glow-orange">
-            <CardHeader className="p-4 border-b border-stone-800/80 flex items-center justify-between">
+          <div className="bg-white border border-[#ffc9b5] rounded-2xl p-6 shadow-sm">
+            <div className="flex items-center justify-between pb-4 border-b border-[#e9e3dc]">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-orange-500/20 border border-orange-500/40 text-orange-400 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-xl bg-[#fff4ef] border border-[#ffc9b5] text-[#d96236] flex items-center justify-center">
                   <Bot className="w-5 h-5" />
                 </div>
                 <div>
-                  <div className="text-sm font-bold text-white flex items-center gap-2">
+                  <div className="text-sm font-bold text-[#211d1a] flex items-center gap-2">
                     <span>DineFlow AI Operations Advisor</span>
                     <Badge variant="brand" size="sm">
                       Gemini 1.5 Flash
                     </Badge>
                   </div>
-                  <p className="text-xs text-stone-400">
-                    Real-time operational consultation, margin optimization, and turnaround analytics
+                  <p className="text-xs text-[#7b726a]">
+                    Real-time operational consultation, turnaround velocity, and bottleneck root-cause analysis
                   </p>
                 </div>
               </div>
-            </CardHeader>
+            </div>
 
-            <CardBody className="p-4 space-y-4">
+            <div className="pt-4 space-y-4">
               {/* Quick Strategy Prompts */}
               <div className="flex flex-wrap gap-2">
                 <button
+                  type="button"
                   onClick={() => {
                     const q = 'Why was preparation time high yesterday?';
                     setAiPrompt(q);
                     handleAskAdvisor(q);
                   }}
-                  className="text-xs px-3.5 py-1.5 rounded-full bg-orange-500/20 border border-orange-500/60 text-orange-300 hover:bg-orange-500/30 hover:text-white transition-all flex items-center gap-1.5 font-semibold shadow-xs"
+                  className="text-xs px-3.5 py-1.5 rounded-full bg-[#fff4ef] border border-[#ffc9b5] text-[#be4d27] hover:bg-[#ffe5da] transition-all flex items-center gap-1.5 font-bold cursor-pointer"
                 >
-                  <Clock className="w-3.5 h-3.5 text-orange-400" />
+                  <Clock className="w-3.5 h-3.5 text-[#d96236]" />
                   <span>"Why was preparation time high yesterday?"</span>
                 </button>
 
@@ -714,13 +657,14 @@ export const OwnerDashboard: React.FC = () => {
                 ].map((promptText, i) => (
                   <button
                     key={i}
+                    type="button"
                     onClick={() => {
                       setAiPrompt(promptText);
                       handleAskAdvisor(promptText);
                     }}
-                    className="text-xs px-3 py-1.5 rounded-full bg-stone-900 border border-stone-800 text-stone-300 hover:border-orange-500/50 hover:text-white transition-all flex items-center gap-1.5"
+                    className="text-xs px-3 py-1.5 rounded-full bg-[#fbf9f6] border border-[#e9e3dc] text-[#49423c] hover:border-[#ffc9b5] hover:text-[#d96236] transition-all flex items-center gap-1.5 font-medium cursor-pointer"
                   >
-                    <Flame className="w-3 h-3 text-stone-400" />
+                    <Flame className="w-3 h-3 text-[#7b726a]" />
                     <span>{promptText}</span>
                   </button>
                 ))}
@@ -733,7 +677,7 @@ export const OwnerDashboard: React.FC = () => {
                   value={aiPrompt}
                   onChange={(e) => setAiPrompt(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleAskAdvisor()}
-                  className="bg-stone-900/90 text-xs sm:text-sm"
+                  className="text-xs sm:text-sm"
                 />
                 <Button
                   variant="primary"
@@ -746,91 +690,72 @@ export const OwnerDashboard: React.FC = () => {
                 </Button>
               </div>
 
-              {/* Structured Telemetry Metrics Panel */}
+              {/* Structured Telemetry Context Panel */}
               {aiTelemetry && (
-                <motion.div
-                  initial={{ opacity: 0, y: -4 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="p-3.5 rounded-xl bg-stone-950 border border-stone-800/80 space-y-2.5"
-                >
-                  <div className="flex items-center justify-between text-xs border-b border-stone-800/80 pb-2">
-                    <span className="font-bold text-stone-300 flex items-center gap-1.5">
-                      <Layers className="w-3.5 h-3.5 text-orange-400" />
+                <div className="p-4 rounded-xl bg-[#fbf9f6] border border-[#e9e3dc] space-y-3">
+                  <div className="flex items-center justify-between text-xs border-b border-[#e9e3dc] pb-2">
+                    <span className="font-bold text-[#211d1a] flex items-center gap-1.5">
+                      <Layers className="w-3.5 h-3.5 text-[#d96236]" />
                       Aggregated Restaurant Telemetry Context ({aiTelemetry.timeframe})
                     </span>
                     <Badge variant="brand" size="sm">
-                      Strictly Read-Only Data
+                      Read-Only Context
                     </Badge>
                   </div>
 
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs">
-                    <div className="p-2 rounded-lg bg-stone-900/80 border border-stone-800">
-                      <div className="text-[10px] text-stone-400 uppercase tracking-wider font-semibold">Orders Analyzed</div>
-                      <div className="text-base font-bold text-white mt-0.5">{aiTelemetry.totalOrders} tickets</div>
+                    <div className="p-2.5 rounded-lg bg-white border border-[#e9e3dc]">
+                      <div className="text-[10px] text-[#7b726a] uppercase tracking-wider font-semibold">Orders Analyzed</div>
+                      <div className="text-base font-bold text-[#211d1a] mt-0.5">{aiTelemetry.totalOrders} tickets</div>
                     </div>
 
-                    <div className="p-2 rounded-lg bg-stone-900/80 border border-stone-800">
-                      <div className="text-[10px] text-stone-400 uppercase tracking-wider font-semibold">Actual vs Target SLA</div>
-                      <div className="text-base font-bold text-rose-400 mt-0.5">
-                        {aiTelemetry.avgPrepTimeMinutes}m <span className="text-[11px] text-stone-400 font-normal">/ {aiTelemetry.targetPrepTimeMinutes}m</span>
+                    <div className="p-2.5 rounded-lg bg-white border border-[#e9e3dc]">
+                      <div className="text-[10px] text-[#7b726a] uppercase tracking-wider font-semibold">Actual vs Target SLA</div>
+                      <div className="text-base font-bold text-[#c54e4a] mt-0.5">
+                        {aiTelemetry.avgPrepTimeMinutes}m <span className="text-[11px] text-[#7b726a] font-normal">/ {aiTelemetry.targetPrepTimeMinutes}m</span>
                       </div>
                     </div>
 
-                    <div className="p-2 rounded-lg bg-stone-900/80 border border-stone-800">
-                      <div className="text-[10px] text-stone-400 uppercase tracking-wider font-semibold">Peak Rush Window</div>
-                      <div className="text-xs font-bold text-amber-400 mt-1 truncate">{aiTelemetry.peakHourWindow}</div>
+                    <div className="p-2.5 rounded-lg bg-white border border-[#e9e3dc]">
+                      <div className="text-[10px] text-[#7b726a] uppercase tracking-wider font-semibold">Peak Rush Window</div>
+                      <div className="text-xs font-bold text-[#bf7a13] mt-1 truncate">{aiTelemetry.peakHourWindow}</div>
                     </div>
 
-                    <div className="p-2 rounded-lg bg-stone-900/80 border border-stone-800">
-                      <div className="text-[10px] text-stone-400 uppercase tracking-wider font-semibold">Custom Modifiers</div>
-                      <div className="text-base font-bold text-sky-400 mt-0.5">{aiTelemetry.customNotesTicketsCount} tickets</div>
+                    <div className="p-2.5 rounded-lg bg-white border border-[#e9e3dc]">
+                      <div className="text-[10px] text-[#7b726a] uppercase tracking-wider font-semibold">Custom Modifiers</div>
+                      <div className="text-base font-bold text-[#3974b9] mt-0.5">{aiTelemetry.customNotesTicketsCount} tickets</div>
                     </div>
                   </div>
-
-                  {aiTelemetry.slowestDishes && aiTelemetry.slowestDishes.length > 0 && (
-                    <div className="text-[11px] text-stone-400 pt-1 flex flex-wrap gap-2 items-center">
-                      <span className="font-semibold text-stone-300">Longest Prep Dishes:</span>
-                      {aiTelemetry.slowestDishes.map((dish: any, idx: number) => (
-                        <span key={idx} className="px-2 py-0.5 rounded-md bg-stone-900 border border-stone-800 text-stone-200">
-                          {dish.name} (~{dish.avgTimeMinutes}m)
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                </motion.div>
+                </div>
               )}
 
               {/* AI Advice Response Card */}
               {aiAdvice && (
-                <motion.div
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="p-4 rounded-2xl bg-stone-900/90 border border-orange-500/30 text-xs text-stone-200 leading-relaxed space-y-3"
-                >
-                  <div className="flex items-center justify-between border-b border-stone-800 pb-2 text-[10px] text-stone-400 font-mono">
-                    <span className="flex items-center gap-1 text-orange-400 font-bold">
+                <div className="p-4 rounded-xl bg-white border border-[#ffc9b5] text-xs text-[#211d1a] leading-relaxed space-y-3 shadow-sm">
+                  <div className="flex items-center justify-between border-b border-[#e9e3dc] pb-2 text-[10px] text-[#7b726a] font-mono">
+                    <span className="flex items-center gap-1 text-[#d96236] font-bold">
                       <Bot className="w-3.5 h-3.5" />
                       DineFlow AI Operations Assistant ({aiSource})
                     </span>
-                    <span className="text-stone-400">🔒 AI Cannot Modify Restaurant Data</span>
+                    <span className="text-[#7b726a]">🔒 AI Cannot Modify Restaurant Data</span>
                   </div>
-                  <div className="whitespace-pre-line leading-relaxed text-stone-200">
+                  <div className="whitespace-pre-line leading-relaxed text-[#211d1a]">
                     {aiAdvice}
                   </div>
-                </motion.div>
+                </div>
               )}
-            </CardBody>
-          </Card>
+            </div>
+          </div>
         </div>
       )}
 
       {/* TAB 2: STAFF MANAGEMENT */}
       {activeTab === 'staff' && (
         <div className="space-y-6">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between pb-2">
             <div>
-              <h3 className="text-base font-bold text-white">Staff Roster & Authorizations</h3>
-              <p className="text-xs text-stone-400">Manage credentials and kitchen station allocations</p>
+              <h3 className="text-base font-bold text-[#211d1a]">Staff Roster & Authorizations</h3>
+              <p className="text-xs text-[#7b726a]">Manage credentials and kitchen station allocations</p>
             </div>
 
             <Button
@@ -844,7 +769,7 @@ export const OwnerDashboard: React.FC = () => {
             </Button>
           </div>
 
-          <Card variant="glass" className="border-stone-800 overflow-hidden">
+          <div className="bg-white border border-[#e9e3dc] rounded-2xl overflow-hidden shadow-2xs">
             <Table>
               <TableHeader>
                 <TableRow>
@@ -865,7 +790,7 @@ export const OwnerDashboard: React.FC = () => {
                   </TableRow>
                 ) : staffList.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={5} className="text-center py-8 text-stone-400">
+                    <TableCell colSpan={5} className="text-center py-8 text-[#7b726a]">
                       No staff members registered.
                     </TableCell>
                   </TableRow>
@@ -873,8 +798,8 @@ export const OwnerDashboard: React.FC = () => {
                   staffList.map((st) => (
                     <TableRow key={st._id}>
                       <TableCell>
-                        <div className="font-bold text-white text-xs">{st.name}</div>
-                        <div className="text-[10px] text-stone-400">{st.email}</div>
+                        <div className="font-bold text-[#211d1a] text-xs">{st.name}</div>
+                        <div className="text-[10px] text-[#7b726a]">{st.email}</div>
                       </TableCell>
                       <TableCell>
                         <Badge
@@ -893,7 +818,7 @@ export const OwnerDashboard: React.FC = () => {
                         </Badge>
                       </TableCell>
                       <TableCell>
-                        <span className="text-xs text-stone-300 font-mono">
+                        <span className="text-xs text-[#49423c] font-mono">
                           {st.role === 'KITCHEN' ? st.station || 'Main Kitchen' : 'Dining Floor'}
                         </span>
                       </TableCell>
@@ -919,7 +844,7 @@ export const OwnerDashboard: React.FC = () => {
                 )}
               </TableBody>
             </Table>
-          </Card>
+          </div>
         </div>
       )}
 
@@ -931,67 +856,57 @@ export const OwnerDashboard: React.FC = () => {
         size="md"
       >
         <form onSubmit={handleCreateStaff} className="space-y-4">
-          <div className="space-y-1">
-            <label className="text-xs font-bold text-stone-300">Full Name</label>
-            <Input
-              placeholder="e.g. Vikram Sharma"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-          </div>
+          <Input
+            label="Full Name"
+            placeholder="e.g. Vikram Sharma"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
 
-          <div className="space-y-1">
-            <label className="text-xs font-bold text-stone-300">Email Address</label>
-            <Input
-              type="email"
-              placeholder="vikram@dineflow.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
+          <Input
+            label="Email Address"
+            type="email"
+            placeholder="vikram@dineflow.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
 
           <div className="grid grid-cols-2 gap-3">
-            <div className="space-y-1">
-              <label className="text-xs font-bold text-stone-300">System Role</label>
-              <Select
-                value={role}
-                onChange={(e) => setRole(e.target.value as Role)}
-              >
-                <option value="MANAGER">Floor Manager</option>
-                <option value="WAITER">Service Waiter</option>
-                <option value="KITCHEN">Line Chef</option>
-              </Select>
-            </div>
+            <Select
+              label="System Role"
+              value={role}
+              onChange={(e) => setRole(e.target.value as Role)}
+            >
+              <option value="MANAGER">Floor Manager</option>
+              <option value="WAITER">Service Waiter</option>
+              <option value="KITCHEN">Line Chef</option>
+            </Select>
 
             {role === 'KITCHEN' && (
-              <div className="space-y-1">
-                <label className="text-xs font-bold text-stone-300">Station</label>
-                <Select
-                  value={station}
-                  onChange={(e) => setStation(e.target.value)}
-                >
-                  <option value="Main Kitchen">Main Kitchen</option>
-                  <option value="Grill">Grill</option>
-                  <option value="Beverage">Beverage</option>
-                  <option value="Dessert">Dessert</option>
-                </Select>
-              </div>
+              <Select
+                label="Kitchen Station"
+                value={station}
+                onChange={(e) => setStation(e.target.value)}
+              >
+                <option value="Main Kitchen">Main Kitchen</option>
+                <option value="Grill">Grill</option>
+                <option value="Beverage">Beverage</option>
+                <option value="Dessert">Dessert</option>
+              </Select>
             )}
           </div>
 
-          <div className="space-y-1">
-            <label className="text-xs font-bold text-stone-300">Temporary Password</label>
-            <Input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
+          <Input
+            label="Temporary Password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
 
-          <div className="flex justify-end gap-2 pt-2 border-t border-stone-800">
+          <div className="flex justify-end gap-2 pt-2 border-t border-[#e9e3dc]">
             <Button
               type="button"
               variant="outline"

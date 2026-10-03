@@ -589,9 +589,9 @@ export const CustomerMenuPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-4 pb-24 selection:bg-orange-500 selection:text-white">
-      {/* 1. Restaurant Header Banner with Gradient Overlay */}
-      <div className="relative h-48 rounded-3xl overflow-hidden border border-stone-800 shadow-2xl">
+    <div className="space-y-4 pb-24 selection:bg-[#d96236] selection:text-white">
+      {/* 1. Restaurant Header Banner with Controlled Light Overlay */}
+      <div className="relative h-48 rounded-3xl overflow-hidden border border-[#e9e3dc] shadow-md bg-white">
         <img
           src={
             profile?.coverImage ||
@@ -600,24 +600,24 @@ export const CustomerMenuPage: React.FC = () => {
           alt="Restaurant Cover"
           className="w-full h-full object-cover scale-105 transition-transform duration-700 hover:scale-100"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/60 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#211d1a]/80 via-[#211d1a]/30 to-transparent" />
 
         {/* Top Badges Bar */}
         <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-10">
-          <span className="px-3 py-1 rounded-full bg-stone-950/80 text-white font-mono font-bold text-xs border border-orange-500/40 shadow-lg flex items-center gap-1.5 backdrop-blur-md">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+          <span className="px-3 py-1 rounded-full bg-white/95 text-[#211d1a] font-mono font-bold text-xs border border-[#e9e3dc] shadow-md flex items-center gap-1.5 backdrop-blur-md">
+            <span className="w-2 h-2 rounded-full bg-[#059669] animate-pulse" />
             TABLE {tableNumber}
           </span>
 
           <div className="flex items-center gap-1.5">
             <button
               onClick={handleToggleSound}
-              className="p-1.5 rounded-full bg-stone-950/80 text-stone-300 border border-stone-700/60 hover:text-white backdrop-blur-md transition-colors"
+              className="p-1.5 rounded-full bg-white/95 text-[#4d443c] border border-[#e9e3dc] hover:text-[#211d1a] backdrop-blur-md transition-colors shadow-sm"
               title={isSoundOn ? 'Mute Sound' : 'Enable Sound'}
             >
-              {isSoundOn ? <Volume2 className="w-3.5 h-3.5" /> : <VolumeX className="w-3.5 h-3.5 text-stone-500" />}
+              {isSoundOn ? <Volume2 className="w-3.5 h-3.5 text-[#d96236]" /> : <VolumeX className="w-3.5 h-3.5 text-[#a69c93]" />}
             </button>
-            <span className="text-[10px] font-mono px-2 py-1 rounded-full bg-stone-950/80 text-stone-300 border border-stone-700/60 backdrop-blur-md">
+            <span className="text-[10px] font-mono px-2.5 py-1 rounded-full bg-white/95 text-[#4d443c] border border-[#e9e3dc] backdrop-blur-md shadow-sm font-semibold">
               Session #{sessionNumber}
             </span>
           </div>
@@ -626,7 +626,7 @@ export const CustomerMenuPage: React.FC = () => {
         {/* Bottom Title, Logo & Branding */}
         <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between z-10">
           <div className="flex items-center gap-2.5">
-            <div className="w-12 h-12 rounded-2xl overflow-hidden border-2 border-orange-500/40 bg-stone-900 shadow-xl shrink-0">
+            <div className="w-12 h-12 rounded-2xl overflow-hidden border-2 border-white bg-white shadow-lg shrink-0">
               <img
                 src={
                   profile?.logo ||
@@ -637,18 +637,18 @@ export const CustomerMenuPage: React.FC = () => {
               />
             </div>
             <div>
-              <span className="text-[10px] font-mono uppercase tracking-widest text-orange-400 font-bold bg-orange-950/60 px-2 py-0.5 rounded border border-orange-500/20">
+              <span className="text-[10px] font-mono uppercase tracking-widest text-[#fff4ef] font-bold bg-[#d96236]/90 px-2 py-0.5 rounded shadow-sm">
                 {currency} • Contemporary Bistro
               </span>
-              <h1 className="text-lg font-black text-white font-serif tracking-tight truncate max-w-[220px] mt-0.5">
+              <h1 className="text-lg font-black text-white font-serif tracking-tight truncate max-w-[220px] mt-0.5 drop-shadow-sm">
                 {profile?.name || 'Saffron & Sage'}
               </h1>
             </div>
           </div>
 
           <div className="text-right">
-            <span className="text-[10px] text-emerald-400 font-mono font-semibold flex items-center gap-1 justify-end bg-emerald-950/70 px-2 py-0.5 rounded-full border border-emerald-500/30">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="text-[10px] text-[#059669] font-mono font-semibold flex items-center gap-1 justify-end bg-white/95 px-2.5 py-1 rounded-full border border-[#a7f3d0] shadow-sm backdrop-blur-md">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#059669] animate-pulse" />
               Kitchen Live
             </span>
           </div>
@@ -656,9 +656,9 @@ export const CustomerMenuPage: React.FC = () => {
       </div>
 
       {/* 2. Collaborative Companions Ribbon */}
-      <div className="p-2.5 rounded-2xl bg-stone-900/80 border border-stone-800/90 flex items-center justify-between gap-2 overflow-x-auto shadow-md">
-        <div className="flex items-center gap-1.5 shrink-0 text-xs text-stone-400 font-medium">
-          <Users className="w-3.5 h-3.5 text-orange-400" />
+      <div className="p-2.5 rounded-2xl bg-white border border-[#e9e3dc] flex items-center justify-between gap-2 overflow-x-auto shadow-xs">
+        <div className="flex items-center gap-1.5 shrink-0 text-xs text-[#7b726a] font-medium">
+          <Users className="w-3.5 h-3.5 text-[#d96236]" />
           <span>Diners:</span>
         </div>
         <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
@@ -667,8 +667,8 @@ export const CustomerMenuPage: React.FC = () => {
               key={idx}
               className={`px-2.5 py-0.5 rounded-full text-[11px] font-medium whitespace-nowrap border ${
                 comp.name.includes(myDisplayName) || idx === 0
-                  ? 'bg-orange-500/20 text-orange-300 border-orange-500/40 shadow-sm'
-                  : 'bg-stone-800 text-stone-300 border-stone-700/60'
+                  ? 'bg-[#fff4ef] text-[#be4d27] border-[#ffc9b5] shadow-xs font-semibold'
+                  : 'bg-[#fbf9f6] text-[#4d443c] border-[#e9e3dc]'
               }`}
             >
               {comp.name}
@@ -678,13 +678,13 @@ export const CustomerMenuPage: React.FC = () => {
       </div>
 
       {/* 3. Section Navigation Tabs */}
-      <div className="grid grid-cols-3 gap-1.5 p-1 bg-stone-900/90 rounded-2xl border border-stone-800 shadow-md">
+      <div className="grid grid-cols-3 gap-1.5 p-1 bg-[#f5f1ec] rounded-2xl border border-[#e9e3dc]">
         <button
           onClick={() => setActiveTab('menu')}
           className={`py-2 px-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
             activeTab === 'menu'
-              ? 'bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-md shadow-orange-950/60'
-              : 'text-stone-400 hover:text-stone-200'
+              ? 'bg-[#d96236] text-white shadow-sm'
+              : 'text-[#7b726a] hover:text-[#211d1a]'
           }`}
         >
           <Utensils className="w-3.5 h-3.5" />
@@ -698,14 +698,14 @@ export const CustomerMenuPage: React.FC = () => {
           }}
           className={`py-2 px-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 relative ${
             activeTab === 'orders'
-              ? 'bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-md shadow-orange-950/60'
-              : 'text-stone-400 hover:text-stone-200'
+              ? 'bg-[#d96236] text-white shadow-sm'
+              : 'text-[#7b726a] hover:text-[#211d1a]'
           }`}
         >
           <Clock className="w-3.5 h-3.5" />
           <span>Rounds</span>
           {sessionOrders.length > 0 && (
-            <span className="w-4 h-4 rounded-full bg-emerald-500 text-[10px] text-white flex items-center justify-center font-bold">
+            <span className="w-4 h-4 rounded-full bg-[#059669] text-[10px] text-white flex items-center justify-center font-bold">
               {sessionOrders.length}
             </span>
           )}
@@ -718,8 +718,8 @@ export const CustomerMenuPage: React.FC = () => {
           }}
           className={`py-2 px-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
             activeTab === 'bill'
-              ? 'bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-md shadow-orange-950/60'
-              : 'text-stone-400 hover:text-stone-200'
+              ? 'bg-[#d96236] text-white shadow-sm'
+              : 'text-[#7b726a] hover:text-[#211d1a]'
           }`}
         >
           <Receipt className="w-3.5 h-3.5" />
@@ -734,18 +734,18 @@ export const CustomerMenuPage: React.FC = () => {
         <div className="space-y-4">
           {/* Search Bar with Instant Clear */}
           <div className="relative">
-            <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400" />
+            <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#a69c93]" />
             <input
               type="text"
               placeholder="Search gourmet dishes, spices, allergens..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-10 py-3 bg-stone-900/90 border border-stone-800 rounded-2xl text-xs text-white placeholder-stone-500 focus:outline-none focus:border-orange-500 transition-colors shadow-inner"
+              className="w-full pl-10 pr-10 py-3 bg-white border border-[#e9e3dc] rounded-2xl text-xs text-[#211d1a] placeholder-[#a69c93] focus:outline-none focus:border-[#d96236] transition-colors shadow-xs"
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery('')}
-                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-stone-400 hover:text-white p-1"
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#7b726a] hover:text-[#211d1a] p-1"
               >
                 <X className="w-3.5 h-3.5" />
               </button>
@@ -758,8 +758,8 @@ export const CustomerMenuPage: React.FC = () => {
               onClick={() => setDietaryFilter('ALL')}
               className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-colors ${
                 dietaryFilter === 'ALL'
-                  ? 'bg-stone-100 text-stone-950 font-bold shadow-sm'
-                  : 'bg-stone-900 text-stone-400 border border-stone-800 hover:border-stone-700'
+                  ? 'bg-[#211d1a] text-white font-bold shadow-xs'
+                  : 'bg-white text-[#7b726a] border border-[#e9e3dc] hover:border-[#cfc5ba]'
               }`}
             >
               All Items
@@ -768,33 +768,33 @@ export const CustomerMenuPage: React.FC = () => {
               onClick={() => setDietaryFilter('VEG')}
               className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap flex items-center gap-1.5 transition-colors ${
                 dietaryFilter === 'VEG'
-                  ? 'bg-emerald-500 text-white font-bold shadow-md shadow-emerald-950'
-                  : 'bg-stone-900 text-emerald-400 border border-emerald-500/30 hover:border-emerald-500/60'
+                  ? 'bg-[#059669] text-white font-bold shadow-xs'
+                  : 'bg-white text-[#059669] border border-[#a7f3d0] hover:bg-[#ecfdf5]'
               }`}
             >
-              <span className="w-2 h-2 rounded-full bg-emerald-400" />
+              <span className="w-2 h-2 rounded-full bg-[#059669]" />
               Pure Veg
             </button>
             <button
               onClick={() => setDietaryFilter('NON_VEG')}
               className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap flex items-center gap-1.5 transition-colors ${
                 dietaryFilter === 'NON_VEG'
-                  ? 'bg-rose-500 text-white font-bold shadow-md shadow-rose-950'
-                  : 'bg-stone-900 text-rose-400 border border-rose-500/30 hover:border-rose-500/60'
+                  ? 'bg-[#dc2626] text-white font-bold shadow-xs'
+                  : 'bg-white text-[#dc2626] border border-[#fecaca] hover:bg-[#fef2f2]'
               }`}
             >
-              <span className="w-2 h-2 rounded-full bg-rose-400" />
+              <span className="w-2 h-2 rounded-full bg-[#dc2626]" />
               Non-Veg
             </button>
             <button
               onClick={() => setDietaryFilter('FEATURED')}
               className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap flex items-center gap-1.5 transition-colors ${
                 dietaryFilter === 'FEATURED'
-                  ? 'bg-amber-500 text-stone-950 font-bold shadow-md shadow-amber-950'
-                  : 'bg-stone-900 text-amber-400 border border-amber-500/30 hover:border-amber-500/60'
+                  ? 'bg-[#d97706] text-white font-bold shadow-xs'
+                  : 'bg-white text-[#b45309] border border-[#fde68a] hover:bg-[#fffbeb]'
               }`}
             >
-              <Sparkles className="w-3 h-3 text-amber-400" />
+              <Sparkles className="w-3 h-3 text-[#d97706]" />
               Chef Specials
             </button>
           </div>
@@ -805,8 +805,8 @@ export const CustomerMenuPage: React.FC = () => {
               onClick={() => setSelectedCategory('ALL')}
               className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all shrink-0 ${
                 selectedCategory === 'ALL'
-                  ? 'bg-orange-500 text-white shadow-md shadow-orange-950'
-                  : 'bg-stone-900 text-stone-400 border border-stone-800 hover:text-white'
+                  ? 'bg-[#d96236] text-white shadow-xs'
+                  : 'bg-white text-[#7b726a] border border-[#e9e3dc] hover:text-[#211d1a]'
               }`}
             >
               All Categories ({menuItems.length})
@@ -819,8 +819,8 @@ export const CustomerMenuPage: React.FC = () => {
                   onClick={() => setSelectedCategory(cat._id)}
                   className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all shrink-0 flex items-center gap-1.5 ${
                     selectedCategory === cat._id
-                      ? 'bg-orange-500 text-white shadow-md shadow-orange-950'
-                      : 'bg-stone-900 text-stone-400 border border-stone-800 hover:text-white'
+                      ? 'bg-[#d96236] text-white shadow-xs'
+                      : 'bg-white text-[#7b726a] border border-[#e9e3dc] hover:text-[#211d1a]'
                   }`}
                 >
                   <span>{cat.name}</span>
@@ -830,15 +830,15 @@ export const CustomerMenuPage: React.FC = () => {
             })}
           </div>
 
-          {/* Featured Highlights Section (when no search query active) */}
+          {/* Featured Highlights Section */}
           {!searchQuery && selectedCategory === 'ALL' && dietaryFilter === 'ALL' && featuredDishes.length > 0 && (
             <div className="space-y-2 pt-1">
               <div className="flex items-center justify-between">
-                <h3 className="text-xs font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5" />
+                <h3 className="text-xs font-bold text-[#b45309] uppercase tracking-wider flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-[#d97706]" />
                   <span>Chef's Signature Creations</span>
                 </h3>
-                <span className="text-[10px] text-stone-400">Handcrafted highlights</span>
+                <span className="text-[10px] text-[#7b726a]">Handcrafted highlights</span>
               </div>
 
               <div className="flex gap-3 overflow-x-auto no-scrollbar pb-2">
@@ -846,30 +846,30 @@ export const CustomerMenuPage: React.FC = () => {
                   <div
                     key={item._id}
                     onClick={() => handleOpenCustomization(item)}
-                    className="w-48 shrink-0 rounded-2xl bg-stone-900/90 border border-amber-500/30 p-2.5 space-y-2 cursor-pointer hover:border-amber-500/60 transition-all shadow-lg group relative"
+                    className="w-48 shrink-0 rounded-2xl bg-white border border-[#fed7aa] p-2.5 space-y-2 cursor-pointer hover:border-[#f97316] transition-all shadow-sm group relative"
                   >
-                    <div className="h-28 rounded-xl overflow-hidden relative bg-stone-800">
+                    <div className="h-28 rounded-xl overflow-hidden relative bg-[#f5f1ec]">
                       <img
                         src={item.image}
                         alt={item.name}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />
-                      <span className="absolute top-1.5 left-1.5 px-2 py-0.5 rounded-md bg-amber-500 text-stone-950 text-[10px] font-black uppercase tracking-wider shadow">
+                      <span className="absolute top-1.5 left-1.5 px-2 py-0.5 rounded-md bg-[#d97706] text-white text-[10px] font-black uppercase tracking-wider shadow-sm">
                         Chef Special
                       </span>
                     </div>
 
                     <div className="space-y-1">
-                      <div className="font-bold text-white text-xs truncate">{item.name}</div>
+                      <div className="font-bold text-[#211d1a] text-xs truncate">{item.name}</div>
                       <div className="flex items-center justify-between pt-1">
-                        <span className="font-mono text-xs font-extrabold text-orange-400">
+                        <span className="font-mono text-xs font-extrabold text-[#d96236]">
                           {currency}
                           {item.price.toFixed(2)}
                         </span>
 
                         <button
                           onClick={(e) => handleQuickAdd(item, e)}
-                          className="px-2 py-1 rounded-lg bg-orange-500 text-white text-[11px] font-bold shadow hover:bg-orange-600 transition-colors flex items-center gap-1"
+                          className="px-2 py-1 rounded-lg bg-[#d96236] text-white text-[11px] font-bold shadow-xs hover:bg-[#be4d27] transition-colors flex items-center gap-1"
                         >
                           <Plus className="w-3 h-3" />
                           <span>Add</span>
@@ -888,26 +888,26 @@ export const CustomerMenuPage: React.FC = () => {
               {[1, 2, 3, 4].map((i) => (
                 <div
                   key={i}
-                  className="p-3.5 rounded-2xl bg-stone-900/40 border border-stone-800/80 animate-pulse flex gap-3.5"
+                  className="p-3.5 rounded-2xl bg-white border border-[#e9e3dc] animate-pulse flex gap-3.5"
                 >
-                  <div className="w-24 h-24 rounded-xl bg-stone-800/60 shrink-0" />
+                  <div className="w-24 h-24 rounded-xl bg-[#f5f1ec] shrink-0" />
                   <div className="flex-1 space-y-2.5 py-1">
-                    <div className="h-4 bg-stone-800/80 rounded w-2/3" />
-                    <div className="h-3 bg-stone-800/50 rounded w-full" />
-                    <div className="h-3 bg-stone-800/50 rounded w-4/5" />
+                    <div className="h-4 bg-[#f5f1ec] rounded w-2/3" />
+                    <div className="h-3 bg-[#f5f1ec] rounded w-full" />
+                    <div className="h-3 bg-[#f5f1ec] rounded w-4/5" />
                     <div className="flex justify-between items-center pt-2">
-                      <div className="h-4 bg-stone-800/80 rounded w-16" />
-                      <div className="h-7 bg-stone-800/80 rounded w-16" />
+                      <div className="h-4 bg-[#f5f1ec] rounded w-16" />
+                      <div className="h-7 bg-[#f5f1ec] rounded w-16" />
                     </div>
                   </div>
                 </div>
               ))}
             </div>
           ) : menuLoadError ? (
-            <div className="p-6 rounded-2xl bg-stone-900 border border-rose-500/30 text-center space-y-3">
-              <AlertCircle className="w-8 h-8 text-rose-400 mx-auto" />
-              <h3 className="text-sm font-bold text-white">Menu Unavailable</h3>
-              <p className="text-xs text-stone-400">{menuLoadError}</p>
+            <div className="p-6 rounded-2xl bg-white border border-[#fecaca] text-center space-y-3 shadow-xs">
+              <AlertCircle className="w-8 h-8 text-[#dc2626] mx-auto" />
+              <h3 className="text-sm font-bold text-[#211d1a]">Menu Unavailable</h3>
+              <p className="text-xs text-[#7b726a]">{menuLoadError}</p>
               <Button variant="primary" size="sm" onClick={loadMenuData}>
                 Retry Connection
               </Button>
@@ -948,15 +948,15 @@ export const CustomerMenuPage: React.FC = () => {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     whileHover={!isSoldOut ? { y: -2 } : {}}
-                    className={`p-3.5 rounded-2xl bg-stone-900/90 border transition-all flex gap-3.5 group cursor-pointer shadow-xl relative overflow-hidden ${
+                    className={`p-3.5 rounded-2xl bg-white border transition-all flex gap-3.5 group cursor-pointer shadow-xs relative overflow-hidden ${
                       isSoldOut
-                        ? 'border-stone-800 opacity-60 grayscale'
-                        : 'border-stone-800/90 hover:border-orange-500/40'
+                        ? 'border-[#e9e3dc] opacity-60 grayscale'
+                        : 'border-[#e9e3dc] hover:border-[#ffc9b5] hover:shadow-md'
                     }`}
                     onClick={() => handleOpenCustomization(item)}
                   >
                     {/* Dish Photography Thumbnail */}
-                    <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden bg-stone-800 relative shrink-0">
+                    <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden bg-[#f5f1ec] relative shrink-0">
                       <img
                         src={item.image}
                         alt={item.name}
@@ -966,14 +966,14 @@ export const CustomerMenuPage: React.FC = () => {
 
                       {/* Sold Out Overlay */}
                       {isSoldOut ? (
-                        <div className="absolute inset-0 bg-stone-950/80 backdrop-blur-[2px] flex items-center justify-center p-1 text-center">
-                          <span className="px-2 py-0.5 rounded-md bg-rose-950 text-rose-300 border border-rose-700 font-mono font-bold text-[10px] uppercase">
+                        <div className="absolute inset-0 bg-[#211d1a]/80 backdrop-blur-[2px] flex items-center justify-center p-1 text-center">
+                          <span className="px-2 py-0.5 rounded-md bg-[#dc2626] text-white font-mono font-bold text-[10px] uppercase">
                             Sold Out
                           </span>
                         </div>
                       ) : (
                         item.featured && (
-                          <span className="absolute top-1.5 left-1.5 p-1 rounded-md bg-amber-500 text-stone-950 shadow-md">
+                          <span className="absolute top-1.5 left-1.5 p-1 rounded-md bg-[#d97706] text-white shadow-sm">
                             <Sparkles className="w-3 h-3 fill-current" />
                           </span>
                         )
@@ -987,25 +987,25 @@ export const CustomerMenuPage: React.FC = () => {
                         <div className="flex items-center gap-1.5 min-w-0">
                           {/* Pure Veg / Non-Veg Icon */}
                           <span
-                            className={`w-3.5 h-3.5 border flex items-center justify-center shrink-0 ${
-                              item.foodType === 'VEG' ? 'border-emerald-500' : 'border-rose-500'
+                            className={`w-3.5 h-3.5 border flex items-center justify-center shrink-0 rounded-xs ${
+                              item.foodType === 'VEG' ? 'border-[#059669]' : 'border-[#dc2626]'
                             }`}
                           >
                             <span
                               className={`w-1.5 h-1.5 rounded-full ${
-                                item.foodType === 'VEG' ? 'bg-emerald-500' : 'bg-rose-500'
+                                item.foodType === 'VEG' ? 'bg-[#059669]' : 'bg-[#dc2626]'
                               }`}
                             />
                           </span>
 
-                          <h3 className="text-sm font-bold text-white truncate">{item.name}</h3>
+                          <h3 className="text-sm font-bold text-[#211d1a] truncate">{item.name}</h3>
 
                           {/* Spice indicator */}
                           {renderSpiceIndicator(item.spiceLevel)}
                         </div>
 
                         {/* Description */}
-                        <p className="text-[11px] text-stone-400 line-clamp-2 mt-1 leading-relaxed">
+                        <p className="text-[11px] text-[#7b726a] line-clamp-2 mt-1 leading-relaxed">
                           {item.description}
                         </p>
 
@@ -1015,7 +1015,7 @@ export const CustomerMenuPage: React.FC = () => {
                             {item.allergens.slice(0, 2).map((alg, i) => (
                               <span
                                 key={i}
-                                className="px-1.5 py-0.2 rounded bg-stone-800 text-stone-400 text-[9px]"
+                                className="px-1.5 py-0.2 rounded bg-[#f5f1ec] text-[#4d443c] text-[9px] border border-[#e9e3dc]"
                               >
                                 {alg}
                               </span>
@@ -1025,16 +1025,16 @@ export const CustomerMenuPage: React.FC = () => {
                       </div>
 
                       {/* Bottom Price & Add Action */}
-                      <div className="flex items-center justify-between pt-2 mt-1 border-t border-stone-800/80">
+                      <div className="flex items-center justify-between pt-2 mt-1 border-t border-[#f5f1ec]">
                         <div className="flex items-center gap-2">
-                          <span className="text-sm font-black text-orange-400 font-mono">
+                          <span className="text-sm font-black text-[#d96236] font-mono">
                             {currency}
                             {item.price.toFixed(2)}
                           </span>
 
                           {item.preparationTime && (
-                            <span className="text-[10px] text-stone-400 flex items-center gap-0.5">
-                              <Clock className="w-3 h-3 text-stone-500" />
+                            <span className="text-[10px] text-[#7b726a] flex items-center gap-0.5">
+                              <Clock className="w-3 h-3 text-[#a69c93]" />
                               {item.preparationTime}m
                             </span>
                           )}
@@ -1045,12 +1045,12 @@ export const CustomerMenuPage: React.FC = () => {
                           whileTap={!isSoldOut ? { scale: 0.92 } : {}}
                           disabled={isSoldOut}
                           onClick={(e) => handleQuickAdd(item, e)}
-                          className={`py-1.5 px-3 rounded-xl text-xs font-bold flex items-center gap-1 transition-all shadow-md ${
+                          className={`py-1.5 px-3 rounded-xl text-xs font-bold flex items-center gap-1 transition-all shadow-xs ${
                             isSoldOut
-                              ? 'bg-stone-800 text-stone-500 cursor-not-allowed'
+                              ? 'bg-[#f5f1ec] text-[#a69c93] cursor-not-allowed border border-[#e9e3dc]'
                               : isJustAdded
-                              ? 'bg-emerald-500 text-white'
-                              : 'bg-orange-500 hover:bg-orange-600 text-white shadow-orange-950/50'
+                              ? 'bg-[#059669] text-white'
+                              : 'bg-[#d96236] hover:bg-[#be4d27] text-white'
                           }`}
                         >
                           {isSoldOut ? (
@@ -1083,8 +1083,8 @@ export const CustomerMenuPage: React.FC = () => {
       {activeTab === 'orders' && (
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-sm font-bold text-white flex items-center gap-2">
-              <Clock className="w-4 h-4 text-orange-400" />
+            <h2 className="text-sm font-bold text-[#211d1a] flex items-center gap-2">
+              <Clock className="w-4 h-4 text-[#d96236]" />
               <span>Table Dining Rounds ({sessionOrders.length})</span>
             </h2>
             <Button variant="ghost" size="sm" onClick={loadOrders} className="text-xs">
@@ -1093,7 +1093,7 @@ export const CustomerMenuPage: React.FC = () => {
           </div>
 
           {isLoadingOrders ? (
-            <div className="py-12 text-center text-xs text-stone-400">Loading active tickets...</div>
+            <div className="py-12 text-center text-xs text-[#7b726a]">Loading active tickets...</div>
           ) : sessionOrders.length === 0 ? (
             <EmptyState
               title="No Rounds Placed Yet"
@@ -1111,14 +1111,14 @@ export const CustomerMenuPage: React.FC = () => {
                 const currentIdx = statusOrder.indexOf(order.status);
 
                 return (
-                  <Card key={order._id} variant="default" className="border-stone-800 shadow-xl overflow-hidden">
-                    <CardHeader className="p-3.5 border-b border-stone-800/80 flex items-center justify-between bg-stone-900/60">
+                  <Card key={order._id} variant="default" className="border-[#e9e3dc] shadow-sm overflow-hidden bg-white">
+                    <CardHeader className="p-3.5 border-b border-[#e9e3dc] flex items-center justify-between bg-[#fbf9f6]">
                       <div className="flex items-center gap-2">
-                        <span className="px-2.5 py-0.5 rounded-full bg-orange-500/20 text-orange-400 text-xs font-mono font-bold border border-orange-500/30">
+                        <span className="px-2.5 py-0.5 rounded-full bg-[#fff4ef] text-[#be4d27] text-xs font-mono font-bold border border-[#ffc9b5]">
                           ROUND #{order.roundNumber}
                         </span>
-                        <span className="text-xs text-stone-400">
-                          by <strong className="text-stone-200">{order.placedByMemberName}</strong>
+                        <span className="text-xs text-[#7b726a]">
+                          by <strong className="text-[#211d1a]">{order.placedByMemberName}</strong>
                         </span>
                       </div>
 
@@ -1144,7 +1144,7 @@ export const CustomerMenuPage: React.FC = () => {
                     <CardBody className="p-3.5 space-y-3">
                       {/* Step-by-Step Order Timeline */}
                       <div className="py-1">
-                        <div className="text-[10px] uppercase font-mono tracking-wider text-stone-400 mb-1.5">
+                        <div className="text-[10px] uppercase font-mono tracking-wider text-[#7b726a] mb-1.5">
                           Order Progress:
                         </div>
                         <div className="grid grid-cols-4 gap-1 text-[10px] text-center font-bold">
@@ -1161,10 +1161,10 @@ export const CustomerMenuPage: React.FC = () => {
                                 key={step.key}
                                 className={`p-1.5 rounded-lg border transition-all ${
                                   isCurrent
-                                    ? 'bg-orange-500/20 text-orange-300 border-orange-500 ring-1 ring-orange-500/50'
+                                    ? 'bg-[#fff4ef] text-[#be4d27] border-[#d96236] ring-1 ring-[#d96236]'
                                     : isPastOrCurrent
-                                    ? 'bg-emerald-950/40 text-emerald-300 border-emerald-500/40'
-                                    : 'bg-stone-900 text-stone-600 border-stone-800'
+                                    ? 'bg-[#ecfdf5] text-[#059669] border-[#a7f3d0]'
+                                    : 'bg-[#f5f1ec] text-[#a69c93] border-[#e9e3dc]'
                                 }`}
                               >
                                 {step.label}
@@ -1175,22 +1175,22 @@ export const CustomerMenuPage: React.FC = () => {
                       </div>
 
                       {/* Items List in This Round */}
-                      <div className="divide-y divide-stone-800/60 pt-1">
+                      <div className="divide-y divide-[#f5f1ec] pt-1">
                         {order.items.map((item, idx) => (
                           <div key={idx} className="py-2 flex items-center justify-between text-xs">
                             <div className="space-y-0.5 min-w-0 pr-2">
                               <div className="flex items-center gap-1.5">
-                                <span className="font-bold text-white">
+                                <span className="font-bold text-[#211d1a]">
                                   {item.quantity}x {item.name}
                                 </span>
                               </div>
-                              <div className="text-[10px] text-stone-400 flex items-center gap-2">
+                              <div className="text-[10px] text-[#7b726a] flex items-center gap-2">
                                 <span>👤 {item.sessionMemberName}</span>
-                                <span className="text-stone-500">• {item.kitchenStation}</span>
-                                {item.notes && <span className="italic text-amber-400">"{item.notes}"</span>}
+                                <span className="text-[#a69c93]">• {item.kitchenStation}</span>
+                                {item.notes && <span className="italic text-[#d97706]">"{item.notes}"</span>}
                               </div>
                             </div>
-                            <span className="font-mono text-stone-300 font-semibold shrink-0">
+                            <span className="font-mono text-[#4d443c] font-semibold shrink-0">
                               {currency}
                               {(item.priceSnapshot * item.quantity).toFixed(2)}
                             </span>
@@ -1207,21 +1207,21 @@ export const CustomerMenuPage: React.FC = () => {
       )}
 
       {/* ============================================================ */}
-      {/* TAB 3: VIEW BILL & SPLIT MODES (PHASE 12) */}
+      {/* TAB 3: VIEW BILL & SPLIT MODES */}
       {/* ============================================================ */}
       {activeTab === 'bill' && billData && (
         <div className="space-y-4">
-          <Card variant="glass" className="border-stone-800 shadow-2xl overflow-hidden">
-            <CardHeader className="p-4 border-b border-stone-800/80 bg-stone-900/40">
+          <Card variant="default" className="border-[#e9e3dc] shadow-md overflow-hidden bg-white">
+            <CardHeader className="p-4 border-b border-[#e9e3dc] bg-[#fbf9f6]">
               <div className="flex items-center justify-between">
                 <div>
-                  <div className="text-[10px] text-stone-400 uppercase font-mono tracking-wider">
+                  <div className="text-[10px] text-[#7b726a] uppercase font-mono tracking-wider">
                     Official Session Bill
                   </div>
-                  <h2 className="text-base font-black text-white font-serif flex items-center gap-2">
+                  <h2 className="text-base font-black text-[#211d1a] font-serif flex items-center gap-2">
                     <span>Table {billData.session.tableNumber}</span>
-                    <span className="text-stone-500">•</span>
-                    <span className="text-orange-400 font-mono text-sm">
+                    <span className="text-[#a69c93]">•</span>
+                    <span className="text-[#d96236] font-mono text-sm">
                       #{billData.session.sessionNumber}
                     </span>
                   </h2>
@@ -1238,11 +1238,11 @@ export const CustomerMenuPage: React.FC = () => {
               {/* Split Mode Selector (Phase 12: Full, Own Items, Equal, Custom) */}
               {!(paymentSuccess || billData.payment?.status === 'SUCCESS') && (
                 <div className="pt-3">
-                  <div className="text-[10px] uppercase font-mono tracking-wider text-stone-400 mb-1.5 flex items-center justify-between">
+                  <div className="text-[10px] uppercase font-mono tracking-wider text-[#7b726a] mb-1.5 flex items-center justify-between">
                     <span>Select Bill Split Mode:</span>
-                    <span className="text-orange-400 font-bold">Backend Verified</span>
+                    <span className="text-[#d96236] font-bold">Backend Verified</span>
                   </div>
-                  <div className="grid grid-cols-4 gap-1.5 p-1 bg-stone-950/80 rounded-xl border border-stone-800/90 text-xs">
+                  <div className="grid grid-cols-4 gap-1.5 p-1 bg-[#f5f1ec] rounded-xl border border-[#e9e3dc] text-xs">
                     {(
                       [
                         { id: 'FULL', label: 'Full Bill' },
@@ -1256,8 +1256,8 @@ export const CustomerMenuPage: React.FC = () => {
                         onClick={() => handleChangeSplitMode(mode.id)}
                         className={`py-1.5 px-2 rounded-lg font-bold text-center transition-all ${
                           splitMode === mode.id
-                            ? 'bg-orange-500 text-white shadow-md shadow-orange-950/80'
-                            : 'text-stone-400 hover:text-stone-200'
+                            ? 'bg-[#d96236] text-white shadow-xs'
+                            : 'text-[#7b726a] hover:text-[#211d1a]'
                         }`}
                       >
                         {mode.label}
@@ -1270,22 +1270,22 @@ export const CustomerMenuPage: React.FC = () => {
                     <motion.div
                       initial={{ opacity: 0, y: -4 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className="mt-2.5 p-2.5 rounded-xl bg-stone-900/90 border border-stone-800 flex items-center justify-between text-xs"
+                      className="mt-2.5 p-2.5 rounded-xl bg-white border border-[#e9e3dc] flex items-center justify-between text-xs"
                     >
-                      <span className="text-stone-300 font-medium">Split equally among diners:</span>
+                      <span className="text-[#4d443c] font-medium">Split equally among diners:</span>
                       <div className="flex items-center gap-2">
                         <button
                           onClick={() => handleChangeSplitCount(splitCount - 1)}
-                          className="w-7 h-7 rounded-lg bg-stone-800 text-stone-300 hover:bg-stone-700 flex items-center justify-center font-bold"
+                          className="w-7 h-7 rounded-lg bg-[#f5f1ec] text-[#4d443c] hover:bg-[#e9e3dc] flex items-center justify-center font-bold"
                         >
                           <Minus className="w-3.5 h-3.5" />
                         </button>
-                        <span className="font-mono text-sm font-bold text-white w-6 text-center">
+                        <span className="font-mono text-sm font-bold text-[#211d1a] w-6 text-center">
                           {splitCount}
                         </span>
                         <button
                           onClick={() => handleChangeSplitCount(splitCount + 1)}
-                          className="w-7 h-7 rounded-lg bg-stone-800 text-stone-300 hover:bg-stone-700 flex items-center justify-center font-bold"
+                          className="w-7 h-7 rounded-lg bg-[#f5f1ec] text-[#4d443c] hover:bg-[#e9e3dc] flex items-center justify-center font-bold"
                         >
                           <Plus className="w-3.5 h-3.5" />
                         </button>
@@ -1298,12 +1298,12 @@ export const CustomerMenuPage: React.FC = () => {
                     <motion.div
                       initial={{ opacity: 0, y: -4 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className="mt-2.5 p-2.5 rounded-xl bg-stone-900/90 border border-stone-800 space-y-2 text-xs"
+                      className="mt-2.5 p-2.5 rounded-xl bg-white border border-[#e9e3dc] space-y-2 text-xs"
                     >
-                      <label className="text-stone-300 block font-medium">Enter custom amount to pay:</label>
+                      <label className="text-[#4d443c] block font-medium">Enter custom amount to pay:</label>
                       <div className="flex gap-2">
                         <div className="relative flex-1">
-                          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400 font-mono">
+                          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#a69c93] font-mono">
                             {currency}
                           </span>
                           <input
@@ -1311,7 +1311,7 @@ export const CustomerMenuPage: React.FC = () => {
                             placeholder="e.g. 500"
                             value={customAmountInput}
                             onChange={(e) => setCustomAmountInput(e.target.value)}
-                            className="w-full pl-8 pr-3 py-2 bg-stone-950 border border-stone-700 rounded-xl text-xs text-white focus:outline-none focus:border-orange-500 font-mono"
+                            className="w-full pl-8 pr-3 py-2 bg-white border border-[#e9e3dc] rounded-xl text-xs text-[#211d1a] focus:outline-none focus:border-[#d96236] font-mono"
                           />
                         </div>
                         <Button
@@ -1332,33 +1332,33 @@ export const CustomerMenuPage: React.FC = () => {
             <CardBody className="p-4 space-y-4">
               {/* Food Items Breakdown */}
               <div className="space-y-1.5">
-                <div className="text-[10px] uppercase font-mono tracking-wider text-stone-400 flex justify-between">
+                <div className="text-[10px] uppercase font-mono tracking-wider text-[#7b726a] flex justify-between">
                   <span>Item Description</span>
                   <span>Qty • Price • Total</span>
                 </div>
 
-                <div className="divide-y divide-stone-800/80 max-h-56 overflow-y-auto pr-1">
+                <div className="divide-y divide-[#f5f1ec] max-h-56 overflow-y-auto pr-1">
                   {(billData.selectedSplit?.items || billData.summary.items || []).map((item, idx) => (
                     <div key={idx} className="py-2 flex items-center justify-between text-xs">
                       <div className="space-y-0.5 min-w-0 pr-2">
-                        <div className="font-bold text-white truncate">{item.name}</div>
-                        <div className="text-[10px] text-stone-400 flex items-center gap-1.5">
+                        <div className="font-bold text-[#211d1a] truncate">{item.name}</div>
+                        <div className="text-[10px] text-[#7b726a] flex items-center gap-1.5">
                           {item.orderedBy && (
-                            <span className="px-1.5 py-0.2 rounded bg-stone-800 text-stone-300">
+                            <span className="px-1.5 py-0.2 rounded bg-[#f5f1ec] text-[#4d443c] border border-[#e9e3dc]">
                               👤 {item.orderedBy}
                             </span>
                           )}
                           {item.roundNumber && (
-                            <span className="text-stone-500">R-{item.roundNumber}</span>
+                            <span className="text-[#a69c93]">R-{item.roundNumber}</span>
                           )}
                         </div>
                       </div>
 
                       <div className="text-right shrink-0">
-                        <div className="text-[10px] text-stone-400 font-mono">
+                        <div className="text-[10px] text-[#7b726a] font-mono">
                           {item.quantity} × {currency}{item.price.toFixed(2)}
                         </div>
-                        <div className="font-mono font-bold text-stone-200">
+                        <div className="font-mono font-bold text-[#211d1a]">
                           {currency}{item.total.toFixed(2)}
                         </div>
                       </div>
@@ -1368,55 +1368,55 @@ export const CustomerMenuPage: React.FC = () => {
               </div>
 
               {/* Subtotal, Tax, and Grand Total */}
-              <div className="pt-3 border-t border-stone-800 space-y-2 text-xs">
-                <div className="flex justify-between text-stone-400">
+              <div className="pt-3 border-t border-[#e9e3dc] space-y-2 text-xs">
+                <div className="flex justify-between text-[#7b726a]">
                   <span>
                     Subtotal{' '}
                     {splitMode !== 'FULL' && (
-                      <span className="text-orange-400 font-mono text-[10px]">
+                      <span className="text-[#d96236] font-mono text-[10px]">
                         ({splitMode.replace('_', ' ')})
                       </span>
                     )}
                   </span>
-                  <span className="font-mono text-stone-200">
+                  <span className="font-mono text-[#211d1a]">
                     {currency}
                     {(billData.selectedSplit?.subtotal ?? billData.summary.subtotal).toFixed(2)}
                   </span>
                 </div>
 
-                <div className="flex justify-between text-stone-400">
+                <div className="flex justify-between text-[#7b726a]">
                   <span>GST ({billData.restaurant.taxRate}%)</span>
-                  <span className="font-mono text-stone-200">
+                  <span className="font-mono text-[#211d1a]">
                     {currency}
                     {(billData.selectedSplit?.tax ?? billData.summary.tax).toFixed(2)}
                   </span>
                 </div>
 
-                <div className="flex justify-between text-stone-400">
+                <div className="flex justify-between text-[#7b726a]">
                   <span>Service Charge ({billData.restaurant.serviceRate}%)</span>
-                  <span className="font-mono text-stone-200">
+                  <span className="font-mono text-[#211d1a]">
                     {currency}
                     {(billData.selectedSplit?.serviceCharge ?? billData.summary.serviceCharge).toFixed(2)}
                   </span>
                 </div>
 
-                <div className="pt-2.5 border-t border-stone-800 flex justify-between items-center text-sm font-black text-white">
-                  <span className="text-stone-200">Total Amount to Pay</span>
-                  <span className="text-lg text-orange-400 font-mono font-black">
+                <div className="pt-2.5 border-t border-[#e9e3dc] flex justify-between items-center text-sm font-black text-[#211d1a]">
+                  <span>Total Amount to Pay</span>
+                  <span className="text-lg text-[#d96236] font-mono font-black">
                     {currency}
                     {(billData.selectedSplit?.total ?? billData.summary.grandTotal).toFixed(2)}
                   </span>
                 </div>
               </div>
 
-              {/* Action: Pay Now (Phase 12 & Phase 13) */}
+              {/* Action: Pay Now */}
               {!(paymentSuccess || billData.payment?.status === 'SUCCESS') ? (
                 <div className="pt-2">
                   <motion.div whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.98 }}>
                     <Button
                       variant="primary"
                       size="lg"
-                      className="w-full font-bold shadow-glow-orange flex items-center justify-center gap-2"
+                      className="w-full font-bold shadow-md shadow-[#d96236]/20 flex items-center justify-center gap-2"
                       onClick={handleOpenDineFlowPay}
                     >
                       <CreditCard className="w-4 h-4 text-white" />
@@ -1429,13 +1429,13 @@ export const CustomerMenuPage: React.FC = () => {
                   </motion.div>
                 </div>
               ) : (
-                <div className="p-4 rounded-2xl bg-emerald-950/40 border border-emerald-500/40 text-center space-y-3">
-                  <div className="w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 mx-auto flex items-center justify-center border border-emerald-500/40 shadow-glow-green">
+                <div className="p-4 rounded-2xl bg-[#ecfdf5] border border-[#a7f3d0] text-center space-y-3">
+                  <div className="w-12 h-12 rounded-full bg-[#d1fae5] text-[#059669] mx-auto flex items-center justify-center border border-[#a7f3d0]">
                     <CheckCircle2 className="w-7 h-7" />
                   </div>
                   <div>
-                    <h3 className="text-base font-bold text-white">Payment Successful</h3>
-                    <p className="text-xs text-stone-300 font-mono mt-0.5">
+                    <h3 className="text-base font-bold text-[#065f46]">Payment Successful</h3>
+                    <p className="text-xs text-[#047857] font-mono mt-0.5">
                       Transaction: {paymentSuccess?.demoTransactionId || billData.payment?.demoTransactionId || billData.payment?.transactionId}
                     </p>
                   </div>
@@ -1444,7 +1444,7 @@ export const CustomerMenuPage: React.FC = () => {
                     href={`/api/payments/invoice/${sessionId}`}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-orange-500 text-white font-bold text-xs shadow-lg hover:bg-orange-600 transition-colors w-full"
+                    className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#d96236] text-white font-bold text-xs shadow-sm hover:bg-[#be4d27] transition-colors w-full"
                   >
                     <Download className="w-4 h-4" />
                     Download Official Tax Invoice (PDF)
@@ -1457,7 +1457,7 @@ export const CustomerMenuPage: React.FC = () => {
       )}
 
       {/* ============================================================ */}
-      {/* DINEFLOW PAY (PHASE 13: SIMULATED DEMO PAYMENT MODAL) */}
+      {/* DINEFLOW PAY (SIMULATED DEMO PAYMENT MODAL) */}
       {/* ============================================================ */}
       <Modal
         isOpen={isDineFlowPayOpen}
@@ -1469,21 +1469,21 @@ export const CustomerMenuPage: React.FC = () => {
       >
         <div className="space-y-4">
           {/* Header Banner with DEMO PAYMENT Badge */}
-          <div className="flex items-center justify-between p-3 rounded-2xl bg-gradient-to-r from-stone-900 to-stone-950 border border-stone-800">
+          <div className="flex items-center justify-between p-3 rounded-2xl bg-[#fff4ef] border border-[#ffc9b5]">
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-extrabold text-white text-sm">DineFlow Pay</span>
-                <span className="px-2 py-0.5 rounded-full bg-cyan-950 text-cyan-400 border border-cyan-800 text-[10px] font-mono font-bold">
+                <span className="font-extrabold text-[#be4d27] text-sm">DineFlow Pay</span>
+                <span className="px-2 py-0.5 rounded-full bg-[#fed7aa] text-[#c2410c] border border-[#fdba74] text-[10px] font-mono font-bold">
                   DEMO PAYMENT
                 </span>
               </div>
-              <p className="text-[10px] text-stone-400 mt-0.5">
+              <p className="text-[10px] text-[#7b726a] mt-0.5">
                 Simulated checkout demonstration. No real financial data stored.
               </p>
             </div>
             <div className="text-right">
-              <span className="text-[10px] text-stone-400 block font-mono">Amount Due</span>
-              <span className="text-base font-black text-orange-400 font-mono">
+              <span className="text-[10px] text-[#7b726a] block font-mono">Amount Due</span>
+              <span className="text-base font-black text-[#d96236] font-mono">
                 {currency}
                 {(billData?.selectedSplit?.total ?? billData?.summary.grandTotal ?? 0).toFixed(2)}
               </span>
@@ -1502,8 +1502,8 @@ export const CustomerMenuPage: React.FC = () => {
                     onClick={() => setSelectedPayMethod(method)}
                     className={`py-2 px-3 rounded-xl border text-xs font-bold text-center transition-all ${
                       selectedPayMethod === method
-                        ? 'bg-orange-500/20 text-orange-300 border-orange-500 shadow-md ring-1 ring-orange-500/50'
-                        : 'bg-stone-900 text-stone-400 border-stone-800 hover:border-stone-700'
+                        ? 'bg-[#fff4ef] text-[#be4d27] border-[#d96236] shadow-xs ring-1 ring-[#d96236]'
+                        : 'bg-white text-[#7b726a] border-[#e9e3dc] hover:border-[#cfc5ba]'
                     }`}
                   >
                     {method.replace('_', ' ')}
@@ -1513,21 +1513,21 @@ export const CustomerMenuPage: React.FC = () => {
 
               {/* UPI Form */}
               {selectedPayMethod === 'UPI' && (
-                <div className="space-y-2 p-3 rounded-xl bg-stone-900/60 border border-stone-800/80">
-                  <label className="text-xs font-bold text-stone-300 block">UPI ID / VPA</label>
+                <div className="space-y-2 p-3 rounded-xl bg-[#fbf9f6] border border-[#e9e3dc]">
+                  <label className="text-xs font-bold text-[#4d443c] block">UPI ID / VPA</label>
                   <Input
                     placeholder="example@upi"
                     value={demoUpiId}
                     onChange={(e) => setDemoUpiId(e.target.value)}
                   />
-                  <div className="flex gap-1.5 text-[10px] text-stone-400 pt-1">
-                    <span className="text-stone-500">Demo shortcuts:</span>
+                  <div className="flex gap-1.5 text-[10px] text-[#7b726a] pt-1">
+                    <span className="text-[#a69c93]">Demo shortcuts:</span>
                     {['alex@okhdfcbank', 'sarah@okaxis', 'fail@upi'].map((v) => (
                       <button
                         key={v}
                         type="button"
                         onClick={() => setDemoUpiId(v)}
-                        className="underline hover:text-white"
+                        className="underline hover:text-[#d96236]"
                       >
                         {v}
                       </button>
@@ -1538,9 +1538,9 @@ export const CustomerMenuPage: React.FC = () => {
 
               {/* CARD Form */}
               {selectedPayMethod === 'CARD' && (
-                <div className="space-y-2.5 p-3 rounded-xl bg-stone-900/60 border border-stone-800/80">
+                <div className="space-y-2.5 p-3 rounded-xl bg-[#fbf9f6] border border-[#e9e3dc]">
                   <div className="space-y-1">
-                    <label className="text-xs font-bold text-stone-300">Card Number</label>
+                    <label className="text-xs font-bold text-[#4d443c]">Card Number</label>
                     <Input
                       placeholder="4242 •••• •••• 4242"
                       value={demoCardNumber}
@@ -1549,7 +1549,7 @@ export const CustomerMenuPage: React.FC = () => {
                   </div>
                   <div className="grid grid-cols-2 gap-2">
                     <div className="space-y-1">
-                      <label className="text-xs font-bold text-stone-300">Expiry</label>
+                      <label className="text-xs font-bold text-[#4d443c]">Expiry</label>
                       <Input
                         placeholder="MM/YY"
                         value={demoCardExpiry}
@@ -1557,7 +1557,7 @@ export const CustomerMenuPage: React.FC = () => {
                       />
                     </div>
                     <div className="space-y-1">
-                      <label className="text-xs font-bold text-stone-300">CVV</label>
+                      <label className="text-xs font-bold text-[#4d443c]">CVV</label>
                       <Input
                         placeholder="•••"
                         type="password"
@@ -1568,7 +1568,7 @@ export const CustomerMenuPage: React.FC = () => {
                     </div>
                   </div>
                   <div className="space-y-1">
-                    <label className="text-xs font-bold text-stone-300">Cardholder Name</label>
+                    <label className="text-xs font-bold text-[#4d443c]">Cardholder Name</label>
                     <Input
                       placeholder="Alex Kumar"
                       value={demoCardHolder}
@@ -1580,12 +1580,12 @@ export const CustomerMenuPage: React.FC = () => {
 
               {/* NET BANKING Form */}
               {selectedPayMethod === 'NET_BANKING' && (
-                <div className="space-y-2 p-3 rounded-xl bg-stone-900/60 border border-stone-800/80">
-                  <label className="text-xs font-bold text-stone-300 block">Select Demo Bank</label>
+                <div className="space-y-2 p-3 rounded-xl bg-[#fbf9f6] border border-[#e9e3dc]">
+                  <label className="text-xs font-bold text-[#4d443c] block">Select Demo Bank</label>
                   <select
                     value={demoBankName}
                     onChange={(e) => setDemoBankName(e.target.value)}
-                    className="w-full px-3 py-2 bg-stone-950 border border-stone-800 rounded-xl text-xs text-white focus:outline-none focus:border-orange-500"
+                    className="w-full px-3 py-2 bg-white border border-[#e9e3dc] rounded-xl text-xs text-[#211d1a] focus:outline-none focus:border-[#d96236]"
                   >
                     <option value="HDFC Bank">HDFC Bank Ltd.</option>
                     <option value="ICICI Bank">ICICI Bank Ltd.</option>
@@ -1596,9 +1596,9 @@ export const CustomerMenuPage: React.FC = () => {
                 </div>
               )}
 
-              {/* Testing Predictability Switch (Phase 13 requirement) */}
-              <div className="p-3 rounded-xl bg-stone-950 border border-stone-800/80 space-y-1.5">
-                <div className="text-[10px] font-mono uppercase text-stone-400 font-bold">
+              {/* Testing Predictability Switch */}
+              <div className="p-3 rounded-xl bg-[#fbf9f6] border border-[#e9e3dc] space-y-1.5">
+                <div className="text-[10px] font-mono uppercase text-[#7b726a] font-bold">
                   Predictable Test Behavior:
                 </div>
                 <div className="grid grid-cols-2 gap-2 text-xs">
@@ -1607,8 +1607,8 @@ export const CustomerMenuPage: React.FC = () => {
                     onClick={() => setDemoSimulateMode('SUCCESS')}
                     className={`py-1.5 px-2 rounded-lg font-bold transition-all ${
                       demoSimulateMode === 'SUCCESS'
-                        ? 'bg-emerald-500 text-white shadow-sm'
-                        : 'bg-stone-900 text-stone-400 hover:text-white'
+                        ? 'bg-[#059669] text-white shadow-xs'
+                        : 'bg-white text-[#7b726a] border border-[#e9e3dc] hover:text-[#211d1a]'
                     }`}
                   >
                     ✓ Simulate Success
@@ -1618,8 +1618,8 @@ export const CustomerMenuPage: React.FC = () => {
                     onClick={() => setDemoSimulateMode('FAILED')}
                     className={`py-1.5 px-2 rounded-lg font-bold transition-all ${
                       demoSimulateMode === 'FAILED'
-                        ? 'bg-rose-500 text-white shadow-sm'
-                        : 'bg-stone-900 text-stone-400 hover:text-white'
+                        ? 'bg-[#dc2626] text-white shadow-xs'
+                        : 'bg-white text-[#7b726a] border border-[#e9e3dc] hover:text-[#211d1a]'
                     }`}
                   >
                     × Simulate Failure
@@ -1631,7 +1631,7 @@ export const CustomerMenuPage: React.FC = () => {
               <Button
                 variant="primary"
                 size="lg"
-                className="w-full font-bold shadow-glow-orange"
+                className="w-full font-bold shadow-md shadow-[#d96236]/20"
                 onClick={handleProcessDemoPayment}
               >
                 Confirm Demo Payment ({currency}
@@ -1644,47 +1644,47 @@ export const CustomerMenuPage: React.FC = () => {
           {payStep === 'PROCESSING' && (
             <div className="py-8 text-center space-y-4">
               <div className="relative w-16 h-16 mx-auto">
-                <div className="w-16 h-16 rounded-full border-4 border-orange-500/20 border-t-orange-500 animate-spin" />
-                <Sparkles className="w-6 h-6 text-orange-400 absolute inset-0 m-auto animate-pulse" />
+                <div className="w-16 h-16 rounded-full border-4 border-[#ffc9b5] border-t-[#d96236] animate-spin" />
+                <Sparkles className="w-6 h-6 text-[#d96236] absolute inset-0 m-auto animate-pulse" />
               </div>
 
               <div>
-                <h3 className="text-base font-black text-white">Processing Demo Payment</h3>
-                <p className="text-xs text-stone-400 mt-1">
+                <h3 className="text-base font-black text-[#211d1a]">Processing Demo Payment</h3>
+                <p className="text-xs text-[#7b726a] mt-1">
                   Connecting to DineFlow Pay gateway simulator...
                 </p>
               </div>
 
-              <div className="space-y-1.5 text-[11px] text-stone-500 font-mono">
+              <div className="space-y-1.5 text-[11px] text-[#7b726a] font-mono">
                 <div>✓ Validating active dining session</div>
                 <div>✓ Recalculating tax & split integrity</div>
-                <div className="text-orange-400 animate-pulse">⚙ Awaiting backend confirmation...</div>
+                <div className="text-[#d96236] animate-pulse">⚙ Awaiting backend confirmation...</div>
               </div>
             </div>
           )}
 
-          {/* STEP 3: SUCCESS (Phase 13 user specified format) */}
+          {/* STEP 3: SUCCESS */}
           {payStep === 'SUCCESS' && (
             <div className="py-4 text-center space-y-4">
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ type: 'spring', damping: 12 }}
-                className="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 mx-auto flex items-center justify-center border-2 border-emerald-500 shadow-glow-green text-3xl font-black"
+                className="w-16 h-16 rounded-full bg-[#ecfdf5] text-[#059669] mx-auto flex items-center justify-center border-2 border-[#059669] shadow-sm text-3xl font-black"
               >
                 ✓
               </motion.div>
 
               <div>
-                <h3 className="text-lg font-black text-white">Payment Successful</h3>
-                <div className="text-2xl font-black text-emerald-400 font-mono mt-1">
+                <h3 className="text-lg font-black text-[#211d1a]">Payment Successful</h3>
+                <div className="text-2xl font-black text-[#059669] font-mono mt-1">
                   {currency}{confirmedAmount.toFixed(2)}
                 </div>
               </div>
 
-              <div className="p-3 rounded-xl bg-stone-900 border border-stone-800 text-xs font-mono">
-                <span className="text-stone-400">Transaction:</span>
-                <span className="text-white font-bold ml-1.5">{confirmedTxnId}</span>
+              <div className="p-3 rounded-xl bg-[#fbf9f6] border border-[#e9e3dc] text-xs font-mono">
+                <span className="text-[#7b726a]">Transaction:</span>
+                <span className="text-[#211d1a] font-bold ml-1.5">{confirmedTxnId}</span>
               </div>
 
               <div className="flex flex-col gap-2 pt-1">
@@ -1692,7 +1692,7 @@ export const CustomerMenuPage: React.FC = () => {
                   href={demoInvoiceUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="w-full py-2.5 px-4 rounded-xl bg-orange-500 text-white font-bold text-xs shadow-lg hover:bg-orange-600 transition-colors flex items-center justify-center gap-1.5"
+                  className="w-full py-2.5 px-4 rounded-xl bg-[#d96236] text-white font-bold text-xs shadow-sm hover:bg-[#be4d27] transition-colors flex items-center justify-center gap-1.5"
                 >
                   <FileText className="w-4 h-4" />
                   View Invoice
@@ -1709,21 +1709,21 @@ export const CustomerMenuPage: React.FC = () => {
             </div>
           )}
 
-          {/* STEP 4: FAILURE (Phase 13 user specified format) */}
+          {/* STEP 4: FAILURE */}
           {payStep === 'FAILED' && (
             <div className="py-4 text-center space-y-4">
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ type: 'spring', damping: 12 }}
-                className="w-16 h-16 rounded-full bg-rose-500/20 text-rose-400 mx-auto flex items-center justify-center border-2 border-rose-500 text-3xl font-black"
+                className="w-16 h-16 rounded-full bg-[#fef2f2] text-[#dc2626] mx-auto flex items-center justify-center border-2 border-[#dc2626] text-3xl font-black"
               >
                 ×
               </motion.div>
 
               <div>
-                <h3 className="text-lg font-black text-white">Payment Failed</h3>
-                <p className="text-xs text-stone-400 mt-1">
+                <h3 className="text-lg font-black text-[#211d1a]">Payment Failed</h3>
+                <p className="text-xs text-[#7b726a] mt-1">
                   {paymentError || 'Demo payment could not be completed.'}
                 </p>
               </div>
@@ -1743,14 +1743,14 @@ export const CustomerMenuPage: React.FC = () => {
 
 
       {/* ============================================================ */}
-      {/* 4. STICKY CART CAPSULE (PHASE 7 & 8 REQUIREMENT) */}
+      {/* 4. STICKY CART CAPSULE */}
       {/* ============================================================ */}
       {activeTab === 'menu' && (
         <div className="fixed bottom-4 max-w-md w-full px-4 z-40 left-1/2 -translate-x-1/2 flex items-center gap-2">
           {/* Call Waiter Quick Action */}
           <button
             onClick={() => setIsServiceModalOpen(true)}
-            className="p-3.5 rounded-2xl bg-stone-900 border border-stone-700/80 text-orange-400 shadow-2xl hover:bg-stone-800 transition-all shrink-0 flex items-center gap-1.5 text-xs font-bold"
+            className="p-3.5 rounded-2xl bg-white border border-[#e9e3dc] text-[#d96236] shadow-lg hover:bg-[#fff4ef] transition-all shrink-0 flex items-center gap-1.5 text-xs font-bold"
             title="Call Waiter"
           >
             <Bell className="w-4 h-4" />
@@ -1761,10 +1761,10 @@ export const CustomerMenuPage: React.FC = () => {
           <button
             onClick={() => setIsCartOpen(true)}
             disabled={getTotalCount() === 0}
-            className={`flex-1 py-3 px-4 rounded-2xl font-bold text-xs flex items-center justify-between shadow-2xl transition-all ${
+            className={`flex-1 py-3 px-4 rounded-2xl font-bold text-xs flex items-center justify-between shadow-lg transition-all ${
               getTotalCount() > 0
-                ? 'bg-gradient-to-r from-orange-600 to-amber-500 text-white shadow-orange-950/70 hover:brightness-105'
-                : 'bg-stone-900/90 text-stone-500 cursor-not-allowed border border-stone-800'
+                ? 'bg-[#d96236] hover:bg-[#be4d27] text-white shadow-[#d96236]/30'
+                : 'bg-white/95 text-[#a69c93] cursor-not-allowed border border-[#e9e3dc]'
             }`}
           >
             <div className="flex items-center gap-2.5">
@@ -1790,7 +1790,7 @@ export const CustomerMenuPage: React.FC = () => {
       )}
 
       {/* ============================================================ */}
-      {/* 5. FOOD DETAIL & CUSTOMIZATION MODAL (PHASE 7 & 8) */}
+      {/* 5. FOOD DETAIL & CUSTOMIZATION MODAL */}
       {/* ============================================================ */}
       <Modal
         isOpen={!!customizingItem}
@@ -1801,13 +1801,13 @@ export const CustomerMenuPage: React.FC = () => {
         {customizingItem && (
           <div className="space-y-4">
             {/* Full-bleed Food Image Banner */}
-            <div className="h-48 w-full rounded-2xl overflow-hidden relative border border-stone-800">
+            <div className="h-48 w-full rounded-2xl overflow-hidden relative border border-[#e9e3dc]">
               <img
                 src={customizingItem.image}
                 alt={customizingItem.name}
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-stone-950/90 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#211d1a]/80 via-transparent to-transparent" />
 
               <div className="absolute bottom-2 left-2 flex items-center gap-2">
                 <Badge
@@ -1818,33 +1818,33 @@ export const CustomerMenuPage: React.FC = () => {
                 </Badge>
 
                 {customizingItem.spiceLevel > 0 && (
-                  <span className="px-2 py-0.5 rounded-full bg-stone-900/90 text-amber-400 font-mono text-[10px] font-bold border border-amber-500/30 flex items-center gap-1">
-                    <Flame className="w-3 h-3 fill-amber-400" />
+                  <span className="px-2 py-0.5 rounded-full bg-white/95 text-[#b45309] font-mono text-[10px] font-bold border border-[#fde68a] flex items-center gap-1 shadow-xs">
+                    <Flame className="w-3 h-3 fill-[#d97706] text-[#d97706]" />
                     Spice {customizingItem.spiceLevel}/3
                   </span>
                 )}
 
-                <span className="px-2 py-0.5 rounded-full bg-stone-900/90 text-stone-300 font-mono text-[10px] border border-stone-700">
+                <span className="px-2 py-0.5 rounded-full bg-white/95 text-[#4d443c] font-mono text-[10px] border border-[#e9e3dc] shadow-xs">
                   {customizingItem.kitchenStationId || 'Main Kitchen'}
                 </span>
               </div>
             </div>
 
             {/* Description */}
-            <p className="text-xs text-stone-300 leading-relaxed">
+            <p className="text-xs text-[#4d443c] leading-relaxed">
               {customizingItem.description}
             </p>
 
             {/* Ingredients & Allergens */}
-            <div className="space-y-2 pt-1 border-t border-stone-800">
+            <div className="space-y-2 pt-1 border-t border-[#e9e3dc]">
               {customizingItem.ingredients && customizingItem.ingredients.length > 0 && (
                 <div className="space-y-1">
-                  <span className="text-[10px] uppercase font-mono tracking-wider text-stone-500">
+                  <span className="text-[10px] uppercase font-mono tracking-wider text-[#7b726a]">
                     Key Ingredients:
                   </span>
                   <div className="flex flex-wrap gap-1">
                     {customizingItem.ingredients.map((ing, i) => (
-                      <span key={i} className="px-2 py-0.5 rounded bg-stone-800 text-stone-300 text-[10px]">
+                      <span key={i} className="px-2 py-0.5 rounded bg-[#f5f1ec] text-[#4d443c] text-[10px] border border-[#e9e3dc]">
                         {ing}
                       </span>
                     ))}
@@ -1854,14 +1854,14 @@ export const CustomerMenuPage: React.FC = () => {
 
               {customizingItem.allergens && customizingItem.allergens.length > 0 && (
                 <div className="space-y-1">
-                  <span className="text-[10px] uppercase font-mono tracking-wider text-rose-400">
+                  <span className="text-[10px] uppercase font-mono tracking-wider text-[#dc2626]">
                     Allergen Notice:
                   </span>
                   <div className="flex flex-wrap gap-1">
                     {customizingItem.allergens.map((alg, i) => (
                       <span
                         key={i}
-                        className="px-2 py-0.5 rounded bg-rose-950/60 text-rose-300 text-[10px] border border-rose-900"
+                        className="px-2 py-0.5 rounded bg-[#fef2f2] text-[#dc2626] text-[10px] border border-[#fecaca]"
                       >
                         {alg}
                       </span>
@@ -1871,10 +1871,10 @@ export const CustomerMenuPage: React.FC = () => {
               )}
             </div>
 
-            {/* Diner Attribution (Phase 8 individual diner cart) */}
-            <div className="space-y-1.5 pt-2 border-t border-stone-800">
-              <label className="text-xs font-bold text-stone-300 flex items-center gap-1.5">
-                <Users className="w-3.5 h-3.5 text-orange-400" />
+            {/* Diner Attribution */}
+            <div className="space-y-1.5 pt-2 border-t border-[#e9e3dc]">
+              <label className="text-xs font-bold text-[#4d443c] flex items-center gap-1.5">
+                <Users className="w-3.5 h-3.5 text-[#d96236]" />
                 <span>Who is ordering this item?</span>
               </label>
               <div className="flex flex-wrap gap-1.5">
@@ -1887,8 +1887,8 @@ export const CustomerMenuPage: React.FC = () => {
                       onClick={() => setAttributedMember({ id: comp.memberId, name: comp.name })}
                       className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
                         isSelected
-                          ? 'bg-orange-500 text-white font-bold shadow-md shadow-orange-950'
-                          : 'bg-stone-800 text-stone-300 hover:bg-stone-700'
+                          ? 'bg-[#d96236] text-white font-bold shadow-xs'
+                          : 'bg-[#f5f1ec] text-[#4d443c] hover:bg-[#e9e3dc] border border-[#e9e3dc]'
                       }`}
                     >
                       {comp.name}
@@ -1900,7 +1900,7 @@ export const CustomerMenuPage: React.FC = () => {
 
             {/* Special Chef Cooking Notes */}
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-stone-300">
+              <label className="text-xs font-bold text-[#4d443c]">
                 Special Requests / Preparation Notes:
               </label>
               <Input
@@ -1911,28 +1911,28 @@ export const CustomerMenuPage: React.FC = () => {
             </div>
 
             {/* Quantity Selector & Price */}
-            <div className="flex items-center justify-between pt-3 border-t border-stone-800">
+            <div className="flex items-center justify-between pt-3 border-t border-[#e9e3dc]">
               <div className="flex items-center gap-3">
                 <button
                   onClick={() => setItemQuantity((q) => Math.max(1, q - 1))}
-                  className="w-9 h-9 rounded-xl bg-stone-800 text-stone-200 flex items-center justify-center hover:bg-stone-700 transition-colors"
+                  className="w-9 h-9 rounded-xl bg-[#f5f1ec] text-[#4d443c] flex items-center justify-center hover:bg-[#e9e3dc] transition-colors border border-[#e9e3dc]"
                 >
                   <Minus className="w-4 h-4" />
                 </button>
-                <span className="font-mono text-base font-bold text-white w-6 text-center">
+                <span className="font-mono text-base font-bold text-[#211d1a] w-6 text-center">
                   {itemQuantity}
                 </span>
                 <button
                   onClick={() => setItemQuantity((q) => q + 1)}
-                  className="w-9 h-9 rounded-xl bg-stone-800 text-stone-200 flex items-center justify-center hover:bg-stone-700 transition-colors"
+                  className="w-9 h-9 rounded-xl bg-[#f5f1ec] text-[#4d443c] flex items-center justify-center hover:bg-[#e9e3dc] transition-colors border border-[#e9e3dc]"
                 >
                   <Plus className="w-4 h-4" />
                 </button>
               </div>
 
               <div className="text-right">
-                <span className="text-[10px] text-stone-400 block font-mono">Item Total</span>
-                <span className="text-lg font-black text-orange-400 font-mono">
+                <span className="text-[10px] text-[#7b726a] block font-mono">Item Total</span>
+                <span className="text-lg font-black text-[#d96236] font-mono">
                   {currency}
                   {(customizingItem.price * itemQuantity).toFixed(2)}
                 </span>
@@ -1942,7 +1942,7 @@ export const CustomerMenuPage: React.FC = () => {
             <Button
               variant="primary"
               size="lg"
-              className="w-full font-bold shadow-glow-orange"
+              className="w-full font-bold shadow-md shadow-[#d96236]/20"
               onClick={handleAddToCart}
             >
               Add to Current Round ({currency}
@@ -1953,7 +1953,7 @@ export const CustomerMenuPage: React.FC = () => {
       </Modal>
 
       {/* ============================================================ */}
-      {/* 6. CURRENT ROUND CART DRAWER / REVIEW (PHASE 8) */}
+      {/* 6. CURRENT ROUND CART DRAWER / REVIEW */}
       {/* ============================================================ */}
       <Modal
         isOpen={isCartOpen}
@@ -1962,55 +1962,55 @@ export const CustomerMenuPage: React.FC = () => {
         size="md"
       >
         <div className="space-y-4">
-          <div className="p-2.5 rounded-xl bg-orange-950/30 border border-orange-500/30 text-xs text-orange-300 flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-orange-400 shrink-0" />
+          <div className="p-2.5 rounded-xl bg-[#fff4ef] border border-[#ffc9b5] text-xs text-[#be4d27] flex items-center gap-2">
+            <Sparkles className="w-4 h-4 text-[#d96236] shrink-0" />
             <span>Dishes in this round will be dispatched directly to chef stations.</span>
           </div>
 
           {/* Cart Items List */}
-          <div className="divide-y divide-stone-800/80 max-h-72 overflow-y-auto pr-1">
+          <div className="divide-y divide-[#f5f1ec] max-h-72 overflow-y-auto pr-1">
             {cartItems.map((item, idx) => (
               <div key={idx} className="py-3 flex items-start justify-between gap-2">
                 <div className="space-y-1 min-w-0 flex-1">
-                  <div className="font-bold text-white text-xs truncate">{item.name}</div>
-                  <div className="text-[10px] text-stone-400 flex items-center gap-1.5">
-                    <span className="px-1.5 py-0.5 rounded bg-stone-800 text-stone-300 font-medium">
+                  <div className="font-bold text-[#211d1a] text-xs truncate">{item.name}</div>
+                  <div className="text-[10px] text-[#7b726a] flex items-center gap-1.5">
+                    <span className="px-1.5 py-0.5 rounded bg-[#f5f1ec] text-[#4d443c] font-medium border border-[#e9e3dc]">
                       👤 {item.sessionMemberName}
                     </span>
-                    <span className="text-stone-500">• {item.kitchenStation}</span>
+                    <span className="text-[#a69c93]">• {item.kitchenStation}</span>
                   </div>
                   {item.notes ? (
-                    <div className="text-[10px] text-amber-400 italic">"{item.notes}"</div>
+                    <div className="text-[10px] text-[#d97706] italic">"{item.notes}"</div>
                   ) : null}
                 </div>
 
                 <div className="flex items-center gap-2.5 shrink-0">
-                  <div className="flex items-center gap-1 bg-stone-900 border border-stone-800 rounded-lg p-1">
+                  <div className="flex items-center gap-1 bg-[#f5f1ec] border border-[#e9e3dc] rounded-lg p-1">
                     <button
                       onClick={() => updateQuantity(item.menuItemId, item.sessionMemberId, -1, item.notes)}
-                      className="w-5 h-5 rounded flex items-center justify-center text-stone-400 hover:text-white"
+                      className="w-5 h-5 rounded flex items-center justify-center text-[#7b726a] hover:text-[#211d1a]"
                     >
                       <Minus className="w-3 h-3" />
                     </button>
-                    <span className="font-mono text-xs font-bold text-white w-4 text-center">
+                    <span className="font-mono text-xs font-bold text-[#211d1a] w-4 text-center">
                       {item.quantity}
                     </span>
                     <button
                       onClick={() => updateQuantity(item.menuItemId, item.sessionMemberId, 1, item.notes)}
-                      className="w-5 h-5 rounded flex items-center justify-center text-stone-400 hover:text-white"
+                      className="w-5 h-5 rounded flex items-center justify-center text-[#7b726a] hover:text-[#211d1a]"
                     >
                       <Plus className="w-3 h-3" />
                     </button>
                   </div>
 
-                  <span className="font-mono text-xs font-bold text-stone-200 w-14 text-right">
+                  <span className="font-mono text-xs font-bold text-[#211d1a] w-14 text-right">
                     {currency}
                     {(item.price * item.quantity).toFixed(2)}
                   </span>
 
                   <button
                     onClick={() => removeItem(item.menuItemId, item.sessionMemberId, item.notes)}
-                    className="text-stone-500 hover:text-rose-400 p-1"
+                    className="text-[#a69c93] hover:text-[#dc2626] p-1"
                     title="Remove item"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
@@ -2021,17 +2021,17 @@ export const CustomerMenuPage: React.FC = () => {
           </div>
 
           {/* Subtotal & Calculations */}
-          <div className="pt-3 border-t border-stone-800 space-y-1.5 text-xs">
-            <div className="flex justify-between text-stone-400">
+          <div className="pt-3 border-t border-[#e9e3dc] space-y-1.5 text-xs">
+            <div className="flex justify-between text-[#7b726a]">
               <span>Items Total ({getTotalCount()} items):</span>
-              <span className="font-mono text-stone-200">
+              <span className="font-mono text-[#211d1a]">
                 {currency}
                 {getSubtotal().toFixed(2)}
               </span>
             </div>
-            <div className="flex justify-between items-center text-sm font-bold text-white pt-1">
+            <div className="flex justify-between items-center text-sm font-bold text-[#211d1a] pt-1">
               <span>Estimated Round Total:</span>
-              <span className="text-base text-orange-400 font-mono">
+              <span className="text-base text-[#d96236] font-mono">
                 {currency}
                 {getSubtotal().toFixed(2)}
               </span>
@@ -2052,7 +2052,7 @@ export const CustomerMenuPage: React.FC = () => {
             <Button
               variant="primary"
               size="md"
-              className="flex-1 font-bold shadow-glow-orange"
+              className="flex-1 font-bold shadow-md shadow-[#d96236]/20"
               onClick={handlePlaceRoundOrder}
               isLoading={isPlacingOrder}
               rightIcon={<Send className="w-3.5 h-3.5" />}
@@ -2064,7 +2064,7 @@ export const CustomerMenuPage: React.FC = () => {
       </Modal>
 
       {/* ============================================================ */}
-      {/* 7. ORDER CONFIRMATION CELEBRATION MODAL (PHASE 8) */}
+      {/* 7. ORDER CONFIRMATION CELEBRATION MODAL */}
       {/* ============================================================ */}
       <Modal
         isOpen={!!orderConfirmation}
@@ -2078,28 +2078,28 @@ export const CustomerMenuPage: React.FC = () => {
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ type: 'spring', damping: 10, stiffness: 100 }}
-              className="w-14 h-14 rounded-full bg-emerald-500/20 text-emerald-400 mx-auto flex items-center justify-center border border-emerald-500/40 shadow-glow-green"
+              className="w-14 h-14 rounded-full bg-[#ecfdf5] text-[#059669] mx-auto flex items-center justify-center border border-[#a7f3d0]"
             >
               <CheckCircle2 className="w-8 h-8" />
             </motion.div>
 
             <div>
-              <h3 className="text-base font-black text-white">
+              <h3 className="text-base font-black text-[#211d1a]">
                 Round #{orderConfirmation.roundNumber} Sent to Kitchen!
               </h3>
-              <p className="text-xs text-stone-400 mt-1">
+              <p className="text-xs text-[#7b726a] mt-1">
                 {orderConfirmation.itemCount} dishes are now queued for Table {tableNumber}.
               </p>
             </div>
 
-            <div className="p-3 rounded-xl bg-stone-900 border border-stone-800 text-xs text-stone-300 space-y-1">
+            <div className="p-3 rounded-xl bg-[#fbf9f6] border border-[#e9e3dc] text-xs text-[#4d443c] space-y-1">
               <div className="flex justify-between">
-                <span className="text-stone-400">Table:</span>
-                <span className="font-bold text-white">Table {tableNumber}</span>
+                <span className="text-[#7b726a]">Table:</span>
+                <span className="font-bold text-[#211d1a]">Table {tableNumber}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-stone-400">Est. Prep Time:</span>
-                <span className="font-bold text-amber-400">~15-20 mins</span>
+                <span className="text-[#7b726a]">Est. Prep Time:</span>
+                <span className="font-bold text-[#d97706]">~15-20 mins</span>
               </div>
             </div>
 
@@ -2128,7 +2128,7 @@ export const CustomerMenuPage: React.FC = () => {
         size="sm"
       >
         <div className="space-y-4">
-          <p className="text-xs text-stone-400">
+          <p className="text-xs text-[#7b726a]">
             Select the service needed at Table {tableNumber}. Floor staff will be alerted instantly.
           </p>
 
@@ -2148,19 +2148,19 @@ export const CustomerMenuPage: React.FC = () => {
                   onClick={() => setServiceType(srv.type)}
                   className={`p-3 rounded-xl border text-left flex flex-col gap-1.5 transition-all ${
                     isSelected
-                      ? 'bg-orange-500/20 text-orange-300 border-orange-500 shadow-md'
-                      : 'bg-stone-900 text-stone-400 border-stone-800 hover:border-stone-700'
+                      ? 'bg-[#fff4ef] text-[#be4d27] border-[#d96236] shadow-xs ring-1 ring-[#d96236]'
+                      : 'bg-white text-[#7b726a] border-[#e9e3dc] hover:border-[#cfc5ba]'
                   }`}
                 >
-                  <Icon className="w-4 h-4 text-orange-400" />
-                  <span className="text-xs font-bold text-white">{srv.label}</span>
+                  <Icon className="w-4 h-4 text-[#d96236]" />
+                  <span className="text-xs font-bold text-[#211d1a]">{srv.label}</span>
                 </button>
               );
             })}
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-xs text-stone-300">Additional details (optional):</label>
+            <label className="text-xs text-[#4d443c]">Additional details (optional):</label>
             <Input
               placeholder="e.g. Warm water, extra napkins, baby chair..."
               value={serviceNotes}
@@ -2171,7 +2171,7 @@ export const CustomerMenuPage: React.FC = () => {
           <Button
             variant="primary"
             size="lg"
-            className="w-full font-bold"
+            className="w-full font-bold shadow-md shadow-[#d96236]/20"
             onClick={handleSendServiceRequest}
             isLoading={isSendingRequest}
           >

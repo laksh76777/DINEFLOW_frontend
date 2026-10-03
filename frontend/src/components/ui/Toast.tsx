@@ -9,28 +9,28 @@ export const ToastContainer: React.FC = () => {
   const getIcon = (type: ToastItem['type']) => {
     switch (type) {
       case 'success':
-        return <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />;
+        return <CheckCircle2 className="w-5 h-5 text-[#23865b] shrink-0" />;
       case 'error':
-        return <AlertCircle className="w-5 h-5 text-rose-400 shrink-0" />;
+        return <AlertCircle className="w-5 h-5 text-[#c54e4a] shrink-0" />;
       case 'warning':
-        return <AlertTriangle className="w-5 h-5 text-amber-400 shrink-0" />;
+        return <AlertTriangle className="w-5 h-5 text-[#bf7a13] shrink-0" />;
       case 'info':
       default:
-        return <Info className="w-5 h-5 text-sky-400 shrink-0" />;
+        return <Info className="w-5 h-5 text-[#3974b9] shrink-0" />;
     }
   };
 
   const getBorderColor = (type: ToastItem['type']) => {
     switch (type) {
       case 'success':
-        return 'border-emerald-500/30 bg-emerald-950/40 text-emerald-100';
+        return 'border-[#a5d8be] bg-white text-[#211d1a] shadow-[0_8px_28px_rgba(35,134,91,0.12)]';
       case 'error':
-        return 'border-rose-500/30 bg-rose-950/40 text-rose-100';
+        return 'border-[#fca5a5] bg-white text-[#211d1a] shadow-[0_8px_28px_rgba(197,78,74,0.12)]';
       case 'warning':
-        return 'border-amber-500/30 bg-amber-950/40 text-amber-100';
+        return 'border-[#fed7aa] bg-white text-[#211d1a] shadow-[0_8px_28px_rgba(191,122,19,0.12)]';
       case 'info':
       default:
-        return 'border-sky-500/30 bg-sky-950/40 text-sky-100';
+        return 'border-[#bfdbfe] bg-white text-[#211d1a] shadow-[0_8px_28px_rgba(57,116,185,0.12)]';
     }
   };
 
@@ -44,20 +44,20 @@ export const ToastContainer: React.FC = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 15, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className={`pointer-events-auto flex items-start gap-3 p-4 rounded-xl border backdrop-blur-xl shadow-2xl ${getBorderColor(
+            className={`pointer-events-auto flex items-start gap-3 p-4 rounded-xl border backdrop-blur-md ${getBorderColor(
               toast.type
             )}`}
           >
             {getIcon(toast.type)}
             <div className="flex-1 min-w-0">
-              <h4 className="text-sm font-semibold tracking-tight">{toast.title}</h4>
+              <h4 className="text-sm font-bold text-[#211d1a] tracking-tight">{toast.title}</h4>
               {toast.message && (
-                <p className="text-xs text-stone-300 mt-0.5 leading-relaxed">{toast.message}</p>
+                <p className="text-xs text-[#7b726a] mt-0.5 leading-relaxed">{toast.message}</p>
               )}
             </div>
             <button
               onClick={() => removeToast(toast.id)}
-              className="text-stone-400 hover:text-white transition-colors p-1 -mr-1 -mt-1"
+              className="text-[#7b726a] hover:text-[#211d1a] transition-colors p-1 -mr-1 -mt-1 rounded-md hover:bg-[#f5f1ec]"
             >
               <X className="w-4 h-4" />
             </button>

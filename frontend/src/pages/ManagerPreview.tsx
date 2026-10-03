@@ -29,45 +29,45 @@ export const ManagerPreview: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
         <Card variant="default">
           <CardHeader className="flex items-center justify-between">
-            <h3 className="text-sm font-bold text-stone-200 flex items-center gap-2">
-              <Layers className="w-4 h-4 text-sky-400" />
+            <h3 className="text-sm font-bold text-[#211d1a] flex items-center gap-2">
+              <Layers className="w-4 h-4 text-[#d96236]" />
               <span>Table Floor Status</span>
             </h3>
             <Badge variant="brand" size="sm">
               7 Active
             </Badge>
           </CardHeader>
-          <CardBody className="space-y-2 text-xs text-stone-300">
-            <div className="flex justify-between p-2 rounded-lg bg-stone-950/60 border border-stone-800">
-              <span className="font-bold text-white">Table 07</span>
-              <span className="text-orange-400 font-mono">Round 2 • Cooking</span>
+          <CardBody className="space-y-2 text-xs text-[#4d443c]">
+            <div className="flex justify-between p-2 rounded-lg bg-[#fbf9f6] border border-[#e9e3dc]">
+              <span className="font-bold text-[#211d1a]">Table 07</span>
+              <span className="text-[#d96236] font-mono">Round 2 • Cooking</span>
             </div>
-            <div className="flex justify-between p-2 rounded-lg bg-stone-950/60 border border-stone-800">
-              <span className="font-bold text-white">Table 03</span>
-              <span className="text-amber-400 font-mono">Bill Requested</span>
+            <div className="flex justify-between p-2 rounded-lg bg-[#fbf9f6] border border-[#e9e3dc]">
+              <span className="font-bold text-[#211d1a]">Table 03</span>
+              <span className="text-[#d97706] font-mono">Bill Requested</span>
             </div>
-            <div className="flex justify-between p-2 rounded-lg bg-stone-950/60 border border-stone-800">
-              <span className="font-bold text-white">Table 12</span>
-              <span className="text-emerald-400 font-mono">Available</span>
+            <div className="flex justify-between p-2 rounded-lg bg-[#fbf9f6] border border-[#e9e3dc]">
+              <span className="font-bold text-[#211d1a]">Table 12</span>
+              <span className="text-[#059669] font-mono">Available</span>
             </div>
           </CardBody>
         </Card>
 
         <Card variant="default">
           <CardHeader className="flex items-center justify-between">
-            <h3 className="text-sm font-bold text-stone-200 flex items-center gap-2">
-              <BellRing className="w-4 h-4 text-amber-400" />
+            <h3 className="text-sm font-bold text-[#211d1a] flex items-center gap-2">
+              <BellRing className="w-4 h-4 text-[#d97706]" />
               <span>Pending Service Requests</span>
             </h3>
             <Badge variant="warning" size="sm">
               2 Pending
             </Badge>
           </CardHeader>
-          <CardBody className="space-y-2 text-xs text-stone-300">
-            <div className="p-2.5 rounded-lg bg-amber-950/30 border border-amber-800/40 flex items-center justify-between">
+          <CardBody className="space-y-2 text-xs text-[#4d443c]">
+            <div className="p-2.5 rounded-lg bg-[#fff8e7] border border-[#fde68a] flex items-center justify-between">
               <div>
-                <span className="font-bold text-amber-200">Table 07: Water Refill</span>
-                <p className="text-[11px] text-stone-400">Laksh • 2 mins ago</p>
+                <span className="font-bold text-[#b45309]">Table 07: Water Refill</span>
+                <p className="text-[11px] text-[#7b726a]">Laksh • 2 mins ago</p>
               </div>
               <Button
                 size="sm"
@@ -77,10 +77,10 @@ export const ManagerPreview: React.FC = () => {
                 Acknowledge
               </Button>
             </div>
-            <div className="p-2.5 rounded-lg bg-amber-950/30 border border-amber-800/40 flex items-center justify-between">
+            <div className="p-2.5 rounded-lg bg-[#fff8e7] border border-[#fde68a] flex items-center justify-between">
               <div>
-                <span className="font-bold text-amber-200">Table 04: Extra Cutlery</span>
-                <p className="text-[11px] text-stone-400">Arjun • 4 mins ago</p>
+                <span className="font-bold text-[#b45309]">Table 04: Extra Cutlery</span>
+                <p className="text-[11px] text-[#7b726a]">Arjun • 4 mins ago</p>
               </div>
               <Button
                 size="sm"
@@ -95,25 +95,25 @@ export const ManagerPreview: React.FC = () => {
 
         <Card variant="default">
           <CardHeader className="flex items-center justify-between">
-            <h3 className="text-sm font-bold text-stone-200 flex items-center gap-2">
-              <Clock className="w-4 h-4 text-emerald-400" />
+            <h3 className="text-sm font-bold text-[#211d1a] flex items-center gap-2">
+              <Clock className="w-4 h-4 text-[#059669]" />
               <span>Kitchen Pace</span>
             </h3>
             <Badge variant="success" size="sm">
               Optimal
             </Badge>
           </CardHeader>
-          <CardBody className="space-y-3 text-xs text-stone-300">
+          <CardBody className="space-y-3 text-xs text-[#4d443c]">
             <div>
-              <div className="flex justify-between mb-1 text-[11px] text-stone-400">
+              <div className="flex justify-between mb-1 text-[11px] text-[#7b726a]">
                 <span>Average Prep Time</span>
-                <span className="font-bold text-white">13.5 mins</span>
+                <span className="font-bold text-[#211d1a]">13.5 mins</span>
               </div>
-              <div className="w-full bg-stone-800 h-2 rounded-full overflow-hidden">
-                <div className="bg-emerald-500 h-full w-[65%]" />
+              <div className="w-full bg-[#f5f1ec] h-2 rounded-full overflow-hidden border border-[#e9e3dc]">
+                <div className="bg-[#059669] h-full w-[65%]" />
               </div>
             </div>
-            <p className="text-[11px] text-stone-400">
+            <p className="text-[11px] text-[#7b726a]">
               Grill station is operating at 80% capacity. Main kitchen has zero ticket backlog.
             </p>
           </CardBody>

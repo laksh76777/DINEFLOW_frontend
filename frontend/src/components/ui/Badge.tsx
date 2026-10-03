@@ -26,39 +26,39 @@ export const Badge: React.FC<BadgeProps> = ({
   ...props
 }) => {
   const variants = {
-    brand: 'bg-orange-500/15 text-orange-400 border-orange-500/30',
-    success: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30',
-    warning: 'bg-amber-500/15 text-amber-400 border-amber-500/30',
-    danger: 'bg-rose-500/15 text-rose-400 border-rose-500/30',
-    neutral: 'bg-stone-800 text-stone-300 border-stone-700',
-    veg: 'bg-emerald-950/80 text-emerald-300 border-emerald-600/50',
-    'non-veg': 'bg-rose-950/80 text-rose-300 border-rose-600/50',
-    vegan: 'bg-teal-950/80 text-teal-300 border-teal-600/50',
-    station: 'bg-indigo-950/80 text-indigo-300 border-indigo-500/40',
+    brand: 'bg-[#fff4ef] text-[#be4d27] border-[#ffc9b5]',
+    success: 'bg-[#e8f6ef] text-[#23865b] border-[#a5d8be]',
+    warning: 'bg-[#fff4dc] text-[#bf7a13] border-[#fed7aa]',
+    danger: 'bg-[#fde8e8] text-[#c54e4a] border-[#fca5a5]',
+    neutral: 'bg-[#f5f1ec] text-[#49423c] border-[#e9e3dc]',
+    veg: 'bg-[#e8f6ef] text-[#23865b] border-[#23865b]/40',
+    'non-veg': 'bg-[#fde8e8] text-[#c54e4a] border-[#c54e4a]/40',
+    vegan: 'bg-[#eaf2fb] text-[#3974b9] border-[#3974b9]/40',
+    station: 'bg-[#fdf2f8] text-[#9d174d] border-[#fbcfe8]',
   };
 
   const sizes = {
-    sm: 'text-[11px] px-2 py-0.5 font-medium',
-    md: 'text-xs px-2.5 py-1 font-medium',
+    sm: 'text-[10px] px-2 py-0.5 font-bold',
+    md: 'text-xs px-2.5 py-1 font-bold',
   };
 
   const dotColors = {
-    brand: 'bg-orange-400',
-    success: 'bg-emerald-400',
-    warning: 'bg-amber-400',
-    danger: 'bg-rose-400',
-    neutral: 'bg-stone-400',
-    veg: 'bg-emerald-400',
-    'non-veg': 'bg-rose-400',
-    vegan: 'bg-teal-400',
-    station: 'bg-indigo-400',
+    brand: 'bg-[#d96236]',
+    success: 'bg-[#23865b]',
+    warning: 'bg-[#bf7a13]',
+    danger: 'bg-[#c54e4a]',
+    neutral: 'bg-[#7b726a]',
+    veg: 'bg-[#23865b]',
+    'non-veg': 'bg-[#c54e4a]',
+    vegan: 'bg-[#3974b9]',
+    station: 'bg-[#9d174d]',
   };
 
   return (
     <span
       className={twMerge(
         clsx(
-          'inline-flex items-center gap-1.5 rounded-full border tracking-wide uppercase font-semibold select-none',
+          'inline-flex items-center gap-1.5 rounded-full border tracking-wide uppercase select-none',
           variants[variant],
           sizes[size],
           className

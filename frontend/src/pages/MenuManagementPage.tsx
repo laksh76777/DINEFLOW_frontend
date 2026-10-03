@@ -368,19 +368,19 @@ export const MenuManagementPage: React.FC = () => {
       />
 
       {/* Category Tabs */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-2 border-b border-stone-800 scrollbar-none">
+      <div className="flex items-center gap-2 overflow-x-auto pb-2 border-b border-[#e9e3dc] scrollbar-none">
         <button
           onClick={() => setSelectedCategory('ALL')}
           className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all shrink-0 ${
             selectedCategory === 'ALL'
-              ? 'bg-gradient-to-r from-orange-500 to-amber-600 text-white shadow-md shadow-orange-950/40'
-              : 'bg-stone-900/80 text-stone-400 hover:text-white border border-stone-800'
+              ? 'bg-[#d96236] text-white shadow-xs'
+              : 'bg-white text-[#7b726a] hover:text-[#211d1a] border border-[#e9e3dc]'
           }`}
         >
           <span>All Categories</span>
           <span
             className={`px-1.5 py-0.2 rounded-md text-[10px] font-mono ${
-              selectedCategory === 'ALL' ? 'bg-black/20 text-white' : 'bg-stone-800 text-stone-300'
+              selectedCategory === 'ALL' ? 'bg-white/20 text-white' : 'bg-[#f5f1ec] text-[#4d443c]'
             }`}
           >
             {menuItems.length}
@@ -397,14 +397,14 @@ export const MenuManagementPage: React.FC = () => {
               onClick={() => setSelectedCategory(cat._id)}
               className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all shrink-0 ${
                 selectedCategory === cat._id
-                  ? 'bg-gradient-to-r from-orange-500 to-amber-600 text-white shadow-md shadow-orange-950/40'
-                  : 'bg-stone-900/80 text-stone-400 hover:text-white border border-stone-800'
+                  ? 'bg-[#d96236] text-white shadow-xs'
+                  : 'bg-white text-[#7b726a] hover:text-[#211d1a] border border-[#e9e3dc]'
               }`}
             >
               <span>{cat.name}</span>
               <span
                 className={`px-1.5 py-0.2 rounded-md text-[10px] font-mono ${
-                  selectedCategory === cat._id ? 'bg-black/20 text-white' : 'bg-stone-800 text-stone-300'
+                  selectedCategory === cat._id ? 'bg-white/20 text-white' : 'bg-[#f5f1ec] text-[#4d443c]'
                 }`}
               >
                 {count}
@@ -415,7 +415,7 @@ export const MenuManagementPage: React.FC = () => {
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 rounded-2xl bg-stone-900/60 border border-stone-800">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 rounded-2xl bg-white border border-[#e9e3dc] shadow-xs">
         <div className="flex-1 max-w-md">
           <Input
             placeholder="Search dishes, spices, ingredients..."
@@ -501,12 +501,12 @@ export const MenuManagementPage: React.FC = () => {
                 variant="default"
                 isHoverable
                 className={`group flex flex-col justify-between h-full relative transition-all border ${
-                  item.available ? 'border-stone-800' : 'border-rose-950/60 bg-stone-950/60'
+                  item.available ? 'border-[#e9e3dc] bg-white' : 'border-[#fecaca] bg-[#fef2f2]/40'
                 }`}
               >
                 <div>
                   {/* Food Image with Zoom on Hover */}
-                  <div className="relative h-48 w-full overflow-hidden bg-stone-950">
+                  <div className="relative h-48 w-full overflow-hidden bg-[#f5f1ec]">
                     <img
                       src={item.image}
                       alt={item.name}
@@ -514,7 +514,7 @@ export const MenuManagementPage: React.FC = () => {
                         !item.available ? 'filter grayscale contrast-125 opacity-40' : ''
                       }`}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/20 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
 
                     {/* Top Left: Dietary Badge */}
                     <div className="absolute top-3 left-3 flex items-center gap-1.5">
@@ -533,7 +533,7 @@ export const MenuManagementPage: React.FC = () => {
                       </Badge>
 
                       {item.featured && (
-                        <Badge variant="brand" size="sm" className="bg-orange-500 text-white">
+                        <Badge variant="brand" size="sm" className="bg-[#d97706] text-white">
                           ★ Chef's Special
                         </Badge>
                       )}
@@ -548,8 +548,8 @@ export const MenuManagementPage: React.FC = () => {
 
                     {/* Sold out overlay banner */}
                     {!item.available && (
-                      <div className="absolute inset-0 flex items-center justify-center bg-black/60 backdrop-blur-xs">
-                        <span className="px-3 py-1 rounded-full bg-rose-600 text-white text-xs font-black tracking-widest uppercase shadow-lg shadow-rose-950">
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/50 backdrop-blur-xs">
+                        <span className="px-3 py-1 rounded-full bg-[#dc2626] text-white text-xs font-black tracking-widest uppercase shadow-md">
                           86'd • Sold Out
                         </span>
                       </div>
@@ -559,34 +559,34 @@ export const MenuManagementPage: React.FC = () => {
                   {/* Body Content */}
                   <CardBody className="p-4 space-y-2.5">
                     <div className="flex items-start justify-between gap-2">
-                      <h3 className="text-base font-bold text-white group-hover:text-orange-400 transition-colors line-clamp-1 font-serif">
+                      <h3 className="text-base font-bold text-[#211d1a] group-hover:text-[#d96236] transition-colors line-clamp-1 font-serif">
                         {item.name}
                       </h3>
-                      <div className="text-base font-black text-amber-400 font-mono shrink-0">
+                      <div className="text-base font-black text-[#d96236] font-mono shrink-0">
                         ₹{item.price}
                       </div>
                     </div>
 
-                    <p className="text-xs text-stone-400 line-clamp-2 leading-relaxed">
+                    <p className="text-xs text-[#7b726a] line-clamp-2 leading-relaxed">
                       {item.description}
                     </p>
 
                     {/* Nutritional / Flavor Specs */}
-                    <div className="flex flex-wrap items-center gap-2 pt-1 text-[11px] text-stone-400">
+                    <div className="flex flex-wrap items-center gap-2 pt-1 text-[11px] text-[#7b726a]">
                       <span className="flex items-center gap-1">
-                        <Clock className="w-3 h-3 text-stone-500" />
+                        <Clock className="w-3 h-3 text-[#a69c93]" />
                         {item.preparationTime} mins
                       </span>
 
                       {item.spiceLevel > 0 && (
-                        <span className="flex items-center gap-0.5 text-rose-400 font-semibold">
+                        <span className="flex items-center gap-0.5 text-[#d97706] font-semibold">
                           <Flame className="w-3 h-3" />
                           <span>Level {item.spiceLevel}</span>
                         </span>
                       )}
 
                       {item.allergens?.length > 0 && (
-                        <span className="text-stone-500 truncate max-w-[130px]">
+                        <span className="text-[#a69c93] truncate max-w-[130px]">
                           Contains: {item.allergens.join(', ')}
                         </span>
                       )}
@@ -595,7 +595,7 @@ export const MenuManagementPage: React.FC = () => {
                 </div>
 
                 {/* Footer Controls: Availability Toggle & Edit/Delete */}
-                <div className="p-3 bg-stone-950/60 border-t border-stone-800/80 flex items-center justify-between">
+                <div className="p-3 bg-[#fbf9f6] border-t border-[#f5f1ec] flex items-center justify-between">
                   {/* Availability Toggle Switch */}
                   <label className="flex items-center gap-2 cursor-pointer select-none">
                     <div className="relative">
@@ -607,18 +607,18 @@ export const MenuManagementPage: React.FC = () => {
                       />
                       <div
                         className={`w-9 h-5 rounded-full transition-colors ${
-                          item.available ? 'bg-emerald-500' : 'bg-stone-700'
+                          item.available ? 'bg-[#059669]' : 'bg-[#cfc5ba]'
                         }`}
                       />
                       <div
-                        className={`absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white transition-transform ${
+                        className={`absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white shadow-xs transition-transform ${
                           item.available ? 'translate-x-4' : 'translate-x-0'
                         }`}
                       />
                     </div>
                     <span
                       className={`text-xs font-semibold ${
-                        item.available ? 'text-emerald-400' : 'text-stone-500'
+                        item.available ? 'text-[#059669]' : 'text-[#a69c93]'
                       }`}
                     >
                       {item.available ? 'Available' : 'Unavailable'}
@@ -630,14 +630,14 @@ export const MenuManagementPage: React.FC = () => {
                     <div className="flex items-center gap-1">
                       <button
                         onClick={() => openItemModal(item)}
-                        className="p-1.5 rounded-lg text-stone-400 hover:text-white hover:bg-stone-800 transition-colors"
+                        className="p-1.5 rounded-lg text-[#7b726a] hover:text-[#211d1a] hover:bg-[#e9e3dc] transition-colors"
                         title="Edit Dish Details"
                       >
                         <Edit2 className="w-3.5 h-3.5" />
                       </button>
                       <button
                         onClick={() => handleDeleteItem(item)}
-                        className="p-1.5 rounded-lg text-stone-400 hover:text-rose-400 hover:bg-rose-950/30 transition-colors"
+                        className="p-1.5 rounded-lg text-[#7b726a] hover:text-[#dc2626] hover:bg-[#fee2e2] transition-colors"
                         title="Delete Dish"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
@@ -677,15 +677,15 @@ export const MenuManagementPage: React.FC = () => {
         <form onSubmit={handleSaveItem} className="space-y-4">
           {/* Image Upload Area */}
           <div>
-            <label className="text-xs font-semibold text-stone-300 mb-1.5 block">
+            <label className="text-xs font-semibold text-[#4d443c] mb-1.5 block">
               Dish Photography (Cloudinary)
             </label>
             <div className="flex items-center gap-4">
-              <div className="relative w-24 h-24 rounded-2xl overflow-hidden border border-stone-800 bg-stone-950 shrink-0">
+              <div className="relative w-24 h-24 rounded-2xl overflow-hidden border border-[#e9e3dc] bg-[#f5f1ec] shrink-0">
                 <img src={formImage} alt="Dish Preview" className="w-full h-full object-cover" />
                 {isUploadingImage && (
-                  <div className="absolute inset-0 bg-black/70 flex items-center justify-center">
-                    <span className="w-4 h-4 border-2 border-orange-500 border-t-transparent rounded-full animate-spin" />
+                  <div className="absolute inset-0 bg-white/70 flex items-center justify-center">
+                    <span className="w-4 h-4 border-2 border-[#d96236] border-t-transparent rounded-full animate-spin" />
                   </div>
                 )}
               </div>
@@ -694,7 +694,7 @@ export const MenuManagementPage: React.FC = () => {
                   type="button"
                   size="sm"
                   variant="outline"
-                  leftIcon={<Upload className="w-3.5 h-3.5 text-orange-400" />}
+                  leftIcon={<Upload className="w-3.5 h-3.5 text-[#d96236]" />}
                   onClick={() => fileInputRef.current?.click()}
                   isLoading={isUploadingImage}
                 >
@@ -720,7 +720,7 @@ export const MenuManagementPage: React.FC = () => {
             />
 
             <div>
-              <label className="text-xs font-semibold text-stone-300 mb-1.5 block">
+              <label className="text-xs font-semibold text-[#4d443c] mb-1.5 block">
                 Price (₹ INR) {!isOwnerOrManager && '(Locked for Staff)'}
               </label>
               <Input
@@ -753,8 +753,8 @@ export const MenuManagementPage: React.FC = () => {
                     onClick={() => setFormCookingMethod(m)}
                     className={`text-[10px] px-2 py-0.5 rounded-md border transition-all ${
                       formCookingMethod === m
-                        ? 'bg-orange-500/20 border-orange-500 text-orange-300'
-                        : 'bg-stone-900 border-stone-800 text-stone-400 hover:text-stone-200'
+                        ? 'bg-[#fff4ef] border-[#d96236] text-[#be4d27]'
+                        : 'bg-[#fbf9f6] border-[#e9e3dc] text-[#7b726a] hover:text-[#211d1a]'
                     }`}
                   >
                     {m}
@@ -774,17 +774,17 @@ export const MenuManagementPage: React.FC = () => {
           {/* Dish Description with Gemini AI Assistant */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <label className="text-xs font-semibold text-stone-300 block">
+              <label className="text-xs font-semibold text-[#4d443c] block">
                 Dish Description
               </label>
               <Button
                 type="button"
                 size="sm"
                 variant="outline"
-                className="border-orange-500/40 text-orange-400 hover:bg-orange-500/10 text-xs py-1 px-2.5 h-auto"
+                className="border-[#ffc9b5] text-[#d96236] hover:bg-[#fff4ef] text-xs py-1 px-2.5 h-auto"
                 onClick={handleGenerateAiDescription}
                 isLoading={isGeneratingDescription}
-                leftIcon={<Sparkles className="w-3 h-3 text-orange-400" />}
+                leftIcon={<Sparkles className="w-3 h-3 text-[#d96236]" />}
               >
                 Draft with AI
               </Button>
@@ -795,11 +795,11 @@ export const MenuManagementPage: React.FC = () => {
               <motion.div
                 initial={{ opacity: 0, y: -6 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="p-3 rounded-xl bg-orange-950/40 border border-orange-500/50 space-y-2 shadow-lg"
+                className="p-3 rounded-xl bg-[#fff8e7] border border-[#fde68a] space-y-2 shadow-sm"
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-orange-300 flex items-center gap-1.5">
-                    <Sparkles className="w-3.5 h-3.5 text-orange-400" />
+                  <span className="text-xs font-bold text-[#b45309] flex items-center gap-1.5">
+                    <Sparkles className="w-3.5 h-3.5 text-[#d97706]" />
                     AI Draft (Review before applying)
                   </span>
                   <div className="flex items-center gap-1">
@@ -820,13 +820,13 @@ export const MenuManagementPage: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => setAiDraftDescription(null)}
-                      className="p-1 text-stone-400 hover:text-stone-200"
+                      className="p-1 text-[#7b726a] hover:text-[#211d1a]"
                     >
                       <X className="w-3.5 h-3.5" />
                     </button>
                   </div>
                 </div>
-                <p className="text-xs text-stone-200 italic leading-relaxed bg-black/30 p-2 rounded-lg border border-stone-800">
+                <p className="text-xs text-[#78350f] italic leading-relaxed bg-white/60 p-2 rounded-lg border border-[#fde68a]">
                   "{aiDraftDescription}"
                 </p>
               </motion.div>
@@ -837,7 +837,7 @@ export const MenuManagementPage: React.FC = () => {
               value={formDescription}
               onChange={(e) => setFormDescription(e.target.value)}
               placeholder="Sensory description of taste, texture, and culinary craft..."
-              className="w-full bg-stone-900 border border-stone-800 text-stone-100 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-orange-500/60 focus:ring-2 focus:ring-orange-500/20"
+              className="w-full bg-white border border-[#e9e3dc] text-[#211d1a] rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#d96236] focus:ring-2 focus:ring-[#d96236]/20"
             />
           </div>
 
@@ -912,9 +912,9 @@ export const MenuManagementPage: React.FC = () => {
               type="checkbox"
               checked={formFeatured}
               onChange={(e) => setFormFeatured(e.target.checked)}
-              className="w-4 h-4 rounded text-orange-500 focus:ring-orange-500/30 bg-stone-900 border-stone-800"
+              className="w-4 h-4 rounded text-[#d96236] focus:ring-[#d96236]/30 bg-white border-[#e9e3dc]"
             />
-            <span className="text-xs font-semibold text-white">
+            <span className="text-xs font-semibold text-[#211d1a]">
               Mark as Chef's Special / Featured Dish (Displayed prominently)
             </span>
           </label>

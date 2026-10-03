@@ -17,21 +17,21 @@ export const KitchenPreview: React.FC = () => {
   return (
     <div className="space-y-4">
       {/* Station Selector Bar */}
-      <div className="flex flex-wrap items-center gap-2 pb-2 border-b border-stone-800">
+      <div className="flex flex-wrap items-center gap-2 pb-2 border-b border-[#e9e3dc]">
         {stations.map((st) => (
           <button
             key={st.id}
             onClick={() => setActiveStation(st.id)}
             className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all ${
               activeStation === st.id
-                ? 'bg-amber-500 text-stone-950 shadow-lg shadow-amber-950/40'
-                : 'bg-stone-900 text-stone-400 hover:text-white border border-stone-800'
+                ? 'bg-[#d96236] text-white shadow-sm'
+                : 'bg-white text-[#7b726a] hover:text-[#211d1a] border border-[#e9e3dc]'
             }`}
           >
             <span>{st.label}</span>
             <span
               className={`px-1.5 py-0.5 rounded-md text-[10px] font-mono ${
-                activeStation === st.id ? 'bg-stone-950/20 text-stone-950 font-black' : 'bg-stone-800 text-stone-300'
+                activeStation === st.id ? 'bg-white/20 text-white font-black' : 'bg-[#f5f1ec] text-[#4d443c]'
               }`}
             >
               {st.count}
@@ -44,29 +44,29 @@ export const KitchenPreview: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         {/* NEW Column */}
         <div className="space-y-3">
-          <div className="flex items-center justify-between px-2 text-xs font-black uppercase tracking-wider text-rose-400">
+          <div className="flex items-center justify-between px-2 text-xs font-black uppercase tracking-wider text-[#dc2626]">
             <span>● New Tickets</span>
             <span className="font-mono">1</span>
           </div>
-          <Card variant="default" className="border-rose-500/40 bg-stone-900/90">
-            <CardHeader className="p-3 bg-rose-950/20 border-b border-rose-500/20 flex items-center justify-between">
+          <Card variant="default" className="border-[#fecaca] bg-white shadow-sm">
+            <CardHeader className="p-3 bg-[#fef2f2] border-b border-[#fecaca] flex items-center justify-between">
               <div>
-                <span className="text-base font-black text-white font-mono">T-07</span>
-                <span className="text-[11px] text-stone-400 ml-2">Round 2</span>
+                <span className="text-base font-black text-[#211d1a] font-mono">T-07</span>
+                <span className="text-[11px] text-[#7b726a] ml-2">Round 2</span>
               </div>
-              <div className="flex items-center gap-1 text-[11px] text-rose-400 font-mono font-bold">
+              <div className="flex items-center gap-1 text-[11px] text-[#dc2626] font-mono font-bold">
                 <Clock className="w-3.5 h-3.5 animate-pulse" />
                 <span>01:42</span>
               </div>
             </CardHeader>
             <CardBody className="p-3 space-y-2 text-xs">
-              <div className="flex justify-between font-bold text-stone-100">
+              <div className="flex justify-between font-bold text-[#211d1a]">
                 <span>2x Paneer Tikka</span>
                 <Badge variant="veg" size="sm">
                   Veg
                 </Badge>
               </div>
-              <div className="text-[11px] text-amber-400 italic">Note: Extra mint chutney on side</div>
+              <div className="text-[11px] text-[#d97706] italic">Note: Extra mint chutney on side</div>
               <Button
                 size="sm"
                 variant="primary"
@@ -81,26 +81,26 @@ export const KitchenPreview: React.FC = () => {
 
         {/* ACCEPTED Column */}
         <div className="space-y-3">
-          <div className="flex items-center justify-between px-2 text-xs font-black uppercase tracking-wider text-amber-400">
+          <div className="flex items-center justify-between px-2 text-xs font-black uppercase tracking-wider text-[#d97706]">
             <span>● Accepted</span>
             <span className="font-mono">1</span>
           </div>
-          <Card variant="default" className="border-stone-800">
-            <CardHeader className="p-3 bg-stone-950/60 border-b border-stone-800 flex items-center justify-between">
+          <Card variant="default" className="border-[#e9e3dc] bg-white shadow-sm">
+            <CardHeader className="p-3 bg-[#fbf9f6] border-b border-[#e9e3dc] flex items-center justify-between">
               <div>
-                <span className="text-base font-black text-white font-mono">T-03</span>
-                <span className="text-[11px] text-stone-400 ml-2">Round 1</span>
+                <span className="text-base font-black text-[#211d1a] font-mono">T-03</span>
+                <span className="text-[11px] text-[#7b726a] ml-2">Round 1</span>
               </div>
-              <span className="text-[11px] text-stone-400 font-mono">03:15</span>
+              <span className="text-[11px] text-[#7b726a] font-mono">03:15</span>
             </CardHeader>
             <CardBody className="p-3 space-y-2 text-xs">
-              <div className="flex justify-between font-bold text-stone-100">
+              <div className="flex justify-between font-bold text-[#211d1a]">
                 <span>1x Dal Makhani</span>
                 <Badge variant="veg" size="sm">
                   Veg
                 </Badge>
               </div>
-              <div className="flex justify-between font-bold text-stone-100">
+              <div className="flex justify-between font-bold text-[#211d1a]">
                 <span>2x Garlic Naan</span>
                 <Badge variant="veg" size="sm">
                   Veg
@@ -110,7 +110,7 @@ export const KitchenPreview: React.FC = () => {
                 size="sm"
                 variant="outline"
                 className="w-full mt-2"
-                leftIcon={<Play className="w-3.5 h-3.5 text-amber-400" />}
+                leftIcon={<Play className="w-3.5 h-3.5 text-[#d97706]" />}
                 onClick={() => toast.info('Cooking Started', 'Table 03 timer running')}
               >
                 Start Cooking
@@ -121,20 +121,20 @@ export const KitchenPreview: React.FC = () => {
 
         {/* PREPARING Column */}
         <div className="space-y-3">
-          <div className="flex items-center justify-between px-2 text-xs font-black uppercase tracking-wider text-sky-400">
+          <div className="flex items-center justify-between px-2 text-xs font-black uppercase tracking-wider text-[#d96236]">
             <span>● Preparing</span>
             <span className="font-mono">2</span>
           </div>
-          <Card variant="default" className="border-sky-500/30">
-            <CardHeader className="p-3 bg-sky-950/20 border-b border-sky-500/20 flex items-center justify-between">
+          <Card variant="default" className="border-[#ffc9b5] bg-white shadow-sm">
+            <CardHeader className="p-3 bg-[#fff4ef] border-b border-[#ffc9b5] flex items-center justify-between">
               <div>
-                <span className="text-base font-black text-white font-mono">T-11</span>
-                <span className="text-[11px] text-stone-400 ml-2">Round 1</span>
+                <span className="text-base font-black text-[#211d1a] font-mono">T-11</span>
+                <span className="text-[11px] text-[#7b726a] ml-2">Round 1</span>
               </div>
-              <span className="text-[11px] text-sky-400 font-mono font-bold">08:40</span>
+              <span className="text-[11px] text-[#d96236] font-mono font-bold">08:40</span>
             </CardHeader>
             <CardBody className="p-3 space-y-2 text-xs">
-              <div className="flex justify-between font-bold text-stone-100">
+              <div className="flex justify-between font-bold text-[#211d1a]">
                 <span>1x Murgh Biryani</span>
                 <Badge variant="non-veg" size="sm">
                   Non-Veg
@@ -144,7 +144,7 @@ export const KitchenPreview: React.FC = () => {
                 size="sm"
                 variant="success"
                 className="w-full mt-2"
-                leftIcon={<Check className="w-3.5 h-3.5" />}
+                leftIcon={<Check className="w-3.5 h-3.5 text-white" />}
                 onClick={() => toast.success('Order Ready', 'Waiter alerted for pickup at T-11')}
               >
                 Mark as Ready
@@ -155,23 +155,23 @@ export const KitchenPreview: React.FC = () => {
 
         {/* READY Column */}
         <div className="space-y-3">
-          <div className="flex items-center justify-between px-2 text-xs font-black uppercase tracking-wider text-emerald-400">
+          <div className="flex items-center justify-between px-2 text-xs font-black uppercase tracking-wider text-[#059669]">
             <span>● Ready for Pickup</span>
             <span className="font-mono">1</span>
           </div>
-          <Card variant="default" className="border-emerald-500/40 bg-emerald-950/10">
-            <CardHeader className="p-3 bg-emerald-950/30 border-b border-emerald-500/30 flex items-center justify-between">
+          <Card variant="default" className="border-[#a7f3d0] bg-white shadow-sm">
+            <CardHeader className="p-3 bg-[#ecfdf5] border-b border-[#a7f3d0] flex items-center justify-between">
               <div>
-                <span className="text-base font-black text-white font-mono">T-04</span>
-                <span className="text-[11px] text-stone-400 ml-2">Round 1</span>
+                <span className="text-base font-black text-[#211d1a] font-mono">T-04</span>
+                <span className="text-[11px] text-[#7b726a] ml-2">Round 1</span>
               </div>
               <Badge variant="success" size="sm" dot>
                 Ready
               </Badge>
             </CardHeader>
             <CardBody className="p-3 space-y-2 text-xs">
-              <div className="font-bold text-emerald-200">2x Fresh Lime Soda</div>
-              <p className="text-[11px] text-stone-400">Waiter notified 45s ago</p>
+              <div className="font-bold text-[#059669]">2x Fresh Lime Soda</div>
+              <p className="text-[11px] text-[#7b726a]">Waiter notified 45s ago</p>
             </CardBody>
           </Card>
         </div>
