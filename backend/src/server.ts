@@ -12,40 +12,41 @@ const PORT = process.env.PORT || 5000;
 
 async function bootstrap() {
   try {
-    logger.info('Starting DineFlow Backend Services...');
+    // 1. Connect to Database (Atlas or embedded MongoMemoryServer)
+    await connectDatabase();
 
-    // 1. Initialize Redis / Cache
+    // 2. Bootstrap Core Entities & Ensure All Tables are Clean and AVAILABLE
+    const { seedInitialUsers } = await import('./scripts/seed.js');
+    await seedInitialUsers();
+
+    // 3. Initialize Redis / Cache
     await initRedis();
 
-    // 2. Create Express App & HTTP Server
+    // 4. Create Express App & HTTP Server
     const app = createApp();
     const httpServer = http.createServer(app);
 
-    // 3. Initialize Socket.IO Foundation
+    // 5. Initialize Socket.IO Foundation
     initSocketServer(httpServer);
 
-    // 4. Start Listening immediately so health checks and API are available
+    // 6. Start Listening and display status banner
     httpServer.listen(PORT, () => {
-      logger.info(`✨ DineFlow Server listening on http://localhost:${PORT}`);
-      logger.info(`⚡ Health Check available at http://localhost:${PORT}/api/health`);
+      console.log('=======================================================');
+      console.log('🍽️  DineFlow Restaurant Technology Backend Running');
+      console.log(`📡 URL: http://localhost:${PORT}`);
+      console.log(`⚡ Real-time Socket.IO: Active`);
+      console.log(`🛡️  Security: Helmet + CORS + Rate Limiting + RBAC`);
+      console.log(`🤖 AI Advisor: Google Gemini (Active)`);
+      console.log(`📋 Floor State: All Tables Initialized to AVAILABLE`);
+      console.log('=======================================================');
     });
 
-    // 5. Connect to Database (Atlas, Local, or MongoMemoryServer) in background
-    connectDatabase()
-      .then(async () => {
-        const { seedInitialUsers } = await import('./scripts/seed.js');
-        await seedInitialUsers();
-      })
-      .catch((err) => {
-        logger.warn(`Initial database connection attempt failed: ${err.message}`);
-      });
-
     // Graceful Shutdown Handling
-    const handleShutdown = async (signal: string) => {
-      logger.info(`Received ${signal}. Shutting down DineFlow gracefully...`);
+    const handleShutdown = async (_signal: string) => {
+      console.log('\n[Shutdown] Closing server...');
       httpServer.close(async () => {
         await disconnectDatabase();
-        logger.info('DineFlow Server stopped cleanly.');
+        console.log('[Shutdown] Server closed cleanly.');
         process.exit(0);
       });
     };
@@ -53,7 +54,7 @@ async function bootstrap() {
     process.on('SIGINT', () => handleShutdown('SIGINT'));
     process.on('SIGTERM', () => handleShutdown('SIGTERM'));
   } catch (err: any) {
-    logger.error(`Critical server initialization error: ${err.message}`, { stack: err.stack });
+    console.error(`[Server] Critical server initialization error: ${err.message}`);
     process.exit(1);
   }
 }

@@ -51,6 +51,7 @@ import {
 import { menuService, MenuItem, Category } from '../services/menuService';
 import { restaurantService, RestaurantProfile } from '../services/restaurantService';
 import { orderService, IOrder } from '../services/orderService';
+import { sessionService } from '../services/sessionService';
 import { staffRequestService } from '../services/staffRequestService';
 import { paymentService, BillSummary, SplitMode, DemoPaymentMethod } from '../services/paymentService';
 import { analyticsService } from '../services/analyticsService';
@@ -67,28 +68,29 @@ export const CustomerMenuPage: React.FC = () => {
 
   const handleLeaveTable = () => {
     localStorage.removeItem('dineflow_active_session');
+    localStorage.removeItem('dineflow_table_number');
+    localStorage.removeItem('dineflow_session_number');
+    localStorage.removeItem('dineflow_member_id');
+    localStorage.removeItem('dineflow_member_name');
+    localStorage.removeItem('dineflow_qr_token');
     const keys = Object.keys(localStorage);
     keys.forEach((key) => {
       if (key.startsWith('dineflow_temp_member_') || key.startsWith('dineflow_name_')) {
         localStorage.removeItem(key);
       }
     });
-    toast.success('Thank you for dining with us!', `Table ${tableNumber} has been released.`);
+    toast.success('Thank you for dining with us!', `Table ${tableNumber || ''} has been released.`);
     navigate('/');
   };
 
   // Restaurant & Session Context
   const [profile, setProfile] = useState<RestaurantProfile | null>(null);
-  const [sessionId, setSessionId] = useState<string>('');
-  const [tableNumber, setTableNumber] = useState<string>('07');
-  const [sessionNumber, setSessionNumber] = useState<string>('8291');
-  const [myMemberId, setMyMemberId] = useState<string>('guest-1');
-  const [myDisplayName, setMyDisplayName] = useState<string>('Laksh');
-  const [companions, setCompanions] = useState<Array<{ memberId: string; name: string }>>([
-    { memberId: 'guest-1', name: 'Laksh (Host)' },
-    { memberId: 'guest-2', name: 'Priya' },
-    { memberId: 'guest-3', name: 'Rahul' },
-  ]);
+  const [sessionId, setSessionId] = useState<string>(() => localStorage.getItem('dineflow_active_session') || '');
+  const [tableNumber, setTableNumber] = useState<string>(() => localStorage.getItem('dineflow_table_number') || '');
+  const [sessionNumber, setSessionNumber] = useState<string>(() => localStorage.getItem('dineflow_session_number') || '');
+  const [myMemberId, setMyMemberId] = useState<string>(() => localStorage.getItem('dineflow_member_id') || '');
+  const [myDisplayName, setMyDisplayName] = useState<string>(() => localStorage.getItem('dineflow_member_name') || 'Guest');
+  const [companions, setCompanions] = useState<Array<{ memberId: string; name: string }>>([]);
 
   // Menu Data
   const [categories, setCategories] = useState<Category[]>([]);
@@ -196,17 +198,73 @@ export const CustomerMenuPage: React.FC = () => {
   useEffect(() => {
     // Read session identity from localStorage (saved in CustomerWelcomePage)
     const storedSession = localStorage.getItem('dineflow_active_session');
-    if (storedSession) setSessionId(storedSession);
+    const storedTable = localStorage.getItem('dineflow_table_number');
+    const storedSessionNum = localStorage.getItem('dineflow_session_number');
+    const storedMemberId = localStorage.getItem('dineflow_member_id');
+    const storedMemberName = localStorage.getItem('dineflow_member_name');
 
-    // Look for stored member name & id
-    const keys = Object.keys(localStorage);
-    const tokenKey = keys.find((k) => k.startsWith('dineflow_name_'));
-    if (tokenKey) {
-      const name = localStorage.getItem(tokenKey);
-      if (name) {
-        setMyDisplayName(name);
-        setAttributedMember({ id: 'guest-me', name });
+    if (storedSession) {
+      setSessionId(storedSession);
+      if (storedTable) setTableNumber(storedTable);
+      if (storedSessionNum) setSessionNumber(storedSessionNum);
+      if (storedMemberId) setMyMemberId(storedMemberId);
+      if (storedMemberName) {
+        setMyDisplayName(storedMemberName);
+        setAttributedMember({ id: storedMemberId || 'guest-me', name: storedMemberName });
       }
+
+      // Verify session with backend
+      sessionService
+        .getSessionDetails(storedSession)
+        .then((res: any) => {
+          if (res?.session) {
+            // Check if session has been settled/completed
+            if (res.session.status === 'COMPLETED' || res.session.status === 'CLOSED') {
+              console.log('Session has ended and table released. Clearing session storage.');
+              localStorage.removeItem('dineflow_active_session');
+              localStorage.removeItem('dineflow_table_number');
+              localStorage.removeItem('dineflow_session_number');
+              localStorage.removeItem('dineflow_member_id');
+              localStorage.removeItem('dineflow_member_name');
+              localStorage.removeItem('dineflow_qr_token');
+              setSessionId('');
+              setTableNumber('');
+              setSessionNumber('');
+              setCompanions([]);
+              toast.info('Session Ended', 'This dining session has ended and the table is now available.');
+              return;
+            }
+
+            if (res.session.tableNumber) {
+              setTableNumber(String(res.session.tableNumber));
+              localStorage.setItem('dineflow_table_number', String(res.session.tableNumber));
+            }
+            if (res.session.sessionNumber) {
+              setSessionNumber(String(res.session.sessionNumber));
+              localStorage.setItem('dineflow_session_number', String(res.session.sessionNumber));
+            }
+            if (Array.isArray(res.members) && res.members.length > 0) {
+              setCompanions(
+                res.members.map((m: any) => ({
+                  memberId: m.temporaryMemberId || m._id,
+                  name: m.displayName,
+                }))
+              );
+            }
+          }
+        })
+        .catch((err: any) => {
+          console.warn('Could not verify session with backend:', err);
+          if (err?.message && err.message.toLowerCase().includes('not found')) {
+            localStorage.removeItem('dineflow_active_session');
+            localStorage.removeItem('dineflow_table_number');
+            localStorage.removeItem('dineflow_session_number');
+            setSessionId('');
+            setTableNumber('');
+            setSessionNumber('');
+            setCompanions([]);
+          }
+        });
     }
 
     loadMenuData();
@@ -620,8 +678,8 @@ export const CustomerMenuPage: React.FC = () => {
         {/* Top Badges Bar */}
         <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-10">
           <span className="px-3 py-1 rounded-full bg-white/95 text-[#211d1a] font-mono font-bold text-xs border border-[#e9e3dc] shadow-md flex items-center gap-1.5 backdrop-blur-md">
-            <span className="w-2 h-2 rounded-full bg-[#059669] animate-pulse" />
-            TABLE {tableNumber}
+            <span className={`w-2 h-2 rounded-full ${tableNumber ? 'bg-[#059669] animate-pulse' : 'bg-[#e59b2a]'}`} />
+            {tableNumber ? `TABLE ${tableNumber}` : 'DIGITAL MENU'}
           </span>
 
           <div className="flex items-center gap-1.5">
@@ -633,7 +691,7 @@ export const CustomerMenuPage: React.FC = () => {
               {isSoundOn ? <Volume2 className="w-3.5 h-3.5 text-[#d96236]" /> : <VolumeX className="w-3.5 h-3.5 text-[#a69c93]" />}
             </button>
             <span className="text-[10px] font-mono px-2.5 py-1 rounded-full bg-white/95 text-[#4d443c] border border-[#e9e3dc] backdrop-blur-md shadow-sm font-semibold">
-              Session #{sessionNumber}
+              {sessionNumber ? `Session #${sessionNumber}` : 'Preview Mode'}
             </span>
           </div>
         </div>

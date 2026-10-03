@@ -24,12 +24,21 @@ export const staffRequestController = {
 
       const effectiveTableNumber = tableNumber || session.tableNumber;
 
+      // Normalize requestType to match Model Enum: 'Water' | 'Cutlery' | 'Call Waiter' | 'Request Bill' | 'Other'
+      let normalizedType = requestType;
+      const upper = String(requestType).toUpperCase().replace(/[\s_-]+/g, '');
+      if (upper === 'WATER') normalizedType = 'Water';
+      else if (upper === 'CUTLERY') normalizedType = 'Cutlery';
+      else if (upper === 'CALLWAITER' || upper === 'WAITER') normalizedType = 'Call Waiter';
+      else if (upper === 'REQUESTBILL' || upper === 'BILL') normalizedType = 'Request Bill';
+      else if (upper === 'OTHER') normalizedType = 'Other';
+
       const newRequest = new StaffRequest({
         session: session._id,
         tableNumber: effectiveTableNumber,
         memberId: memberId || 'guest',
         memberName: memberName || 'Guest',
-        requestType,
+        requestType: normalizedType,
         notes: (notes || '').trim(),
         status: STAFF_REQUEST_STATUSES.REQUESTED,
         requestedAt: new Date(),

@@ -16,64 +16,56 @@ import { generateQrDataUrl } from '../utils/qr.js';
 import { logger } from '../utils/logger.js';
 
 export async function seedInitialUsers() {
-  const existingOwner = await User.findOne({ role: ROLES.OWNER });
-  if (!existingOwner) {
-    logger.info('Initializing primary restaurant Owner and core staff accounts...');
+  const initialStaff = [
+    {
+      name: 'Laksh Sharma',
+      email: 'owner@dineflow.com',
+      phone: '+91 98765 43210',
+      role: ROLES.OWNER,
+      active: true,
+      passwordHash: 'dineflow123',
+    },
+    {
+      name: 'Rohit Verma',
+      email: 'manager@dineflow.com',
+      phone: '+91 98765 43211',
+      role: ROLES.MANAGER,
+      active: true,
+      passwordHash: 'dineflow123',
+    },
+    {
+      name: 'Chef Vikram Singh',
+      email: 'kitchen@dineflow.com',
+      phone: '+91 98765 43212',
+      role: ROLES.KITCHEN,
+      station: 'Main Kitchen',
+      active: true,
+      passwordHash: 'dineflow123',
+    },
+    {
+      name: 'Priya Patel',
+      email: 'waiter@dineflow.com',
+      phone: '+91 98765 43213',
+      role: ROLES.WAITER,
+      active: true,
+      passwordHash: 'dineflow123',
+    },
+  ];
 
-    const initialStaff = [
-      {
-        name: 'Laksh Sharma',
-        email: 'owner@dineflow.com',
-        phone: '+91 98765 43210',
-        role: ROLES.OWNER,
-        active: true,
-        passwordHash: 'dineflow123',
-      },
-      {
-        name: 'Rohit Verma',
-        email: 'manager@dineflow.com',
-        phone: '+91 98765 43211',
-        role: ROLES.MANAGER,
-        active: true,
-        passwordHash: 'dineflow123',
-      },
-      {
-        name: 'Chef Vikram Singh',
-        email: 'kitchen@dineflow.com',
-        phone: '+91 98765 43212',
-        role: ROLES.KITCHEN,
-        station: 'Main Kitchen',
-        active: true,
-        passwordHash: 'dineflow123',
-      },
-      {
-        name: 'Priya Patel',
-        email: 'waiter@dineflow.com',
-        phone: '+91 98765 43213',
-        role: ROLES.WAITER,
-        active: true,
-        passwordHash: 'dineflow123',
-      },
-      {
-        name: 'Arjun Mehta (Deactivated)',
-        email: 'inactive@dineflow.com',
-        phone: '+91 98765 43214',
-        role: ROLES.WAITER,
-        active: false,
-        passwordHash: 'dineflow123',
-      },
-    ];
-
-    for (const staff of initialStaff) {
-      await User.findOneAndUpdate({ email: staff.email }, staff, { upsert: true, new: true });
+  for (const staff of initialStaff) {
+    const existing = await User.findOne({ email: staff.email });
+    if (!existing) {
+      console.log(`[Bootstrap] Creating missing account: ${staff.email} (${staff.role})...`);
+      await User.create(staff);
+    } else {
+      console.log(`[Bootstrap] Verified account: ${staff.email} (${staff.role})`);
     }
-    logger.info('✅ Initialized 5 staff accounts.');
   }
 
   // Seed restaurant branding if not present
   let restaurant = await Restaurant.findOne();
   if (!restaurant) {
-    logger.info('Initializing restaurant profile & branding...');
+    console.log('[Bootstrap] Initializing restaurant profile & branding (Saffron & Sage)...');
     restaurant = await Restaurant.create({
       name: 'Saffron & Sage',
       description:
@@ -387,8 +379,33 @@ export async function seedInitialUsers() {
       });
     }
 
-    logger.info(`✅ Seeded ${tablesToSeed.length} restaurant tables — all clean and AVAILABLE.`);
+    console.log(`[Bootstrap] Seeded ${tablesToSeed.length} restaurant tables.`);
   }
+
+  // Ensure ALL floor tables in DB are set to AVAILABLE with 0 active customer sessions
+  await Table.updateMany(
+    {},
+    {
+      $set: {
+        status: 'AVAILABLE',
+        activeSessionId: null,
+        active: true,
+        'qrCode.active': true,
+      },
+    }
+  );
+  await TableSession.updateMany(
+    { status: { $ne: 'COMPLETED' } },
+    {
+      $set: {
+        status: 'COMPLETED',
+        paymentStatus: 'PAID',
+        endedAt: new Date(),
+      },
+    }
+  );
+  await SessionMember.updateMany({ active: true }, { $set: { active: false } });
+  console.log('[Bootstrap] Initialized all floor tables to AVAILABLE (0 active customer sessions)');
 }
 
 if (process.argv[1]?.endsWith('seed.ts') || process.argv[1]?.endsWith('seed.js')) {

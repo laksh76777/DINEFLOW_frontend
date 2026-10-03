@@ -54,6 +54,12 @@ export const CustomerWelcomePage: React.FC = () => {
         // Automatically link back to existing joined state
         const member = data.existingMembers.find((m) => m.temporaryMemberId === savedTempId);
         if (member) {
+          localStorage.setItem('dineflow_active_session', data.activeSession.id);
+          localStorage.setItem('dineflow_table_number', data.table.tableNumber);
+          localStorage.setItem('dineflow_session_number', data.activeSession.sessionNumber);
+          localStorage.setItem('dineflow_member_id', member.temporaryMemberId);
+          localStorage.setItem('dineflow_member_name', member.displayName);
+          localStorage.setItem('dineflow_qr_token', token);
           setJoinedSessionData({
             session: data.activeSession,
             currentMember: member,
@@ -87,10 +93,15 @@ export const CustomerWelcomePage: React.FC = () => {
       const existingTempId = localStorage.getItem(`dineflow_temp_member_${token}`) || undefined;
       const result = await sessionService.joinSession(token, displayName.trim(), existingTempId);
 
-      // Store temporary member identity in localStorage
+      // Store temporary member identity and session in localStorage
       localStorage.setItem(`dineflow_temp_member_${token}`, result.currentMember.temporaryMemberId);
       localStorage.setItem(`dineflow_name_${token}`, result.currentMember.displayName);
-      localStorage.setItem(`dineflow_active_session`, result.session.id);
+      localStorage.setItem('dineflow_active_session', result.session.id);
+      localStorage.setItem('dineflow_table_number', result.table.tableNumber);
+      localStorage.setItem('dineflow_session_number', result.session.sessionNumber);
+      localStorage.setItem('dineflow_member_id', result.currentMember.temporaryMemberId);
+      localStorage.setItem('dineflow_member_name', result.currentMember.displayName);
+      localStorage.setItem('dineflow_qr_token', token);
 
       setJoinedSessionData(result);
       toast.success(

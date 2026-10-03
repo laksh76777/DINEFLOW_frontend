@@ -8,26 +8,26 @@ export async function connectDatabase(): Promise<string> {
 
   if (uri) {
     try {
-      logger.info(`Connecting to configured MongoDB instance...`);
+      console.log('[Database] Connecting to configured MongoDB instance...');
       await mongoose.connect(uri, { serverSelectionTimeoutMS: 5000 });
-      logger.info('Connected to MongoDB successfully');
+      console.log('[Database] Connected to MongoDB successfully.');
       return uri;
     } catch (err: any) {
-      logger.warn(`Failed to connect to configured MONGODB_URI: ${err.message}. Falling back to in-memory MongoDB.`);
+      console.log(`[Database] Could not connect to configured MONGODB_URI. Falling back to embedded MongoMemoryServer...`);
     }
   }
 
   // Fallback to MongoMemoryServer for effortless zero-config local run
   try {
     const { MongoMemoryServer } = await import('mongodb-memory-server');
-    logger.info('Starting MongoMemoryServer for development...');
+    console.log('[Database] Starting in-memory MongoDB server for seamless zero-setup execution...');
     mongod = await MongoMemoryServer.create();
     const memoryUri = mongod.getUri();
     await mongoose.connect(memoryUri);
-    logger.info(`Connected to MongoMemoryServer at ${memoryUri}`);
+    console.log(`[Database] Connected to in-memory MongoDB at ${memoryUri}`);
     return memoryUri;
   } catch (memErr: any) {
-    logger.error('Failed to initialize in-memory MongoDB:', memErr.message);
+    console.error('[Database] Failed to initialize in-memory MongoDB:', memErr.message);
     throw memErr;
   }
 }
@@ -37,5 +37,5 @@ export async function disconnectDatabase(): Promise<void> {
   if (mongod) {
     await mongod.stop();
   }
-  logger.info('Disconnected from MongoDB');
+  console.log('[Shutdown] Disconnected from MongoDB.');
 }

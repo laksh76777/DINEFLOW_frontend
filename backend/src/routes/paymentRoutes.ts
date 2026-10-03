@@ -1,18 +1,36 @@
 import { Router } from 'express';
 import { paymentController } from '../controllers/paymentController.js';
+import { User } from '../models/User.js';
 
 const router = Router();
 
 // RBAC: Kitchen staff is strictly forbidden from accessing payment records or billing
-const forbidKitchenRole = (req: any, res: any, next: any) => {
-  const role = req.headers['x-demo-role'] || req.user?.role;
-  if (role === 'KITCHEN') {
-    return res.status(403).json({
-      success: false,
-      message: 'Forbidden: Kitchen staff is strictly not authorized to access payments or billing.',
-    });
+const forbidKitchenRole = async (req: any, res: any, next: any) => {
+  try {
+    let role = req.headers['x-demo-role'] || req.user?.role;
+    if (!role && req.headers.authorization?.startsWith('Bearer ')) {
+      const token = req.headers.authorization.split(' ')[1];
+      if (token.startsWith('demo-')) {
+        role = token.replace('demo-', '').toUpperCase();
+      } else if (token.includes('@')) {
+        const u = await User.findOne({ email: token.toLowerCase() });
+        if (u) role = u.role;
+      } else if (token.match(/^[0-9a-fA-F]{24}$/)) {
+        const u = await User.findById(token);
+        if (u) role = u.role;
+      }
+    }
+
+    if (role === 'KITCHEN') {
+      return res.status(403).json({
+        success: false,
+        message: 'Forbidden: Kitchen staff is strictly not authorized to access payments or billing.',
+      });
+    }
+    next();
+  } catch (err) {
+    next(err);
   }
-  next();
 };
 
 router.use(forbidKitchenRole);

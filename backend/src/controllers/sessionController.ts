@@ -12,7 +12,8 @@ export const sessionController = {
   // Join or Create Session when customer submits display name
   async joinTableSession(req: Request, res: Response, next: NextFunction) {
     try {
-      const { token, displayName, temporaryMemberId } = req.body;
+      const { displayName, temporaryMemberId } = req.body;
+      const token = req.body.token || req.body.qrToken;
 
       if (!token) throw new AppError('Table QR token is required', 400);
       if (!displayName || !displayName.trim()) {

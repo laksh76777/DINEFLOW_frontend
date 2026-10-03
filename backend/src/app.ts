@@ -115,6 +115,7 @@ export function createApp(): Express {
   app.use('/api/sessions', sessionRoutes);
   app.use('/api/orders', orderRoutes);
   app.use('/api/requests', staffRequestRoutes);
+  app.use('/api/staff-requests', staffRequestRoutes);
   app.use('/api/payments', paymentRoutes);
   app.use('/api/analytics', analyticsRoutes);
   app.use('/api/ai', aiRoutes);
